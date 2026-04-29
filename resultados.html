@@ -202,16 +202,6 @@
         .replaceAll("'", "&#039;");
     }
 
-    function inicialesParticipante(nombre) {
-      return String(nombre || "")
-        .trim()
-        .split(/\s+/)
-        .filter(Boolean)
-        .slice(0, 2)
-        .map(parte => parte[0].toUpperCase())
-        .join("") || "?";
-    }
-
     function renderizarPodio(filtrados) {
       podium.innerHTML = "";
       const distanciaTexto = distanciaSelect.value.toUpperCase();
@@ -233,12 +223,6 @@
         card.className = `podium-place place-${posicion}`;
         card.style.animationDelay = `${posicion === 1 ? 0.05 : posicion === 2 ? 0.2 : 0.35}s`;
         card.innerHTML = `
-          <div class="podium-runner">
-            <span class="runner-glow"></span>
-            <div class="runner-avatar">${inicialesParticipante(p.nombre)}</div>
-            ${posicion === 1 ? `<div class="winner-crown" aria-hidden="true">👑</div>` : ""}
-          </div>
-
           <div class="podium-info">
             <div class="podium-medal">${medalla(posicion)}</div>
             <strong>${escaparHTML(p.nombre)}</strong>

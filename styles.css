@@ -1979,3 +1979,90 @@ tbody tr:hover { background: rgba(232, 247, 239, 0.52); }
     font-size: 20px;
   }
 }
+
+
+/* Podio minimalista sin avatares/iniciales */
+.podium-runner,
+.runner-avatar,
+.runner-glow,
+.winner-crown {
+  display: none !important;
+}
+
+.podium-place {
+  grid-template-rows: auto auto;
+  min-height: 250px;
+}
+
+.place-1 { min-height: 292px; }
+.place-2 { min-height: 252px; }
+.place-3 { min-height: 232px; }
+
+.podium-info {
+  margin: 0 8px -10px;
+}
+
+@media (max-width: 680px) {
+  .podium-card {
+    padding: 16px;
+  }
+
+  .podium {
+    gap: 9px;
+  }
+
+  .podium-place,
+  .place-1,
+  .place-2,
+  .place-3 {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 13px 14px;
+    border-radius: 18px;
+    box-shadow: 0 8px 22px rgba(7, 63, 42, 0.07);
+  }
+
+  .podium-info {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "medal name time"
+      "medal meta time";
+    align-items: center;
+    column-gap: 10px;
+    row-gap: 2px;
+    width: 100%;
+  }
+
+  .podium-medal { grid-area: medal; font-size: 24px; }
+  .podium-place strong { grid-area: name; }
+  .podium-place span { grid-area: meta; }
+  .podium-place b { grid-area: time; justify-self: end; font-size: 20px; }
+}
+
+@media (max-width: 420px) {
+  .podium-card {
+    padding: 14px;
+  }
+
+  .podium-place,
+  .place-1,
+  .place-2,
+  .place-3 {
+    padding: 12px;
+  }
+
+  .podium-info {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "medal name"
+      "medal meta"
+      "medal time";
+  }
+
+  .podium-place b {
+    justify-self: start;
+    margin-top: 3px;
+    font-size: 21px;
+  }
+}
