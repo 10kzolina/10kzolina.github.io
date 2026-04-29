@@ -258,6 +258,10 @@ h1 {
   gap: 12px;
 }
 
+.mini-stats {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .mini-stats div,
 .summary-card {
   padding: 16px;
@@ -278,6 +282,11 @@ h1 {
   color: var(--muted);
   font-size: 13px;
   font-weight: 800;
+}
+
+
+.pet-stat strong {
+  white-space: nowrap;
 }
 
 .impact-card {
@@ -1557,15 +1566,21 @@ tbody tr:hover { background: rgba(232, 247, 239, 0.52); }
   }
   .mini-stats { grid-template-columns: repeat(3, 1fr); gap: 7px; }
   .mini-stats div { padding: 10px 6px; border-radius: 16px; }
+  .mini-stats .pet-stat {
+    grid-column: 1 / -1;
+    padding: 12px 10px;
+  }
   .mini-stats strong,
   .stat-link { font-size: 14px; }
+  .mini-stats .pet-stat strong { font-size: 15px; }
   .mini-stats span { font-size: 11px; }
 }
 @media (max-width: 380px) {
   .nav-actions { gap: 5px; }
   .nav-actions a,
   .nav-actions a:not(.nav-pill) { font-size: 11px; padding: 7px 4px; }
-  .mini-stats { grid-template-columns: 1fr; }
+  .mini-stats { grid-template-columns: repeat(3, 1fr); }
+  .mini-stats .pet-stat { grid-column: 1 / -1; }
   .main-cta-row,
   .hero-actions { grid-template-columns: 1fr; }
 }
@@ -1978,256 +1993,4 @@ tbody tr:hover { background: rgba(232, 247, 239, 0.52); }
   .podium-place b {
     font-size: 20px;
   }
-}
-
-
-/* Podio minimalista sin avatares/iniciales */
-.podium-runner,
-.runner-avatar,
-.runner-glow,
-.winner-crown {
-  display: none !important;
-}
-
-.podium-place {
-  grid-template-rows: auto auto;
-  min-height: 250px;
-}
-
-.place-1 { min-height: 292px; }
-.place-2 { min-height: 252px; }
-.place-3 { min-height: 232px; }
-
-.podium-info {
-  margin: 0 8px -10px;
-}
-
-@media (max-width: 680px) {
-  .podium-card {
-    padding: 16px;
-  }
-
-  .podium {
-    gap: 9px;
-  }
-
-  .podium-place,
-  .place-1,
-  .place-2,
-  .place-3 {
-    grid-template-columns: 1fr;
-    gap: 0;
-    padding: 13px 14px;
-    border-radius: 18px;
-    box-shadow: 0 8px 22px rgba(7, 63, 42, 0.07);
-  }
-
-  .podium-info {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    grid-template-areas:
-      "medal name time"
-      "medal meta time";
-    align-items: center;
-    column-gap: 10px;
-    row-gap: 2px;
-    width: 100%;
-  }
-
-  .podium-medal { grid-area: medal; font-size: 24px; }
-  .podium-place strong { grid-area: name; }
-  .podium-place span { grid-area: meta; }
-  .podium-place b { grid-area: time; justify-self: end; font-size: 20px; }
-}
-
-@media (max-width: 420px) {
-  .podium-card {
-    padding: 14px;
-  }
-
-  .podium-place,
-  .place-1,
-  .place-2,
-  .place-3 {
-    padding: 12px;
-  }
-
-  .podium-info {
-    grid-template-columns: auto 1fr;
-    grid-template-areas:
-      "medal name"
-      "medal meta"
-      "medal time";
-  }
-
-  .podium-place b {
-    justify-self: start;
-    margin-top: 3px;
-    font-size: 21px;
-  }
-}
-
-/* Podio móvil: mantiene forma real de podio, sin avatares */
-@media (max-width: 680px) {
-  .podium-card {
-    padding: 16px 12px 18px;
-  }
-
-  .podium-card .section-title-row {
-    margin-bottom: 12px;
-  }
-
-  .podium {
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: end;
-    gap: 6px;
-    min-height: 245px;
-    padding: 10px 0 0;
-    overflow: visible;
-  }
-
-  .podium::before {
-    display: block;
-    inset: auto 0 0;
-    height: 92px;
-    border-radius: 22px;
-    background: linear-gradient(180deg, rgba(232, 247, 239, 0), rgba(232, 247, 239, 0.95));
-    filter: none;
-  }
-
-  .podium::after {
-    display: none;
-  }
-
-  .podium-place,
-  .place-1,
-  .place-2,
-  .place-3 {
-    width: auto;
-    min-height: auto;
-    display: grid !important;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    align-items: end;
-    gap: 0;
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-  }
-
-  .place-2 { order: 1; }
-  .place-1 { order: 2; }
-  .place-3 { order: 3; }
-
-  .podium-info {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-areas: none;
-    justify-items: center;
-    width: 100%;
-    min-height: 112px;
-    margin: 0 0 -7px;
-    padding: 9px 5px 12px;
-    border: 1px solid rgba(15, 111, 71, 0.10);
-    border-radius: 15px;
-    background: rgba(255, 255, 255, 0.94);
-    box-shadow: 0 8px 18px rgba(7, 63, 42, 0.08);
-    text-align: center;
-    z-index: 3;
-  }
-
-  .place-1 .podium-info {
-    border-color: rgba(250, 204, 21, 0.38);
-  }
-
-  .podium-medal {
-    grid-area: auto;
-    width: auto;
-    height: auto;
-    margin-bottom: 2px;
-    padding: 0;
-    background: transparent;
-    box-shadow: none;
-    font-size: 22px;
-    line-height: 1;
-  }
-
-  .podium-place strong {
-    grid-area: auto;
-    max-width: 100%;
-    font-size: 12px;
-    line-height: 1.12;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .podium-place span {
-    grid-area: auto;
-    margin-top: 2px;
-    font-size: 10px;
-    line-height: 1.15;
-  }
-
-  .podium-place b {
-    grid-area: auto;
-    justify-self: center;
-    margin-top: 4px;
-    font-size: 17px;
-    line-height: 1;
-  }
-
-  .podium-block,
-  .place-1 .podium-block,
-  .place-2 .podium-block,
-  .place-3 .podium-block {
-    display: grid !important;
-    min-height: 86px;
-    border-radius: 16px 16px 10px 10px;
-    box-shadow: 0 12px 22px rgba(7, 63, 42, 0.13), inset 0 1px 0 rgba(255,255,255,0.25);
-  }
-
-  .place-1 .podium-block { min-height: 122px; }
-  .place-2 .podium-block { min-height: 94px; }
-  .place-3 .podium-block { min-height: 74px; }
-
-  .podium-block span {
-    font-size: 44px;
-    letter-spacing: -0.08em;
-  }
-}
-
-@media (max-width: 420px) {
-  .podium {
-    gap: 4px;
-    min-height: 232px;
-  }
-
-  .podium-info {
-    min-height: 108px;
-    padding: 8px 4px 11px;
-    border-radius: 13px;
-  }
-
-  .podium-medal { font-size: 20px; }
-  .podium-place strong { font-size: 11px; }
-  .podium-place span { font-size: 9px; }
-  .podium-place b { font-size: 15px; }
-
-  .podium-block,
-  .place-1 .podium-block,
-  .place-2 .podium-block,
-  .place-3 .podium-block {
-    border-radius: 13px 13px 9px 9px;
-  }
-
-  .place-1 .podium-block { min-height: 112px; }
-  .place-2 .podium-block { min-height: 86px; }
-  .place-3 .podium-block { min-height: 68px; }
-
-  .podium-block span { font-size: 38px; }
 }
