@@ -1,13 +1,13 @@
 Nombre y apellido,distancia,genero,tiempo,dorsal
-Medalla oro,10k,M,00:00:01,1
-Medalla plata,10k,M,00:00:02,2
-Medalla bronce,10k,M,00:00:03,3
-Medalla oro,10k,F,00:00:01,1
-Medalla plata,10k,F,00:00:02,2
-Medalla bronce,10k,F,00:00:03,3
-Medalla oro,5k,M,00:00:01,1
-Medalla plata,5k,M,00:00:02,2
-Medalla bronce,5k,M,00:00:03,3
-Medalla oro,5k,F,00:00:01,1
-Medalla plata,5k,F,00:00:02,2
-Medalla bronce,5k,F,00:00:03,3
+Medalla oro M,10k,M,00:00:01,1
+Medalla plata M,10k,M,00:00:02,2
+Medalla bronce M,10k,M,00:00:03,3
+Medalla oro F,10k,F,00:00:04,1
+Medalla plata F,10k,F,00:00:05,2
+Medalla bronce F,10k,F,00:00:06,3
+Medalla oro M,5k,M,00:00:01,1
+Medalla plata M,5k,M,00:00:02,2
+Medalla bronce M,5k,M,00:00:03,3
+Medalla oro F,5k,F,00:00:04,1
+Medalla plata F,5k,F,00:00:05,2
+Medalla bronce F,5k,F,00:00:06,3
