@@ -1068,3 +1068,162 @@ tbody tr:hover { background: rgba(232, 247, 239, 0.52); }
     border-radius: 24px;
   }
 }
+
+/* Ajustes móviles de coherencia global */
+.event-badge {
+  max-width: 100%;
+  flex-wrap: wrap;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.event-badge .pulse-dot {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 680px) {
+  .site-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 12px 12px;
+  }
+
+  .brand {
+    justify-content: center;
+  }
+
+  .brand-logo {
+    width: 132px;
+    max-height: 40px;
+  }
+
+  .nav-actions {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 7px;
+    font-size: 12px;
+  }
+
+  .nav-actions a,
+  .nav-actions a:not(.nav-pill) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid var(--border);
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .nav-actions .nav-pill {
+    background: var(--green-deep);
+    border-color: var(--green-deep);
+    color: white !important;
+  }
+
+  .hero {
+    padding: 14px;
+    gap: 14px;
+  }
+
+  .hero-card {
+    padding: 20px 16px;
+  }
+
+  .event-badge {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 10px;
+    font-size: 12px;
+    text-align: center;
+    border-radius: 18px;
+  }
+
+  .hero-logo {
+    width: 100%;
+    max-height: 185px;
+    margin: 14px auto 14px;
+    object-position: center;
+  }
+
+  .hero-lead {
+    margin-bottom: 18px;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .hero-actions {
+    gap: 9px;
+    margin-bottom: 22px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    min-height: 44px;
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .mini-stats div,
+  .summary-card {
+    padding: 13px;
+    text-align: center;
+  }
+
+  .impact-card {
+    padding: 20px 16px;
+  }
+
+  .food-progress-info {
+    margin-top: 18px;
+  }
+
+  .food-progress-info strong {
+    font-size: 38px;
+  }
+
+  .container {
+    padding: 18px 14px 42px;
+  }
+
+  .partners-hero,
+  .results-hero,
+  .contact-hero {
+    padding: 20px 16px;
+  }
+
+  .section-logo {
+    max-height: 92px;
+    object-position: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 380px) {
+  .nav-actions {
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  .nav-actions a,
+  .nav-actions a:not(.nav-pill) {
+    padding: 7px 8px;
+  }
+
+  .event-badge {
+    font-size: 11px;
+  }
+
+  .hero-logo {
+    max-height: 160px;
+  }
+}
