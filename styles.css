@@ -1817,3 +1817,165 @@ tbody tr:hover { background: rgba(232, 247, 239, 0.52); }
   .challenge-info-card { padding: 20px 16px; }
   .challenge-poster { border-radius: 18px; }
 }
+
+/* Ajuste podio minimalista y responsive */
+.podium::after {
+  display: none;
+}
+
+.podium::before {
+  opacity: 0.55;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(22, 161, 99, 0.12), transparent 30%),
+    radial-gradient(circle at 20% 65%, rgba(183, 243, 74, 0.12), transparent 24%);
+}
+
+.runner-glow {
+  animation: none;
+  opacity: 0.65;
+}
+
+.winner-crown {
+  animation: none;
+  font-size: 28px;
+  top: -15px;
+}
+
+.podium-block::before {
+  display: none;
+}
+
+.podium-info {
+  box-shadow: 0 12px 30px rgba(7, 63, 42, 0.10);
+}
+
+@media (max-width: 680px) {
+  .podium-card {
+    padding: 18px;
+  }
+
+  .podium {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    gap: 10px;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .podium::before,
+  .runner-glow,
+  .podium-block {
+    display: none;
+  }
+
+  .podium-place,
+  .place-1,
+  .place-2,
+  .place-3 {
+    width: 100%;
+    min-height: auto;
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 28px rgba(7, 63, 42, 0.08);
+    animation: revealUp 0.42s both cubic-bezier(.22,1,.36,1);
+  }
+
+  .place-1 { order: 1; }
+  .place-2 { order: 2; }
+  .place-3 { order: 3; }
+
+  .place-1 {
+    border-color: rgba(250, 204, 21, 0.45);
+    background: linear-gradient(135deg, rgba(255, 248, 200, 0.78), rgba(255,255,255,0.94));
+  }
+
+  .podium-runner {
+    min-height: auto;
+  }
+
+  .runner-avatar,
+  .place-1 .runner-avatar {
+    width: 52px;
+    height: 52px;
+    border-width: 2px;
+    font-size: 17px;
+    box-shadow: none;
+  }
+
+  .winner-crown {
+    top: -12px;
+    right: -4px;
+    font-size: 18px;
+  }
+
+  .podium-info {
+    justify-items: start;
+    gap: 3px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    text-align: left;
+    backdrop-filter: none;
+  }
+
+  .podium-medal {
+    width: auto;
+    height: auto;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .podium-place strong {
+    max-width: 100%;
+    font-size: 16px;
+    line-height: 1.15;
+  }
+
+  .podium-place span {
+    font-size: 12px;
+  }
+
+  .podium-place b {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 420px) {
+  .podium-card {
+    padding: 15px;
+  }
+
+  .podium-place,
+  .place-1,
+  .place-2,
+  .place-3 {
+    grid-template-columns: 48px 1fr;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .runner-avatar,
+  .place-1 .runner-avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 15px;
+  }
+
+  .podium-place b {
+    font-size: 20px;
+  }
+}
