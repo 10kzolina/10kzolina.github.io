@@ -1,328 +1,731 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0f6f47" />
-  <title>Resultados | 10K Zolina</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body class="results-page">
-  <div class="noise"></div>
+:root {
+  --green: #16a163;
+  --green-dark: #0f6f47;
+  --green-deep: #073f2a;
+  --green-light: #e8f7ef;
+  --lime: #b7f34a;
+  --yellow: #facc15;
+  --orange: #fb923c;
+  --red: #ef4444;
+  --text: #17231d;
+  --muted: #667085;
+  --border: rgba(15, 111, 71, 0.14);
+  --background: #f4fbf7;
+  --white: #ffffff;
+  --shadow: 0 22px 70px rgba(15, 111, 71, 0.16);
+}
 
-  <header class="site-header compact-header">
-    <a href="index.html" class="brand" aria-label="Volver a inicio">
-      <span class="brand-mark">🦔</span>
-      <span>10K Zolina</span>
-    </a>
-    <nav class="nav-actions" aria-label="Navegación principal">
-      <a href="index.html">Inicio</a>
-      <a href="colaboradores.html">Colaboradores</a>
-      <a href="https://forms.gle/TU_FORMULARIO" target="_blank" rel="noopener">Inscribirse</a>
-      <a href="#resultados" class="nav-pill">Resultados</a>
-    </nav>
-  </header>
+* { box-sizing: border-box; }
 
-  <main class="container" id="resultados">
-    <section class="results-hero reveal">
-      <div>
-        <p class="eyebrow">Clasificación oficial</p>
-        <h1>Resultados</h1>
-        <p>Busca participantes, filtra por distancia/categoría y comparte el resultado en un toque.</p>
-      </div>
+html { scroll-behavior: smooth; }
 
-      <div class="summary-grid" aria-label="Resumen de resultados">
-        <div class="summary-card">
-          <span>Total</span>
-          <strong id="stat-total">0</strong>
-        </div>
-        <div class="summary-card">
-          <span>Mejor tiempo</span>
-          <strong id="stat-best">--:--</strong>
-        </div>
-        <div class="summary-card">
-          <span>Distancia</span>
-          <strong id="stat-distance">10K</strong>
-        </div>
-      </div>
-    </section>
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(183, 243, 74, 0.18), transparent 28%),
+    radial-gradient(circle at 90% 10%, rgba(22, 161, 99, 0.22), transparent 30%),
+    var(--background);
+  color: var(--text);
+}
 
-    <section class="podium-card reveal delay-1" aria-label="Podio de la selección actual">
-      <div class="section-title-row">
-        <div>
-          <p class="eyebrow">Top 3</p>
-          <h2 id="podium-title">Podio 10K</h2>
-        </div>
-        <span id="podium-label" class="soft-pill">10K · General</span>
-      </div>
-      <div id="podium" class="podium"></div>
-    </section>
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(15, 111, 71, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 111, 71, 0.045) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, black, transparent 75%);
+}
 
-    <section class="filters-panel reveal delay-2">
-      <div class="filter-group search-group">
-        <label for="busqueda">Buscar</label>
-        <input id="busqueda" type="search" placeholder="Nombre, dorsal..." autocomplete="off" />
-      </div>
+.noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
 
-      <div class="filter-group">
-        <label for="distancia">Distancia</label>
-        <select id="distancia">
-          <option value="10k">10K</option>
-          <option value="5k">5K</option>
-        </select>
-      </div>
+a { color: inherit; }
 
-      <div class="filter-group">
-        <label for="genero">Categoría</label>
-        <select id="genero">
-          <option value="General">General</option>
-          <option value="Masculino">Masculino</option>
-          <option value="Femenino">Femenino</option>
-        </select>
-      </div>
-    </section>
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px clamp(18px, 4vw, 52px);
+  backdrop-filter: blur(18px);
+  background: rgba(244, 251, 247, 0.72);
+  border-bottom: 1px solid rgba(15, 111, 71, 0.1);
+}
 
-    <section class="table-card reveal delay-3">
-      <div class="mobile-results" id="mobile-resultados"></div>
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--green-deep);
+  font-weight: 900;
+  font-size: 19px;
+  text-decoration: none;
+  letter-spacing: -0.03em;
+}
 
-      <table aria-label="Tabla de resultados">
-        <thead>
-          <tr>
-            <th>Posición</th>
-            <th>Dorsal</th>
-            <th>Nombre y apellido</th>
-            <th>Distancia</th>
-            <th>Género</th>
-            <th>Tiempo</th>
-            <th>Compartir</th>
-          </tr>
-        </thead>
-        <tbody id="tabla-resultados"></tbody>
-      </table>
+.brand-mark {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--white);
+  box-shadow: 0 10px 30px rgba(15, 111, 71, 0.12);
+}
 
-      <p id="sin-resultados" class="empty-message">No hay resultados para esta selección.</p>
-    </section>
-  </main>
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--green-deep);
+  font-weight: 800;
+  font-size: 14px;
+}
 
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+.nav-actions a {
+  padding: 10px 14px;
+  text-decoration: none;
+  border-radius: 999px;
+}
 
-  <script>
-    let participantes = [];
+.nav-pill {
+  color: white !important;
+  background: var(--green-deep);
+  box-shadow: 0 12px 32px rgba(15, 111, 71, 0.18);
+}
 
-    const distanciaSelect = document.getElementById("distancia");
-    const generoSelect = document.getElementById("genero");
-    const busquedaInput = document.getElementById("busqueda");
-    const tabla = document.getElementById("tabla-resultados");
-    const mobileResultados = document.getElementById("mobile-resultados");
-    const sinResultados = document.getElementById("sin-resultados");
-    const podium = document.getElementById("podium");
-    const podiumLabel = document.getElementById("podium-label");
-    const podiumTitle = document.getElementById("podium-title");
-    const statTotal = document.getElementById("stat-total");
-    const statBest = document.getElementById("stat-best");
-    const statDistance = document.getElementById("stat-distance");
+.hero {
+  min-height: calc(100vh - 75px);
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 54px);
+  padding: clamp(22px, 5vw, 64px);
+  overflow: hidden;
+}
 
-    function normalizarGenero(genero) {
-      const g = String(genero || "").trim().toLowerCase();
-      if (g === "m" || g === "masculino") return "Masculino";
-      if (g === "f" || g === "femenino") return "Femenino";
-      return genero || "Sin categoría";
-    }
+.hero-bg-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(4px);
+  opacity: 0.5;
+  animation: float 7s ease-in-out infinite;
+}
 
-    function parseCSV(texto) {
-      const lineas = texto.trim().split(/\r?\n/);
-      const cabeceras = lineas[0].split(",").map(h => h.trim());
+.orb-one {
+  width: 280px;
+  height: 280px;
+  right: 8%;
+  top: 16%;
+  background: rgba(183, 243, 74, 0.35);
+}
 
-      return lineas.slice(1).map(linea => {
-        const valores = linea.split(",").map(v => v.trim());
-        const obj = {};
+.orb-two {
+  width: 200px;
+  height: 200px;
+  left: 8%;
+  bottom: 8%;
+  background: rgba(22, 161, 99, 0.22);
+  animation-delay: 1s;
+}
 
-        cabeceras.forEach((cabecera, index) => {
-          obj[cabecera] = valores[index] || "";
-        });
+.glass-card,
+.impact-card,
+.results-hero,
+.podium-card,
+.filters-panel,
+.table-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
 
-        return {
-          nombre: obj["Nombre y apellido"],
-          distancia: obj["distancia"].toLowerCase(),
-          genero: normalizarGenero(obj["genero"]),
-          tiempo: obj["tiempo"],
-          dorsal: obj["dorsal"]
-        };
-      });
-    }
+.hero-card {
+  max-width: 780px;
+  padding: clamp(34px, 7vw, 76px);
+  border-radius: 38px;
+}
 
-    function tiempoASegundos(tiempo) {
-      const partes = String(tiempo).split(":").map(Number);
-      if (partes.length === 3) return partes[0] * 3600 + partes[1] * 60 + partes[2];
-      if (partes.length === 2) return partes[0] * 60 + partes[1];
-      return Infinity;
-    }
+.event-badge,
+.soft-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 13px;
+  border-radius: 999px;
+  background: rgba(232, 247, 239, 0.92);
+  color: var(--green-dark);
+  font-weight: 900;
+  font-size: 13px;
+}
 
-    function obtenerFiltrados() {
-      const distancia = distanciaSelect.value;
-      const genero = generoSelect.value;
-      const busqueda = busquedaInput.value.trim().toLowerCase();
+.pulse-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(22, 161, 99, 0.5);
+  animation: pulse 1.8s infinite;
+}
 
-      let filtrados = participantes.filter(p => p.distancia === distancia);
+h1,
+h2,
+h3,
+p { margin-top: 0; }
 
-      if (genero !== "General") {
-        filtrados = filtrados.filter(p => p.genero === genero);
-      }
+h1 {
+  margin: 22px 0 18px;
+  font-size: clamp(56px, 10vw, 126px);
+  line-height: 0.86;
+  letter-spacing: -0.085em;
+  color: var(--green-deep);
+}
 
-      if (busqueda) {
-        filtrados = filtrados.filter(p =>
-          p.nombre.toLowerCase().includes(busqueda) ||
-          p.dorsal.toLowerCase().includes(busqueda)
-        );
-      }
+.hero-lead {
+  max-width: 610px;
+  margin-bottom: 28px;
+  color: #3d5146;
+  font-size: clamp(18px, 2.4vw, 25px);
+  line-height: 1.35;
+  font-weight: 700;
+}
 
-      return filtrados.sort((a, b) => tiempoASegundos(a.tiempo) - tiempoASegundos(b.tiempo));
-    }
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 34px;
+}
 
-    function medalla(posicion) {
-      if (posicion === 1) return "🥇";
-      if (posicion === 2) return "🥈";
-      if (posicion === 3) return "🥉";
-      return posicion;
-    }
+.primary-button,
+.secondary-button,
+.share-btn {
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 900;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
 
-    function renderizarPodio(filtrados) {
-      podium.innerHTML = "";
-      const distanciaTexto = distanciaSelect.value.toUpperCase();
-      podiumTitle.textContent = "Podio " + distanciaTexto;
-      podiumLabel.textContent = distanciaTexto + " · " + generoSelect.value;
+.primary-button,
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 14px 22px;
+  border-radius: 999px;
+}
 
-      const top3 = filtrados.slice(0, 3);
+.primary-button {
+  color: white;
+  background: linear-gradient(135deg, var(--green-deep), var(--green));
+  box-shadow: 0 18px 44px rgba(15, 111, 71, 0.28);
+}
 
-      if (top3.length === 0) {
-        podium.innerHTML = `<p class="empty-inline">Sin podio para esta selección.</p>`;
-        return;
-      }
+.secondary-button {
+  color: var(--green-deep);
+  background: white;
+  border: 1px solid var(--border);
+}
 
-      top3.forEach((p, index) => {
-        const posicion = index + 1;
-        const card = document.createElement("article");
-        card.className = `podium-place place-${posicion}`;
-        card.innerHTML = `
-          <div class="podium-medal">${medalla(posicion)}</div>
-          <strong>${p.nombre}</strong>
-          <span>Dorsal ${p.dorsal}</span>
-          <b>${p.tiempo}</b>
-        `;
-        podium.appendChild(card);
-      });
-    }
+.primary-button:hover,
+.secondary-button:hover,
+.share-btn:hover {
+  transform: translateY(-2px);
+}
 
-    function renderizarTabla() {
-      const filtrados = obtenerFiltrados();
+.mini-stats,
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
 
-      tabla.innerHTML = "";
-      mobileResultados.innerHTML = "";
+.mini-stats div,
+.summary-card {
+  padding: 16px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.76);
+  border: 1px solid var(--border);
+}
 
-      statTotal.textContent = filtrados.length;
-      statBest.textContent = filtrados[0]?.tiempo || "--:--";
-      statDistance.textContent = distanciaSelect.value.toUpperCase();
+.mini-stats strong,
+.summary-card strong {
+  display: block;
+  color: var(--green-deep);
+  font-size: 18px;
+}
 
-      renderizarPodio(filtrados);
+.mini-stats span,
+.summary-card span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
 
-      if (filtrados.length === 0) {
-        sinResultados.style.display = "block";
-        return;
-      }
+.impact-card {
+  padding: clamp(24px, 4vw, 34px);
+  border-radius: 34px;
+  overflow: hidden;
+}
 
-      sinResultados.style.display = "none";
+.impact-card::after {
+  content: "";
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  right: -60px;
+  top: -60px;
+  border-radius: 50%;
+  background: rgba(22, 161, 99, 0.12);
+}
 
-      filtrados.forEach((p, index) => {
-        const posicion = index + 1;
-        const fila = document.createElement("tr");
+.impact-icon {
+  width: 66px;
+  height: 66px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+  border-radius: 24px;
+  background: white;
+  font-size: 34px;
+  box-shadow: 0 16px 34px rgba(15, 111, 71, 0.14);
+  animation: float 3.6s ease-in-out infinite;
+}
 
-        fila.innerHTML = `
-          <td><span class="rank-badge">${medalla(posicion)}</span></td>
-          <td>${p.dorsal}</td>
-          <td><strong>${p.nombre}</strong></td>
-          <td>${p.distancia.toUpperCase()}</td>
-          <td>${p.genero}</td>
-          <td><strong>${p.tiempo}</strong></td>
-          <td><button class="share-btn">Compartir</button></td>
-        `;
+.eyebrow {
+  margin-bottom: 8px;
+  color: var(--green-dark);
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+}
 
-        fila.querySelector("button").addEventListener("click", () => compartir(p, posicion));
-        tabla.appendChild(fila);
+.impact-card h2,
+.podium-card h2 {
+  margin-bottom: 10px;
+  color: var(--green-deep);
+  font-size: 32px;
+  letter-spacing: -0.04em;
+}
 
-        const card = document.createElement("article");
-        card.className = "result-card";
-        card.innerHTML = `
-          <div class="result-card-top">
-            <span class="rank-badge">${medalla(posicion)}</span>
-            <button class="share-btn">Compartir</button>
-          </div>
-          <h3>${p.nombre}</h3>
-          <div class="result-meta">
-            <span>🎽 ${p.dorsal}</span>
-            <span>📏 ${p.distancia.toUpperCase()}</span>
-            <span>👤 ${p.genero}</span>
-            <span>⏱️ ${p.tiempo}</span>
-          </div>
-        `;
-        card.querySelector("button").addEventListener("click", () => compartir(p, posicion));
-        mobileResultados.appendChild(card);
-      });
-    }
+.food-subtitle {
+  color: var(--muted);
+  line-height: 1.55;
+}
 
-    async function cargarResultados() {
-      try {
-        const respuesta = await fetch("resultados.csv");
-        if (!respuesta.ok) throw new Error("No se pudo cargar resultados.csv");
+.food-progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin: 24px 0 10px;
+  color: var(--green-dark);
+  font-weight: 900;
+}
 
-        const texto = await respuesta.text();
-        participantes = parseCSV(texto);
-        renderizarTabla();
-      } catch (error) {
-        tabla.innerHTML = "";
-        mobileResultados.innerHTML = "";
-        podium.innerHTML = "";
-        sinResultados.textContent = "No se ha podido cargar el archivo de resultados.";
-        sinResultados.style.display = "block";
-      }
-    }
+.food-progress-info strong {
+  font-size: clamp(38px, 7vw, 58px);
+  letter-spacing: -0.08em;
+}
 
-    async function compartir(participante, posicion) {
-      const distanciaTexto = participante.distancia.toUpperCase();
-      const texto = `🏃 ¡He terminado la ${distanciaTexto} Zolina!\n\n${participante.nombre}\n📏 ${distanciaTexto}\n⏱️ ${participante.tiempo}\n🏅 Posición: ${posicion}\n📍 Badostain\n📅 24 de mayo`;
-      const url = window.location.href;
+#porcentaje-comida {
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: var(--green-deep);
+  color: white;
+  font-size: 14px;
+}
 
-      if (navigator.share) {
-        try {
-          await navigator.share({ title: "10K Zolina", text: texto, url });
-        } catch (error) {
-          // El usuario puede cancelar el menú nativo de compartir.
-        }
-        return;
-      }
+.food-progress {
+  height: 32px;
+  overflow: hidden;
+  background: #d9eee3;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 111, 71, 0.18);
+  box-shadow: inset 0 3px 8px rgba(15, 111, 71, 0.12);
+}
 
-      try {
-        await navigator.clipboard.writeText(`${texto}\n${url}`);
-        mostrarToast("Resultado copiado al portapapeles");
-      } catch (error) {
-        mostrarToast("No se pudo copiar el resultado");
-      }
-    }
+.food-progress-fill {
+  position: relative;
+  height: 100%;
+  width: 0%;
+  overflow: hidden;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #22c55e 0%, #84cc16 20%, #eab308 43%, #f97316 70%, #ef4444 100%);
+  background-size: 200% 100%;
+  box-shadow: 0 0 22px rgba(239, 68, 68, 0.32), inset 0 1px 0 rgba(255,255,255,0.35);
+  transition: width 1.5s cubic-bezier(.22,1,.36,1);
+}
 
-    function mostrarToast(mensaje) {
-      const toast = document.getElementById("toast");
-      toast.textContent = mensaje;
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 2200);
-    }
+.food-progress-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 0%, transparent 30%, rgba(255,255,255,0.58) 45%, transparent 60%, transparent 100%);
+  animation: shineMove 2.2s infinite;
+}
 
-    distanciaSelect.addEventListener("change", renderizarTabla);
-    generoSelect.addEventListener("change", renderizarTabla);
-    busquedaInput.addEventListener("input", renderizarTabla);
+.food-scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
 
-    cargarResultados();
-  </script>
-</body>
-</html>
+.impact-message {
+  margin-top: 18px;
+  padding: 14px 15px;
+  border-radius: 18px;
+  background: rgba(232, 247, 239, 0.88);
+  color: var(--green-deep);
+  font-weight: 900;
+}
+
+.container {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 34px 18px 58px;
+}
+
+.results-hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+  align-items: end;
+  padding: clamp(26px, 5vw, 48px);
+  border-radius: 34px;
+  margin-bottom: 22px;
+}
+
+.results-hero h1 {
+  margin: 0 0 10px;
+  font-size: clamp(48px, 8vw, 92px);
+}
+
+.results-hero p:not(.eyebrow) {
+  color: var(--muted);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.podium-card,
+.filters-panel,
+.table-card {
+  border-radius: 28px;
+  margin-bottom: 22px;
+}
+
+.podium-card { padding: 24px; }
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 18px;
+}
+
+.podium {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.podium-place {
+  min-height: 148px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px;
+  border-radius: 24px;
+  background: linear-gradient(145deg, white, #f0fbf5);
+  border: 1px solid var(--border);
+}
+
+.podium-medal { font-size: 34px; }
+.podium-place strong { color: var(--green-deep); }
+.podium-place span { color: var(--muted); font-size: 13px; font-weight: 800; }
+.podium-place b { font-size: 22px; color: var(--green-dark); }
+
+.filters-panel {
+  display: grid;
+  grid-template-columns: 1fr 190px 190px;
+  gap: 14px;
+  padding: 18px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+label {
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--green-dark);
+}
+
+select,
+input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--white);
+  font: inherit;
+  font-size: 15px;
+  color: var(--text);
+  outline: none;
+}
+
+select:focus,
+input:focus {
+  border-color: rgba(22, 161, 99, 0.5);
+  box-shadow: 0 0 0 4px rgba(22, 161, 99, 0.12);
+}
+
+.table-card {
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(15, 111, 71, 0.1);
+}
+
+th {
+  background: rgba(232, 247, 239, 0.9);
+  color: var(--green-dark);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+td { font-size: 14px; }
+tbody tr { transition: background 0.18s ease; }
+tbody tr:hover { background: rgba(232, 247, 239, 0.52); }
+
+.rank-badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 8px;
+  border-radius: 12px;
+  background: var(--green-light);
+  color: var(--green-deep);
+  font-weight: 900;
+}
+
+.share-btn {
+  min-height: 36px;
+  padding: 9px 13px;
+  border-radius: 13px;
+  background: linear-gradient(135deg, var(--green-deep), var(--green));
+  color: white;
+}
+
+.empty-message,
+.empty-inline {
+  display: none;
+  padding: 26px;
+  color: var(--muted);
+  text-align: center;
+  font-weight: 800;
+}
+
+.empty-inline { display: block; grid-column: 1 / -1; }
+
+.mobile-results { display: none; }
+
+.toast {
+  position: fixed;
+  z-index: 50;
+  bottom: 22px;
+  left: 50%;
+  max-width: calc(100vw - 32px);
+  transform: translateX(-50%) translateY(20px);
+  background: var(--green-deep);
+  color: white;
+  padding: 13px 18px;
+  border-radius: 16px;
+  opacity: 0;
+  box-shadow: 0 18px 42px rgba(7, 63, 42, 0.32);
+  transition: 0.28s ease;
+  pointer-events: none;
+  font-weight: 900;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.reveal {
+  animation: revealUp 0.75s both cubic-bezier(.22,1,.36,1);
+}
+.delay-1 { animation-delay: 0.12s; }
+.delay-2 { animation-delay: 0.22s; }
+.delay-3 { animation-delay: 0.32s; }
+
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(22px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes shineMove {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-9px) rotate(3deg); }
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(22, 161, 99, 0.48); }
+  70% { box-shadow: 0 0 0 12px rgba(22, 161, 99, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(22, 161, 99, 0); }
+}
+
+@media (max-width: 900px) {
+  .hero,
+  .results-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    min-height: auto;
+  }
+
+  .filters-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .site-header {
+    padding: 14px 16px;
+  }
+
+  .nav-actions a:not(.nav-pill) {
+    display: none;
+  }
+
+  .hero {
+    padding: 18px;
+    gap: 18px;
+  }
+
+  .hero-card,
+  .impact-card,
+  .results-hero,
+  .podium-card,
+  .filters-panel,
+  .table-card {
+    border-radius: 24px;
+  }
+
+  .hero-card {
+    padding: 28px 22px;
+  }
+
+  h1 {
+    font-size: clamp(54px, 18vw, 76px);
+  }
+
+  .hero-lead {
+    font-size: 17px;
+  }
+
+  .hero-actions,
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+  }
+
+  .mini-stats,
+  .summary-grid,
+  .podium {
+    grid-template-columns: 1fr;
+  }
+
+  .results-hero {
+    padding: 24px;
+  }
+
+  .section-title-row {
+    flex-direction: column;
+  }
+
+  table { display: none; }
+
+  .mobile-results {
+    display: grid;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .result-card {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    background: white;
+  }
+
+  .result-card-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .result-card h3 {
+    margin-bottom: 12px;
+    color: var(--green-deep);
+    font-size: 18px;
+  }
+
+  .result-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .empty-message {
+    padding: 18px;
+  }
+}
