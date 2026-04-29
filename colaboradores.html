@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f6f47" />
+  <title>Colaboradores | 10K Zolina</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="partners-page">
+  <div class="noise"></div>
+
+  <header class="site-header compact-header">
+    <a href="index.html" class="brand" aria-label="Volver a inicio">
+      <span class="brand-mark">🦔</span>
+      <span>10K Zolina</span>
+    </a>
+    <nav class="nav-actions" aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a href="resultados.html">Resultados</a>
+      <a href="https://forms.gle/TU_FORMULARIO" target="_blank" rel="noopener">Inscribirse</a>
+      <a href="colaboradores.html" class="nav-pill">Colaboradores</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="partners-hero reveal">
+      <div>
+        <p class="eyebrow">Gracias por hacerlo posible</p>
+        <h1>Colaboradores</h1>
+        <p>
+          Empresas y entidades que apoyan la 10K Zolina con material, comida,
+          infraestructura o ayuda para que la carrera salga adelante.
+        </p>
+      </div>
+
+      <div class="partners-hero-card">
+        <span>🤝</span>
+        <strong id="partner-count">0</strong>
+        <small>colaboradores</small>
+      </div>
+    </section>
+
+    <section class="partners-toolbar reveal delay-1" aria-label="Filtros de colaboradores">
+      <div class="filter-group search-group">
+        <label for="buscar-colaborador">Buscar colaborador</label>
+        <input id="buscar-colaborador" type="search" placeholder="Nombre, donación, descripción..." autocomplete="off" />
+      </div>
+
+      <div class="filter-group">
+        <label for="tipo-colaborador">Tipo</label>
+        <select id="tipo-colaborador">
+          <option value="Todos">Todos</option>
+          <option value="Material">Material</option>
+          <option value="Alimentos">Alimentos</option>
+          <option value="Servicios">Servicios</option>
+          <option value="Institucional">Institucional</option>
+        </select>
+      </div>
+    </section>
+
+    <section id="partners-grid" class="partners-grid reveal delay-2" aria-label="Listado de colaboradores"></section>
+    <p id="sin-colaboradores" class="empty-message">No hay colaboradores para esta búsqueda.</p>
+  </main>
+
+  <script>
+    /*
+      Para añadir logos reales:
+      1) Crea una carpeta /logos junto a estos HTML.
+      2) Sustituye logo: "" por logo: "logos/nombre-logo.png".
+      3) Si logo está vacío, se mostrará el monograma automáticamente.
+    */
+    const colaboradores = [
+      {
+        nombre: "Masxmenos",
+        tipo: "Material",
+        logo: "./img/masxmenos.png",
+        descripcion: "Tienda colaboradora con material para participantes y apoyo logístico durante la carrera.",
+        dona: "Arco de meta, Bandrolas y ambientación, Carpa Masxmenos y Productos para sortear entre los participantes"
+      },
+      {
+        nombre: "leclerc",
+        tipo: "Alimentos",
+        logo: "./img/leclerc.png",
+        descripcion: "Supermercado colaborador con alimentos para participantes.",
+        dona: "100kg de naranjas y frutos secos"
+      },
+      {
+        nombre: "Sporty",
+        tipo: "Material",
+        logo: "./img/sporty.png",
+        descripcion: "Tienda colaboradora con material para participantes.",
+        dona: "10 pares de crampones y 10 pares de calcetines para sortear"
+      },
+      {
+        nombre: "100k Mendi Taldea",
+        tipo: "Club",
+        logo: "./img/100k.jpg",
+        descripcion: "100k es un Club de montaña que va a sercolaborador con la logistica y organización de la carrera.",
+        dona: "Merchandisign para sortear entre participantes, financiación y organización"
+      },
+      {
+        nombre: "Rocopolis",
+        tipo: "Rocodromo",
+        logo: "./img/rocopolis.png",
+        descripcion: "100k es un Rocodromo ubicado en berrioplano.",
+        dona: "Entradas para el rocodromo para sortear entre los participantes"
+      },
+      {
+        nombre: "Bordaberri",
+        tipo: "Bar/Restaurante",
+        logo: "./img/bordaberri.png",
+        descripcion: "100k Bar y restaurante ubicado en Noain.",
+        dona: "Traerán a la Txaranga turrutxiki."
+      },
+      {
+        nombre: "Farmacia MutilVA",
+        tipo: "Bar/Restaurante",
+        logo: "",
+        descripcion: "Farmacia ubicada en MutilVA.",
+        dona: "Cesta de productos y 3 vales de 20€ para gastar en su farmacia."
+      }
+    ];
+
+    const grid = document.getElementById("partners-grid");
+    const empty = document.getElementById("sin-colaboradores");
+    const count = document.getElementById("partner-count");
+    const buscador = document.getElementById("buscar-colaborador");
+    const tipoSelect = document.getElementById("tipo-colaborador");
+
+    function iniciales(nombre) {
+      return nombre
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(palabra => palabra[0].toUpperCase())
+        .join("");
+    }
+
+    function renderLogo(colaborador) {
+      if (colaborador.logo) {
+        return `<img src="${colaborador.logo}" alt="Logo de ${colaborador.nombre}" loading="lazy" />`;
+      }
+
+      return `<span>${iniciales(colaborador.nombre)}</span>`;
+    }
+
+    function renderColaboradores() {
+      const texto = buscador.value.trim().toLowerCase();
+      const tipo = tipoSelect.value;
+
+      const filtrados = colaboradores.filter(colaborador => {
+        const coincideTipo = tipo === "Todos" || colaborador.tipo === tipo;
+        const contenido = `${colaborador.nombre} ${colaborador.tipo} ${colaborador.descripcion} ${colaborador.dona}`.toLowerCase();
+        const coincideTexto = !texto || contenido.includes(texto);
+        return coincideTipo && coincideTexto;
+      });
+
+      count.textContent = colaboradores.length;
+      grid.innerHTML = "";
+
+      if (filtrados.length === 0) {
+        empty.style.display = "block";
+        return;
+      }
+
+      empty.style.display = "none";
+
+      filtrados.forEach((colaborador, index) => {
+        const card = document.createElement("article");
+        card.className = "partner-card";
+        card.style.animationDelay = `${index * 0.06}s`;
+        card.innerHTML = `
+          <div class="partner-card-top">
+            <div class="partner-logo">${renderLogo(colaborador)}</div>
+            <span class="soft-pill">${colaborador.tipo}</span>
+          </div>
+
+          <h2>${colaborador.nombre}</h2>
+          <p>${colaborador.descripcion}</p>
+
+          ${colaborador.dona ? `
+            <div class="donation-box">
+              <span>Donación / aportación</span>
+              <strong>${colaborador.dona}</strong>
+            </div>
+          ` : ""}
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    buscador.addEventListener("input", renderColaboradores);
+    tipoSelect.addEventListener("change", renderColaboradores);
+
+    renderColaboradores();
+  </script>
+</body>
+</html>
