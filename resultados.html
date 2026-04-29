@@ -193,6 +193,25 @@
       return posicion;
     }
 
+    function escaparHTML(valor) {
+      return String(valor || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function inicialesParticipante(nombre) {
+      return String(nombre || "")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(parte => parte[0].toUpperCase())
+        .join("") || "?";
+    }
+
     function renderizarPodio(filtrados) {
       podium.innerHTML = "";
       const distanciaTexto = distanciaSelect.value.toUpperCase();
@@ -206,15 +225,30 @@
         return;
       }
 
-      top3.forEach((p, index) => {
-        const posicion = index + 1;
+      const ordenVisual = [2, 1, 3].filter(posicion => top3[posicion - 1]);
+
+      ordenVisual.forEach((posicion) => {
+        const p = top3[posicion - 1];
         const card = document.createElement("article");
         card.className = `podium-place place-${posicion}`;
+        card.style.animationDelay = `${posicion === 1 ? 0.05 : posicion === 2 ? 0.2 : 0.35}s`;
         card.innerHTML = `
-          <div class="podium-medal">${medalla(posicion)}</div>
-          <strong>${p.nombre}</strong>
-          <span>Dorsal ${p.dorsal}</span>
-          <b>${p.tiempo}</b>
+          <div class="podium-runner">
+            <span class="runner-glow"></span>
+            <div class="runner-avatar">${inicialesParticipante(p.nombre)}</div>
+            ${posicion === 1 ? `<div class="winner-crown" aria-hidden="true">👑</div>` : ""}
+          </div>
+
+          <div class="podium-info">
+            <div class="podium-medal">${medalla(posicion)}</div>
+            <strong>${escaparHTML(p.nombre)}</strong>
+            <span>Dorsal ${escaparHTML(p.dorsal)} · ${escaparHTML(p.genero)}</span>
+            <b>${escaparHTML(p.tiempo)}</b>
+          </div>
+
+          <div class="podium-block" aria-hidden="true">
+            <span>${posicion}</span>
+          </div>
         `;
         podium.appendChild(card);
       });
