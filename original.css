@@ -1475,62 +1475,44 @@ tbody tr:hover {
     min-height: auto;
     flex-direction: column;
     align-items: stretch;
-    gap: 8px;
-    padding: 9px 0 10px;
-    overflow: hidden;
+    gap: 10px;
+    padding: 10px 12px 12px;
   }
 
   .brand {
     justify-content: center;
-    padding: 0 12px;
   }
 
   .brand-logo {
-    width: min(58vw, 176px);
-    max-height: 44px;
+    width: min(62vw, 190px);
+    max-height: 48px;
   }
 
   .nav-actions {
-    width: calc(100% - 24px);
-    max-width: 100%;
-    margin: 0 12px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 6px;
-    padding: 5px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    overscroll-behavior-x: contain;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    scroll-snap-type: x proximity;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.82);
-    font-size: 12px;
-  }
-
-  .nav-actions::-webkit-scrollbar {
-    display: none;
+    padding: 6px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.78);
+    font-size: clamp(9px, 2.65vw, 11px);
   }
 
   .nav-actions a {
-    flex: 0 0 auto;
-    min-height: 36px;
-    padding: 9px 12px;
+    min-height: 38px;
+    padding: 8px 4px;
     border: 0;
-    border-radius: 999px;
+    border-radius: 16px;
     background: transparent;
     font-weight: 900;
-    line-height: 1;
-    white-space: nowrap;
+    white-space: normal;
     text-align: center;
-    scroll-snap-align: start;
   }
 
   .nav-actions .nav-pill {
-    background: linear-gradient(135deg, var(--green-deep), var(--green));
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    background: var(--green-deep);
+    box-shadow: 0 8px 18px rgba(7, 63, 42, 0.20);
     color: white !important;
   }
 
@@ -1951,15 +1933,12 @@ tbody tr:hover {
 @media (max-width: 380px) {
   .nav-actions {
     gap: 5px;
-    width: calc(100% - 18px);
-    margin-inline: 9px;
-    padding: 4px;
-    font-size: 11px;
   }
 
   .nav-actions a {
     min-height: 34px;
-    padding: 8px 10px;
+    padding: 7px 3px;
+    font-size: 10px;
   }
 
   .mini-stats {
@@ -2060,106 +2039,4 @@ tbody tr:hover {
 .comida-button:hover {
   background: linear-gradient(135deg, #fde68a, #fcd34d);
   transform: translateY(-2px);
-}
-
-/* Ajuste final: header fijo y menú móvil visible completo */
-@media (max-width: 680px) {
-  body {
-    padding-top: 106px;
-  }
-
-  .site-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    min-height: 106px;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 7px;
-    padding: 8px 8px 9px;
-    overflow: visible;
-    border-bottom: 1px solid rgba(15, 111, 71, 0.12);
-    background: rgba(244, 251, 247, 0.88);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-  }
-
-  .brand {
-    justify-content: center;
-    padding: 0;
-  }
-
-  .brand-logo {
-    width: min(48vw, 156px);
-    max-height: 40px;
-  }
-
-  .nav-actions {
-    width: 100%;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    align-items: center;
-    gap: 4px;
-    padding: 4px;
-    overflow: visible;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.86);
-    font-size: clamp(9px, 2.55vw, 12px);
-    box-shadow: 0 10px 28px rgba(15, 111, 71, 0.10);
-    scrollbar-width: auto;
-    scroll-snap-type: none;
-  }
-
-  .nav-actions a {
-    width: 100%;
-    min-width: 0;
-    min-height: 35px;
-    padding: 8px 2px;
-    overflow: hidden;
-    border-radius: 999px;
-    font-weight: 900;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    text-align: center;
-    text-overflow: clip;
-    white-space: nowrap;
-    scroll-snap-align: none;
-  }
-
-  .nav-actions .nav-pill {
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20), 0 6px 16px rgba(15, 111, 71, 0.14);
-  }
-}
-
-@media (max-width: 380px) {
-  body {
-    padding-top: 102px;
-  }
-
-  .site-header {
-    min-height: 102px;
-    padding: 7px 6px 8px;
-  }
-
-  .brand-logo {
-    width: min(46vw, 142px);
-    max-height: 37px;
-  }
-
-  .nav-actions {
-    width: 100%;
-    margin: 0;
-    gap: 3px;
-    padding: 3px;
-    font-size: clamp(8.4px, 2.52vw, 10px);
-  }
-
-  .nav-actions a {
-    min-height: 33px;
-    padding: 7px 1px;
-    letter-spacing: -0.055em;
-  }
 }
