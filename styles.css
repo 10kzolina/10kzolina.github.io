@@ -2452,3 +2452,21 @@ tbody tr:hover { background: rgba(232, 247, 239, 0.52); }
   grid-column: 1 / -1;
   border: 1px dashed var(--green);
 }
+
+/* Botón comida popular (variante visual) */
+.comida-button {
+  background: linear-gradient(135deg, #fef3c7, #fde68a); /* amarillo suave */
+  border: 1px dashed rgba(251, 146, 60, 0.6);
+  color: #92400e; /* marrón cálido */
+}
+
+/* Hover coherente */
+.comida-button:hover {
+  background: linear-gradient(135deg, #fde68a, #fcd34d);
+  transform: translateY(-2px);
+}
+
+/* Mantener ancho completo en móvil */
+.full-width-button {
+  grid-column: 1 / -1;
+}
