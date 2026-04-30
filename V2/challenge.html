@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f6f47" />
+  <title>Reto Strava | 10K Zolina</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="./img/favicon.png">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BD2PFX9LL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-9BD2PFX9LL');
+  </script>
+</head>
+<body class="challenge-page">
+  <div class="noise"></div>
+
+  <header class="site-header compact-header">
+    <a class="brand" href="index.html" aria-label="Volver a inicio">
+      <img class="brand-logo" src="img/logo-zolina.png" alt="10K Zolina Carrera Solidaria" />
+    </a>
+
+    <input class="nav-toggle" type="checkbox" id="nav-toggle" aria-label="Abrir menú de navegación" />
+    <label class="nav-toggle-button" for="nav-toggle">
+      <span class="nav-toggle-lines" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+      <span class="nav-toggle-label">Menú</span>
+    </label>
+
+    <nav class="nav-actions" id="main-navigation" aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a href="challenge.html" class="nav-pill">Challenge</a>
+      <a href="resultados.html">Resultados</a>
+      <a href="colaboradores.html">Colaboradores</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="challenge-hero reveal">
+      <div>
+        <p class="eyebrow">Segmento Zolina</p>
+        <h1>KOM Challenge</h1>
+        <p>
+          ¡Premio asegurado! Completa el recorrido oficial de la 10K Zolina, sube la actividad a Strava
+          y demuestra quién marca el mejor tiempo en el segmento.
+        </p>
+        <div class="hero-actions compact-actions">
+          <a href="https://strava.app.link/L0Bdf7REB2b" class="primary-button" target="_blank" rel="noopener">Abrir Strava</a>
+          <a href="img/cartel-kom-challenge.jpg" class="secondary-button" target="_blank" rel="noopener">Ver cartel oficial</a>
+        </div>
+      </div>
+
+      <div class="challenge-hero-card">
+        <span>🏆</span>
+        <strong>Premio sorpresa</strong>
+        <small>para todos los participantes + premio especial para el mejor tiempo</small>
+      </div>
+    </section>
+
+    <section class="challenge-detail-grid reveal delay-1">
+      <article class="challenge-info-card">
+        <span class="contact-icon">🎁</span>
+        <h2>Premio</h2>
+        <p>Todos los participantes reciben un pequeño premio. La persona que consiga el mejor tiempo validado en el segmento oficial se llevará un premio especial.</p>
+        
+      </article>
+
+      <article class="challenge-info-card">
+        <span class="contact-icon">📍</span>
+        <h2>Recorrido</h2>
+        <p>Segmento oficial de la 10K Zolina con salida y zona de referencia en Badostáin.</p>
+        <ul class="challenge-list">
+          <li><strong>Distancia:</strong> 10,22 km</li>
+          <li><strong>Desnivel positivo:</strong> 267 m</li>
+          <li><strong>Plazo:</strong> del 25 de abril al 22 de mayo a las 23:59 h</li>
+        </ul>
+      </article>
+
+      <article class="challenge-info-card">
+        <span class="contact-icon">✅</span>
+        <h2>Condiciones</h2>
+        <p>Para entrar en la clasificación del reto debes cumplir las condiciones indicadas por la organización.</p>
+        <ul class="challenge-list">
+          <li>Subir la actividad a Strava.</li>
+          <li>Estar inscrito en la 10K Zolina.</li>
+          <li>Seguir a la carrera en Instagram: <a href="https://www.instagram.com/10kzolina" target="_blank" rel="noopener">@10kzolina</a>.</li>
+        </ul>
+        <a href="contacto.html" class="secondary-button challenge-inline-button">Tengo dudas</a>
+      </article>
+    </section>
+
+    <section class="poster-section reveal delay-2">
+      <div class="section-title-row">
+        <div>
+          <p class="eyebrow">Cartel oficial</p>
+          <h2>Segmento Zolina KOM Challenge</h2>
+        </div>
+        <span class="soft-pill">Strava · 10K Zolina</span>
+      </div>
+      <img class="challenge-poster" src="img/cartel-kom-challenge.jpg" alt="Cartel oficial Segmento Zolina KOM Challenge" />
+    </section>
+  </main>
+</body>
+</html>
