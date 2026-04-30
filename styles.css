@@ -2430,3 +2430,20 @@ tbody tr:hover { background: rgba(232, 247, 239, 0.52); }
     line-height: 1.5;
   }
 }
+
+/* Botón comida popular */
+.full-width-button {
+  grid-column: 1 / -1;
+}
+
+/* Ajuste solo en móvil */
+@media (max-width: 680px) {
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .full-width-button {
+    grid-column: 1 / -1;
+  }
+}
