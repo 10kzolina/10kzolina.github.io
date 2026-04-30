@@ -2028,3 +2028,15 @@ tbody tr:hover {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Botón comida popular (variante visual) */
+.comida-button {
+  background: linear-gradient(135deg, #fef3c7, #fde68a); /* amarillo suave */
+  border: 1px dashed rgba(251, 146, 60, 0.6);
+  color: #92400e;
+}
+
+.comida-button:hover {
+  background: linear-gradient(135deg, #fde68a, #fcd34d);
+  transform: translateY(-2px);
+}
