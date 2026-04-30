@@ -2447,3 +2447,8 @@ tbody tr:hover { background: rgba(232, 247, 239, 0.52); }
     grid-column: 1 / -1;
   }
 }
+
+.full-width-button {
+  grid-column: 1 / -1;
+  border: 1px dashed var(--green);
+}
