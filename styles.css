@@ -434,6 +434,14 @@ tbody tr:hover {
   line-height: 1.35;
 }
 
+.event-badge-content {
+  min-width: 0;
+}
+
+.event-badge .inline-location {
+  white-space: nowrap;
+}
+
 .pulse-dot {
   width: 9px;
   height: 9px;
