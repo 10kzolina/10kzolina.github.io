@@ -17,26 +17,27 @@
   <div class="noise"></div>
 
   <header class="site-header compact-header">
-    <a href="index.html" class="brand" aria-label="Volver a inicio">
+    <a class="brand" href="index.html" aria-label="Volver a inicio">
       <img class="brand-logo" src="img/logo-zolina.png" alt="10K Zolina Carrera Solidaria" />
     </a>
-    <nav class="nav-actions" aria-label="Navegación principal">
+
+    <input class="nav-toggle" type="checkbox" id="nav-toggle" aria-label="Abrir menú de navegación" />
+    <label class="nav-toggle-button" for="nav-toggle">
+      <span class="nav-toggle-lines" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+      <span class="nav-toggle-label">Menú</span>
+    </label>
+
+    <nav class="nav-actions" id="main-navigation" aria-label="Navegación principal">
       <a href="index.html">Inicio</a>
       <a href="challenge.html">Challenge</a>
       <a href="resultados.html" class="nav-pill">Resultados</a>
       <a href="colaboradores.html">Colaboradores</a>
       <a href="contacto.html">Contacto</a>
     </nav>
-    <details class="mobile-nav">
-      <summary aria-label="Abrir menú de navegación">Menú</summary>
-      <div class="mobile-nav-panel">
-        <a href="index.html">Inicio</a>
-        <a href="challenge.html">Challenge</a>
-        <a href="resultados.html" class="nav-pill">Resultados</a>
-        <a href="colaboradores.html">Colaboradores</a>
-        <a href="contacto.html">Contacto</a>
-      </div>
-    </details>
   </header>
 
 
@@ -356,5 +357,6 @@
 
     cargarResultados();
   </script>
+  <script src="app.js"></script>
 </body>
 </html>

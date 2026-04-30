@@ -48,23 +48,23 @@
       <img class="brand-logo" src="img/logo-zolina.png" alt="10K Zolina Carrera Solidaria" />
     </a>
 
-    <nav class="nav-actions" aria-label="Navegación principal">
+    <input class="nav-toggle" type="checkbox" id="nav-toggle" aria-label="Abrir menú de navegación" />
+    <label class="nav-toggle-button" for="nav-toggle">
+      <span class="nav-toggle-lines" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+      <span class="nav-toggle-label">Menú</span>
+    </label>
+
+    <nav class="nav-actions" id="main-navigation" aria-label="Navegación principal">
       <a href="index.html" class="nav-pill">Inicio</a>
       <a href="challenge.html">Challenge</a>
       <a href="resultados.html">Resultados</a>
       <a href="colaboradores.html">Colaboradores</a>
       <a href="contacto.html">Contacto</a>
     </nav>
-    <details class="mobile-nav">
-      <summary aria-label="Abrir menú de navegación">Menú</summary>
-      <div class="mobile-nav-panel">
-        <a href="index.html" class="nav-pill">Inicio</a>
-        <a href="challenge.html">Challenge</a>
-        <a href="resultados.html">Resultados</a>
-        <a href="colaboradores.html">Colaboradores</a>
-        <a href="contacto.html">Contacto</a>
-      </div>
-    </details>
   </header>
 
 
@@ -83,7 +83,7 @@
         <h1>10K Zolina</h1>
 
         <p class="hero-lead">
-          Corre, comparte tu resultado y ayuda a llenar el marcador solidario de alimentos.
+          aCorre, comparte tu resultado y ayuda a llenar el marcador solidario de alimentos.
         </p>
 
         <div class="hero-actions main-cta-row">
@@ -202,5 +202,6 @@
         : `Faltan ${Math.max(kgObjetivo - kgActuales, 0)} kg para completar el objetivo.`;
     }, 350);
   </script>
+  <script src="app.js"></script>
 </body>
 </html>
