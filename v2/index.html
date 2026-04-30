@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f6f47" />
+  <title>10K Zolina | Carrera solidaria</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="./img/favicon.png">
+</head>
+<body class="home-page">
+  <div class="noise"></div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Inicio 10K Zolina">
+      <img class="brand-logo" src="img/logo-zolina.png" alt="10K Zolina Carrera Solidaria" />
+    </a>
+
+    <nav class="nav-actions" aria-label="Navegación principal">
+      <a href="index.html" class="nav-pill">Inicio</a>
+      <a href="challenge.html">Challenge</a>
+      <a href="resultados.html">Resultados</a>
+      <a href="colaboradores.html">Colaboradores</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+
+  <main>
+    <section class="hero hero-upgraded">
+      <div class="hero-bg-orb orb-one"></div>
+      <div class="hero-bg-orb orb-two"></div>
+
+      <article class="hero-card glass-card reveal">
+        <div class="event-badge">
+          <span class="pulse-dot"></span>
+          Carrera solidaria · <a class="inline-location" href="https://www.google.com/maps/search/?api=1&query=Badostain%2C%20Navarra" target="_blank" rel="noopener">Badostain</a> · 24 de mayo
+        </div>
+
+        <!-- <img class="hero-logo" src="img/logo-zolina-vertical.png" alt="10K Zolina Carrera Solidaria" /> -->
+        <h1>10K Zolina</h1>
+
+        <p class="hero-lead">
+          Corre, comparte tu resultado y ayuda a llenar el marcador solidario de alimentos.
+        </p>
+
+        <div class="hero-actions main-cta-row">
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfP2-c1h1SoEjlJCK-kpITiLVKQqqQtFjLKk40hK8ChqXCGGg/viewform?usp=dialog" class="primary-button" target="_blank" rel="noopener">INSCRIBETE</a>
+          <a href="https://forms.gle/9uEHps9BrEYXebt8A" class="secondary-button collaborate-button-light" target="_blank" rel="noopener">VOLUNTARIOS</a>
+          <a href="https://forms.gle/9uEHps9BrEYXebt8A" class="secondary-button collaborate-button-light full-width-button comida-button">COMIDA POPULAR</a>
+        </div>
+
+        <div class="mini-stats" aria-label="Datos principales de la carrera">
+          <div>
+            <strong>10K / 5K</strong>
+            <span>Distancias</span>
+          </div>
+
+          <div>
+            <a class="stat-link" href="https://www.google.com/maps/search/?api=1&query=Badostain%2C%20Navarra" target="_blank" rel="noopener">Badostain</a>
+            <span>Ubicación</span>
+          </div>
+
+          <div>
+            <strong>24 mayo</strong>
+            <span>Fecha</span>
+          </div>
+
+          <div class="pet-stat">
+            <strong>🐶 Pet friendly</strong>
+            <span>¡Corre con tu perro!</span>
+          </div>
+        </div>
+      </article>
+      
+
+      <div class="hero-side-stack">
+      <aside class="impact-card reveal delay-1" id="impacto">
+        <div class="impact-icon">🥫</div>
+        <p class="eyebrow">Objetivo solidario</p>
+        <h2>Alimentos recaudados</h2>
+
+        <p class="food-subtitle">Gracias a todas las personas participantes y colaboradoras.</p>
+
+        <div class="food-progress-info">
+          <span><strong id="kg-actuales">0</strong> kg</span>
+          <span id="porcentaje-comida">0%</span>
+        </div>
+
+        <!-- <div class="food-progress" aria-label="Progreso de alimentos recaudados"> -->
+        <div class="food-progress" aria-label="Progreso de alimentos recaudados...">
+          <div id="thermometer-fill" class="food-progress-fill">
+            <div class="food-progress-shine"></div>
+          </div>
+        </div>
+
+        <div class="food-scale">
+          <span>0 kg</span>
+          <span>Objetivo: <strong id="kg-objetivo">1000</strong> kg</span>
+        </div>
+
+        <div class="impact-message" id="impact-message"></div>
+        
+        
+      </aside>
+
+
+        <aside class="challenge-card reveal delay-2" id="reto-strava">
+          <div class="challenge-card-top">
+            <div class="challenge-icon">⛰️</div>
+            <span class="challenge-tag">Strava</span>
+          </div>
+          <p class="eyebrow">Reto oficial</p>
+          <h2>Zolina KOM Challenge 🏆</h2>
+          <p class="challenge-subtitle">Recorre la 10K Zolina, súbela a Strava y compite por el mejor tiempo en el segmento oficial.</p>
+          <div class="challenge-stats" aria-label="Datos del reto Segmento Zolina">
+            <div><strong>10,22 km</strong><span>Distancia</span></div>
+            <div><strong>267 m</strong><span>D+</span></div>
+            <div><strong>22 mayo</strong><span>Fin del reto</span></div>
+          </div>
+          <a href="challenge.html" class="primary-button challenge-button">Más información</a>
+        </aside>
+      </div>    </section>
+  </main>
+
+  <script>
+    const kgActuales = 150;
+    const kgObjetivo = 1000;
+
+    const porcentaje = Math.min((kgActuales / kgObjetivo) * 100, 100);
+
+    const kgActualesEl = document.getElementById("kg-actuales");
+    const kgObjetivoEl = document.getElementById("kg-objetivo");
+    const porcentajeEl = document.getElementById("porcentaje-comida");
+    const fillEl = document.getElementById("thermometer-fill");
+    const messageEl = document.getElementById("impact-message");
+
+    kgObjetivoEl.textContent = kgObjetivo;
+
+    function animarNumero(elemento, final, duracion = 1200) {
+      const inicio = performance.now();
+
+      function tick(ahora) {
+        const progreso = Math.min((ahora - inicio) / duracion, 1);
+        const suavizado = 1 - Math.pow(1 - progreso, 3);
+        elemento.textContent = Math.round(final * suavizado);
+
+        if (progreso < 1) requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    setTimeout(() => {
+      animarNumero(kgActualesEl, kgActuales);
+      porcentajeEl.textContent = Math.round(porcentaje) + "%";
+      fillEl.style.width = porcentaje + "%";
+      messageEl.textContent = porcentaje >= 100
+        ? "Objetivo conseguido. Marcador solidario completado."
+        : `Faltan ${Math.max(kgObjetivo - kgActuales, 0)} kg para completar el objetivo.`;
+    }, 350);
+  </script>
+  <script src="app.js" defer></script>
+</body>
+</html>
