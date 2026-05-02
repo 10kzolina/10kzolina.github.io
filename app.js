@@ -8,6 +8,19 @@
     goalKg: 1000
   };
 
+  const EVENT_TOPBAR = {
+    timezone: "Europe/Madrid",
+    registrationDeadline: "2026-05-10",
+    raceDate: "2026-05-24",
+    dateLabel: "24 may · 10:00 h",
+    locationLabel: "Badostáin, Navarra",
+    locationUrl: "https://www.google.com/maps/search/?api=1&query=Badostain%2C%20Navarra",
+    calendarUrl: "10k-zolina.ics",
+    registrationUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfP2-c1h1SoEjlJCK-kpITiLVKQqqQtFjLKk40hK8ChqXCGGg/viewform?usp=dialog",
+    routesUrl: "carreras.html",
+    resultsUrl: "resultados.html"
+  };
+
   const NAV_LINKS = [
     { href: "carreras.html", label: "Recorridos" },
     { href: "kiloreto.html", label: "Kiloreto" },
@@ -336,6 +349,121 @@
 
   function getCurrentPage() {
     return window.location.pathname.split("/").pop() || "index.html";
+  }
+
+  function getDateStampFromIso(value) {
+    const [year, month, day] = value.split("-").map(Number);
+    return Date.UTC(year, month - 1, day);
+  }
+
+  function getTodayStamp(timezone) {
+    try {
+      const parts = new Intl.DateTimeFormat("en-CA", {
+        timeZone: timezone,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }).formatToParts(new Date()).reduce((current, part) => {
+        if (part.type !== "literal") current[part.type] = Number(part.value);
+        return current;
+      }, {});
+
+      return Date.UTC(parts.year, parts.month - 1, parts.day);
+    } catch (error) {
+      const today = new Date();
+      return Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+    }
+  }
+
+  function getDaysUntil(isoDate) {
+    const dayMs = 24 * 60 * 60 * 1000;
+    return Math.round((getDateStampFromIso(isoDate) - getTodayStamp(EVENT_TOPBAR.timezone)) / dayMs);
+  }
+
+  function getEventTopbarState() {
+    const daysUntilDeadline = getDaysUntil(EVENT_TOPBAR.registrationDeadline);
+    const daysUntilRace = getDaysUntil(EVENT_TOPBAR.raceDate);
+
+    if (daysUntilDeadline >= 0) {
+      const status = daysUntilDeadline === 0
+        ? "Último día"
+        : daysUntilDeadline === 1
+          ? "Cierra mañana"
+          : `Inscríbete: ${daysUntilDeadline} días`;
+
+      return {
+        phase: "open",
+        status,
+        ctaLabel: "Inscríbete",
+        ctaUrl: EVENT_TOPBAR.registrationUrl,
+        ctaExternal: true
+      };
+    }
+
+    if (daysUntilRace >= 0) {
+      const status = daysUntilRace === 0
+        ? "Hoy"
+        : daysUntilRace === 1
+          ? "Mañana"
+          : `Carrera: ${daysUntilRace} días`;
+
+      return {
+        phase: "race",
+        status,
+        ctaLabel: "Recorridos",
+        ctaUrl: EVENT_TOPBAR.routesUrl,
+        ctaExternal: false
+      };
+    }
+
+    return {
+      phase: "done",
+      status: "Resultados",
+      ctaLabel: "Resultados",
+      ctaUrl: EVENT_TOPBAR.resultsUrl,
+      ctaExternal: false
+    };
+  }
+
+  function renderEventTopbar() {
+    const header = document.querySelector(".site-header");
+    if (!header || document.querySelector(".event-topbar")) return;
+
+    const state = getEventTopbarState();
+    const ctaTarget = state.ctaExternal ? ' target="_blank" rel="noopener"' : "";
+    const topbar = document.createElement("aside");
+
+    topbar.className = `event-topbar event-topbar--${state.phase}`;
+    topbar.setAttribute("aria-label", "Información rápida de la carrera");
+    topbar.innerHTML = `
+      <div class="event-topbar-inner">
+        <div class="event-topbar-status" aria-live="polite">
+          <span class="event-topbar-dot" aria-hidden="true"></span>
+          <strong>${escapeHtml(state.status)}</strong>
+        </div>
+
+        <div class="event-topbar-meta" aria-label="Fecha">
+          <a class="event-topbar-item event-topbar-date"
+            href="${EVENT_TOPBAR.calendarUrl}"
+            type="text/calendar"
+            aria-label="Añadir la 10K Zolina al calendario">
+            <span>${escapeHtml(EVENT_TOPBAR.dateLabel)}</span>
+          </a>
+        </div>
+
+        <a class="event-topbar-cta"
+          href="${state.ctaUrl}"${ctaTarget}>
+          ${escapeHtml(state.ctaLabel)}
+        </a>
+      </div>
+    `;
+
+    header.before(topbar);
+
+    const resizeObserver = new ResizeObserver(() => {
+      header.style.top = topbar.offsetHeight + "px";
+    });
+    resizeObserver.observe(topbar);
   }
 
   function renderSiteFooter() {
@@ -1093,6 +1221,7 @@
   }
 
   onReady(() => {
+    renderEventTopbar();
     renderSiteFooter();
     initFoodProgress();
     initPartners();
