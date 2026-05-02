@@ -7,16 +7,17 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 
-  <link rel="icon" href="/favicon.png" type="image/png">
-  <link rel="shortcut icon" href="/favicon.png" type="image/png">
-  <link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
 
-  <title>10K Zolina | Carrera en Badostain - Resultados e inscripción</title>
+  <title>10K Zolina 2026 | Carrera solidaria en Badostain</title>
   <meta name="description" content="Web oficial de la 10K Zolina. Consulta inscripción, carreras Txiki, 5K y 10K, recorridos, resultados y detalles del evento solidario en Badostain (Navarra).">
-  <meta name="keywords" content="10k zolina, carrera zolina, 10k navarra, resultados 10k zolina, badostain carrera">
+  <meta name="robots" content="index,follow">
 
   <!-- Open Graph (cuando compartes enlace) -->
   <meta property="og:title" content="10K Zolina">
@@ -24,12 +25,52 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://10kzolina.github.io/">
   <meta property="og:image" content="https://10kzolina.github.io/img/logo-zolina.png">
+  <meta property="og:site_name" content="10K Zolina">
+  <meta property="og:locale" content="es_ES">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="10K Zolina 2026">
+  <meta name="twitter:description" content="Carrera solidaria en Badostain con Txiki, 5K, 10K, recorridos, inscripción, resultados y Kiloreto de alimentos.">
+  <meta name="twitter:image" content="https://10kzolina.github.io/img/logo-zolina.png">
 
   <!-- Canonical -->
   <link rel="canonical" href="https://10kzolina.github.io/">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsEvent",
+      "name": "10K Zolina 2026",
+      "description": "Carrera solidaria en Badostain con pruebas Txiki, 5K, 10K y reto de recogida de alimentos.",
+      "url": "https://10kzolina.github.io/",
+      "image": "https://10kzolina.github.io/img/logo-zolina.png",
+      "startDate": "2026-05-24T10:00:00+02:00",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "Badostain",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Badostain",
+          "addressRegion": "Navarra",
+          "addressCountry": "ES"
+        }
+      },
+      "organizer": {
+        "@type": "Organization",
+        "name": "10K Zolina",
+        "url": "https://10kzolina.github.io/"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://docs.google.com/forms/d/e/1FAIpQLSfP2-c1h1SoEjlJCK-kpITiLVKQqqQtFjLKk40hK8ChqXCGGg/viewform?usp=dialog",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock"
+      }
+    }
+  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BD2PFX9LL"></script>
@@ -79,10 +120,9 @@
       <article class="hero-card glass-card reveal">
         <div class="event-badge">
           <span class="pulse-dot"></span>
-          <span class="event-badge-content">Carrera solidaria · <a class="inline-location" href="https://www.google.com/maps/search/?api=1&query=Badostain%2C%20Navarra" target="_blank" rel="noopener">Badostain</a> · <a class="inline-location" href="10k-zolina.ics" type="text/calendar" aria-label="Añadir la 10K Zolina del 24 de mayo al calendario">24 de mayo</a></span>
+          <span class="event-badge-content">Carrera solidaria · <a class="inline-location" href="https://www.google.com/maps/search/?api=1&amp;query=Badostain%2C%20Navarra" target="_blank" rel="noopener">Badostain</a> · <a class="inline-location" href="10k-zolina.ics" type="text/calendar" aria-label="Añadir la 10K Zolina del 24 de mayo al calendario">24 de mayo</a></span>
         </div>
 
-        <!-- <img class="hero-logo" src="img/logo-zolina-vertical.png" alt="10K Zolina Carrera Solidaria" /> -->
         <h1>10K Zolina</h1>
 
         <p class="hero-lead">
@@ -102,7 +142,7 @@
           </div>
 
           <div>
-            <a class="stat-link" href="https://www.google.com/maps/search/?api=1&query=Badostain%2C%20Navarra" target="_blank" rel="noopener">Badostain</a>
+            <a class="stat-link" href="https://www.google.com/maps/search/?api=1&amp;query=Badostain%2C%20Navarra" target="_blank" rel="noopener">Badostain</a>
             <span>Ubicación</span>
           </div>
 
@@ -132,8 +172,7 @@
           <span id="porcentaje-comida">0%</span>
         </div>
 
-        <!-- <div class="food-progress" aria-label="Progreso de alimentos recaudados"> -->
-        <div class="food-progress" aria-label="Progreso de alimentos recaudados...">
+        <div class="food-progress" aria-label="Progreso de alimentos recaudados">
           <div id="thermometer-fill" class="food-progress-fill">
             <div class="food-progress-shine"></div>
           </div>
@@ -167,100 +206,12 @@
           </div>
           <a href="challenge.html" class="primary-button challenge-button">Más información</a>
         </aside>
-      </div>    </section>
+      </div>
+    </section>
   </main>
 
-  <footer class="site-footer" aria-labelledby="footer-sponsors-title">
-    <div class="site-footer-inner">
-      <div class="site-footer-heading">
-        <div>
-          <p class="eyebrow">Patrocinadores</p>
-          <h2 id="footer-sponsors-title">Gracias por hacerlo posible</h2>
-        </div>
-        <p>Empresas, clubes y entidades que apoyan la 10K Zolina y su reto solidario.</p>
-      </div>
+  <footer class="site-footer" data-site-footer></footer>
 
-      <div class="sponsor-logo-grid" aria-label="Logos de patrocinadores">
-        <div class="sponsor-logo-card"><img src="img/masxmenos.PNG" alt="Logo de Masxmenos" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/cajarural.PNG" alt="Logo de Caja Rural de Navarra" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/leclerc.PNG" alt="Logo de E.Leclerc" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/sporty.png" alt="Logo de Sporty" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/100k.jpeg" alt="Logo de 100K Mendi Taldea" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/rocopolis.png" alt="Logo de Rocopolis" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/bordaberri.JPG" alt="Logo de Bordaberri" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/solonuts.jpg" alt="Logo de Solonuts" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/iparkirolak.png" alt="Logo de Ipar Kirolak" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/origen.png" alt="Logo de Origen Real Food" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/saltoka.png" alt="Logo de Saltoka Jump" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/reposteriajuanmiguel.png" alt="Logo de Reposteria Juan Miguel" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/farmaciaAtreche.png" alt="Logo de Farmacia Arteche" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/carniceriadeierri.png" alt="Logo de Carniceria Deierri" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/beeprun.jpg" alt="Logo de Beep Run Club" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/askeclothes.jpg" alt="Logo de Aske Clothes" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/lekuona.jpg" alt="Logo de Lekuona" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/irishpub.PNG" alt="Logo de Irish Pub Eskiroz" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/hiruda3d.jpg" alt="Logo de Hiruda 3D" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/aaron.jpg" alt="Logo de Aaron Vilchez DJ" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/auzmendi.png" alt="Logo de Sidreria Auzmendi" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/n2fisio.png" alt="Logo de N2 Fisioterapia" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/kaiku.png" alt="Logo de Kaiku" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/laperla.png" alt="Logo de La Perla" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/reyno.png" alt="Logo de Reyno Gourmet" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/malie.PNG" alt="Logo de Malie Estetica Avanzada" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/losjijonecos.PNG" alt="Logo de Heladeria Los Jijonencos" loading="lazy" /></div>
-        <div class="sponsor-logo-card"><img src="img/txaranga.PNG" alt="Logo de Txaranga Turrutxiki" loading="lazy" /></div>
-      </div>
-
-      <div class="site-footer-bottom">
-        <span>10K Zolina · Carrera solidaria en Badostain</span>
-        <nav class="site-footer-links" aria-label="Enlaces del pie de pagina">
-          <a href="carreras.html">Recorridos</a>
-          <a href="kiloreto.html">Kiloreto</a>
-          <a href="challenge.html">KOM Challenge</a>
-          <a href="colaboradores.html">Colaboradores</a>
-          <a href="contacto.html">Contacto</a>
-        </nav>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    const kgActuales = 369;
-    const kgObjetivo = 1000;
-
-    const porcentaje = Math.min((kgActuales / kgObjetivo) * 100, 100);
-
-    const kgActualesEl = document.getElementById("kg-actuales");
-    const kgObjetivoEl = document.getElementById("kg-objetivo");
-    const porcentajeEl = document.getElementById("porcentaje-comida");
-    const fillEl = document.getElementById("thermometer-fill");
-    const messageEl = document.getElementById("impact-message");
-
-    kgObjetivoEl.textContent = kgObjetivo;
-
-    function animarNumero(elemento, final, duracion = 1200) {
-      const inicio = performance.now();
-
-      function tick(ahora) {
-        const progreso = Math.min((ahora - inicio) / duracion, 1);
-        const suavizado = 1 - Math.pow(1 - progreso, 3);
-        elemento.textContent = Math.round(final * suavizado);
-
-        if (progreso < 1) requestAnimationFrame(tick);
-      }
-
-      requestAnimationFrame(tick);
-    }
-
-    setTimeout(() => {
-      animarNumero(kgActualesEl, kgActuales);
-      porcentajeEl.textContent = Math.round(porcentaje) + "%";
-      fillEl.style.width = porcentaje + "%";
-      messageEl.textContent = porcentaje >= 100
-        ? "Objetivo conseguido. Marcador solidario completado."
-        : `Faltan ${Math.max(kgObjetivo - kgActuales, 0)} kg para completar el objetivo.`;
-    }, 350);
-  </script>
   <script src="app.js"></script>
 </body>
 </html>
