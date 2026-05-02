@@ -4,7 +4,7 @@
   const SITE_NAME = "10K Zolina";
 
   const FOOD_CHALLENGE = {
-    currentKg: 235,
+    currentKg: 318,
     goalKg: 1000
   };
 
