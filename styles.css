@@ -156,6 +156,11 @@ tbody tr:hover {
 .challenge-hero,
 .challenge-info-card,
 .poster-section,
+.race-hero,
+.race-switcher,
+.race-info-card,
+.route-map-card,
+.race-common-card,
 .kiloreto-hero,
 .kiloreto-progress-hero,
 .kiloreto-info-card,
@@ -1252,6 +1257,378 @@ tbody tr:hover {
   box-shadow: 0 22px 56px rgba(7, 63, 42, 0.18);
 }
 
+/* Recorridos */
+.race-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  align-items: stretch;
+  gap: 24px;
+  margin-bottom: 22px;
+  padding: clamp(26px, 5vw, 48px);
+  border-radius: 34px;
+}
+
+.race-hero h1 {
+  max-width: 860px;
+  margin: 0 0 12px;
+  font-size: clamp(46px, 7vw, 90px);
+}
+
+.race-hero p:not(.eyebrow),
+.race-info-card p,
+.race-common-card p {
+  color: var(--muted);
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.race-hero p:not(.eyebrow) {
+  max-width: 780px;
+  font-size: clamp(17px, 2vw, 22px);
+}
+
+.race-hero-card {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 6px;
+  min-height: 230px;
+  padding: 24px;
+  overflow: hidden;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 15% 18%, rgba(250, 204, 21, 0.30), transparent 32%),
+    linear-gradient(145deg, var(--green-deep), var(--green) 66%, #f59e0b);
+  box-shadow: 0 24px 56px rgba(15, 111, 71, 0.24);
+  color: white;
+  text-align: center;
+}
+
+.race-hero-card span {
+  font-size: clamp(58px, 8vw, 82px);
+  font-weight: 900;
+  line-height: 0.86;
+  letter-spacing: -0.09em;
+}
+
+.race-hero-card strong {
+  font-size: 27px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.race-hero-card small {
+  max-width: 160px;
+  opacity: 0.88;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.race-switcher {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 22px;
+  padding: 10px;
+  border-radius: 28px;
+}
+
+.race-tab {
+  min-height: 80px;
+  padding: 15px 16px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--green-deep);
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.race-tab:hover {
+  transform: translateY(-2px);
+  border-color: rgba(22, 161, 99, 0.34);
+  background: white;
+}
+
+.race-tab.is-active {
+  border-color: rgba(15, 111, 71, 0.28);
+  background: linear-gradient(135deg, var(--green-deep), var(--green));
+  box-shadow: 0 16px 34px rgba(15, 111, 71, 0.20);
+  color: white;
+}
+
+.race-tab strong,
+.race-tab span {
+  display: block;
+}
+
+.race-tab strong {
+  margin-bottom: 6px;
+  font-size: 16px;
+  line-height: 1.1;
+}
+
+.race-tab span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.race-tab strong span {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+.race-tab .race-tab-short {
+  display: none;
+}
+
+.race-tab.is-active span {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.race-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.race-info-card,
+.route-map-card,
+.race-common-card {
+  padding: 26px;
+  border-radius: 30px;
+}
+
+.race-info-card h2,
+.route-map-card h2,
+.race-common-card h2 {
+  margin-bottom: 10px;
+  color: var(--green-deep);
+  font-size: 30px;
+  letter-spacing: -0.04em;
+}
+
+.race-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 22px 0;
+}
+
+.race-facts div {
+  min-height: 92px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: rgba(232, 247, 239, 0.86);
+}
+
+.race-facts dt {
+  margin-bottom: 8px;
+  color: var(--green-dark);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.race-facts dd {
+  margin: 0;
+  color: var(--green-deep);
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.race-bullets {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0 0;
+  padding-left: 21px;
+  color: var(--text);
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.race-bullets li::marker {
+  color: var(--green-dark);
+}
+
+.race-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.race-actions .secondary-button {
+  border-color: rgba(15, 111, 71, 0.18);
+}
+
+.route-map-card {
+  overflow: hidden;
+}
+
+.route-map-shell {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(15, 111, 71, 0.14);
+  border-radius: 30px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.48) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.48) 1px, transparent 1px),
+    radial-gradient(circle at 22% 20%, rgba(183, 243, 74, 0.30), transparent 31%),
+    radial-gradient(circle at 80% 76%, rgba(251, 146, 60, 0.18), transparent 30%),
+    linear-gradient(145deg, #dff3ea, #f8fff6);
+  background-size: 34px 34px, 34px 34px, auto, auto, auto;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.route-map {
+  display: block;
+  width: 100%;
+  height: clamp(320px, 39vw, 440px);
+  min-height: 320px;
+  overflow: hidden;
+  border-radius: 29px;
+  background: #183b2e;
+}
+
+.route-map.leaflet-container,
+.route-map .leaflet-container,
+.route-map .leaflet-pane,
+.route-map .leaflet-top,
+.route-map .leaflet-bottom {
+  font-family: Inter, Arial, sans-serif;
+}
+
+.route-map .leaflet-control-attribution {
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--green-deep);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.route-map .leaflet-control-zoom {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(7, 63, 42, 0.28);
+}
+
+.route-map .leaflet-control-zoom a {
+  border: 0;
+  color: var(--green-deep);
+  font-weight: 900;
+}
+
+.route-map-tooltip {
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 24px rgba(7, 63, 42, 0.26);
+  color: var(--green-deep);
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.route-map-tooltip::before {
+  border-top-color: rgba(255, 255, 255, 0.92);
+}
+
+.route-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 26px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--green-deep);
+  font-weight: 900;
+  line-height: 1.35;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.route-loading.is-visible {
+  opacity: 1;
+}
+
+.route-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 12px 0 14px;
+  color: var(--green-deep);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.route-profile {
+  padding: 14px;
+  border: 1px solid rgba(15, 111, 71, 0.12);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.68);
+}
+
+.route-profile-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  color: var(--green-deep);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.route-profile-head span {
+  color: var(--muted);
+}
+
+.route-profile svg {
+  display: block;
+  width: 100%;
+  height: 110px;
+}
+
+.route-profile-area {
+  fill: rgba(22, 161, 99, 0.12);
+}
+
+.route-profile-line {
+  fill: none;
+  stroke: var(--green-dark);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 5;
+}
+
+.race-common-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.race-common-card {
+  min-height: 280px;
+}
+
+.race-hero > *,
+.race-detail-layout > *,
+.race-common-grid > *,
+.race-switcher > * {
+  min-width: 0;
+}
+
 /* Resultados */
 .results-hero {
   display: grid;
@@ -1791,6 +2168,9 @@ tbody tr:hover {
   .partners-toolbar,
   .challenge-hero,
   .challenge-detail-grid,
+  .race-hero,
+  .race-detail-layout,
+  .race-common-grid,
   .kiloreto-hero,
   .kiloreto-quick-grid,
   .kiloreto-food-grid {
@@ -1861,6 +2241,24 @@ tbody tr:hover {
 }
 
 @media (max-width: 680px) {
+  .carreras-page {
+    overflow-x: hidden;
+  }
+
+  .carreras-page .container,
+  .carreras-page .race-hero,
+  .carreras-page .race-hero > div,
+  .carreras-page .race-hero-card,
+  .carreras-page .race-switcher,
+  .carreras-page .race-detail-layout,
+  .carreras-page .race-info-card,
+  .carreras-page .route-map-card,
+  .carreras-page .race-common-grid,
+  .carreras-page .race-common-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
   .container {
     padding: 18px 14px 42px;
   }
@@ -1931,6 +2329,11 @@ tbody tr:hover {
   .challenge-hero,
   .challenge-info-card,
   .poster-section,
+  .race-hero,
+  .race-switcher,
+  .race-info-card,
+  .route-map-card,
+  .race-common-card,
   .kiloreto-hero,
   .kiloreto-progress-hero,
   .kiloreto-info-card,
@@ -1985,9 +2388,12 @@ tbody tr:hover {
   .primary-button,
   .secondary-button {
     width: 100%;
+    min-width: 0;
     min-height: 44px;
     padding: 12px 10px;
     font-size: 14px;
+    text-align: center;
+    white-space: normal;
   }
 
   .mini-stats {
@@ -2092,6 +2498,121 @@ tbody tr:hover {
 
   .challenge-poster {
     border-radius: 18px;
+  }
+
+  .race-hero,
+  .race-info-card,
+  .route-map-card,
+  .race-common-card {
+    min-width: 0;
+    padding: 20px 16px;
+  }
+
+  .race-hero h1 {
+    overflow-wrap: break-word;
+    font-size: clamp(40px, 12vw, 58px);
+  }
+
+  .race-hero p:not(.eyebrow) {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .race-hero-card {
+    min-height: 150px;
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .carreras-page .race-switcher {
+    width: min(100%, 360px);
+  }
+
+  .race-switcher {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 6px;
+  }
+
+  .race-tab {
+    width: 100%;
+    min-width: 0;
+    min-height: 76px;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 10px 4px;
+    text-align: center;
+  }
+
+  .race-tab strong {
+    margin-bottom: 5px;
+    font-size: clamp(11px, 3vw, 13px);
+  }
+
+  .race-tab span {
+    font-size: clamp(9px, 2.45vw, 10px);
+    line-height: 1.25;
+  }
+
+  .race-tab .race-tab-full {
+    display: none;
+  }
+
+  .race-tab .race-tab-short {
+    display: block;
+  }
+
+  .race-tab strong,
+  .race-tab span,
+  .race-facts dd,
+  .race-bullets li {
+    overflow-wrap: anywhere;
+  }
+
+  .carreras-page .hero-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .race-facts {
+    grid-template-columns: 1fr;
+    margin: 18px 0;
+  }
+
+  .race-facts div {
+    min-height: auto;
+  }
+
+  .race-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .route-map-shell {
+    border-radius: 20px;
+  }
+
+  .route-map {
+    height: 285px;
+    min-height: 285px;
+    border-radius: 19px;
+  }
+
+  .route-meta-row {
+    font-size: 12px;
+  }
+
+  .route-profile {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .route-profile svg {
+    height: 86px;
   }
 
   .kiloreto-hero,
@@ -2665,7 +3186,7 @@ tbody tr:hover {
   }
 
   .nav-toggle:checked ~ .nav-actions {
-    max-height: 380px;
+    max-height: 520px;
     margin-top: 2px;
     padding: 8px;
     border: 1px solid rgba(15, 111, 71, 0.12);
