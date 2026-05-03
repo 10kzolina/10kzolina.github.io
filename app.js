@@ -405,7 +405,7 @@
         ? "Hoy"
         : daysUntilRace === 1
           ? "Mañana"
-          : `Carrera: ${daysUntilRace} días`;
+          : `Faltan: ${daysUntilRace} días`;
 
       return {
         phase: "race",
