@@ -386,10 +386,10 @@
 
     if (daysUntilDeadline >= 0) {
       const status = daysUntilDeadline === 0
-        ? "Último día"
+        ? "Último día para inscribirse"
         : daysUntilDeadline === 1
-          ? "Cierra mañana"
-          : `Inscríbete: ${daysUntilDeadline} días`;
+          ? "Cierre inscripciones mañana"
+          : `Cierre inscripciones: ${daysUntilDeadline} días`;
 
       return {
         phase: "open",
@@ -437,11 +437,6 @@
       const [, month, day] = isoDate.split("-").map(Number);
       return `${day} ${monthLabels[month - 1]}`;
     };
-    const phaseDetail = state.phase === "open"
-      ? `Inscripciones abiertas hasta el ${formatShortIsoDate(EVENT_TOPBAR.registrationDeadline)}`
-      : state.phase === "race"
-        ? "Consulta horarios, recorridos y detalles antes de salir"
-        : "Consulta los resultados oficiales de la carrera";
 
     const buildMarqueeGroup = (isClone = false) => `
       <div class="event-topbar-group"${isClone ? ' aria-hidden="true"' : ""}>
@@ -463,14 +458,7 @@
           rel="noopener"${isClone ? ' tabindex="-1"' : ""}>
           <span>${escapeHtml(EVENT_TOPBAR.locationLabel)}</span>
         </a>
-
-        <span class="event-topbar-item event-topbar-detail">
-          <span>${escapeHtml(phaseDetail)}</span>
-        </span>
-
-        <span class="event-topbar-item event-topbar-detail">
-          <span>Kiloreto solidario · trae 1 kg de comida no perecedera</span>
-        </span>
+        
       </div>
     `;
 
