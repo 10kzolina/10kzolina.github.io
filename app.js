@@ -64,7 +64,7 @@
   const COLLABORATORS = [
     {
       name: "Masxmenos",
-      type: "Material",
+      type: "Ropa · Material",
       logo: "img/masxmenos.PNG",
       description: "Tienda especializada en material deportivo y de montaña, con una amplia oferta para actividades al aire libre.",
       contribution: "Arco de meta, banderolas, carpa Masxmenos y productos para sortear entre participantes."
@@ -85,7 +85,7 @@
     },
     {
       name: "Sporty",
-      type: "Material",
+      type: "Ropa · Material",
       logo: "img/sporty.png",
       description: "Tienda especializada en material deportivo y equipamiento técnico para distintas disciplinas.",
       contribution: "10 pares de crampones y 10 pares de calcetines para sortear."
@@ -127,7 +127,7 @@
     },
     {
       name: "Ipar Kirolak",
-      type: "Moda",
+      type: "Ropa · Material",
       logo: "img/iparkirolak.png",
       description: "Tienda especializada en equipamiento para montaña, running y outdoor.",
       contribution: "Material deportivo para sortear y vales para utilizar en tienda."
@@ -176,7 +176,7 @@
     },
     {
       name: "Aske Clothes",
-      type: "Moda",
+      type: "Ropa · Material",
       logo: "img/askeclothes.jpg",
       description: "Marca emergente de streetwear ligada a la expresión personal y el diseño artesanal.",
       contribution: "Dos sudaderas, dos camisetas y vales de descuento para su tienda online."
