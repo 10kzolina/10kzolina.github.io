@@ -71,7 +71,7 @@
     },
     {
       name: "Caja Rural de Navarra",
-      type: "Institucional",
+      type: "Servicios",
       logo: "img/cajarural.PNG",
       description: "Entidad que impulsa proyectos sociales, educativos y medioambientales en Navarra.",
       contribution: "Arco de meta, bolsas del corredor, dorsales y vallas para el recorrido."
@@ -120,14 +120,14 @@
     },
     {
       name: "Farmacia Mutilva",
-      type: "Salud",
+      type: "Bienestar · Salud",
       logo: "",
       description: "Farmacia de proximidad con atención personalizada y asesoramiento en salud y bienestar.",
       contribution: "Cesta de productos y tres vales de 20 euros para gastar en farmacia."
     },
     {
       name: "Ipar Kirolak",
-      type: "Material",
+      type: "Moda",
       logo: "img/iparkirolak.png",
       description: "Tienda especializada en equipamiento para montaña, running y outdoor.",
       contribution: "Material deportivo para sortear y vales para utilizar en tienda."
@@ -155,7 +155,7 @@
     },
     {
       name: "Farmacia Arteche",
-      type: "Salud",
+      type: "Bienestar · Salud",
       logo: "img/farmaciaAtreche.png",
       description: "Farmacia de proximidad con atención personalizada y asesoramiento en cuidado diario.",
       contribution: "Pack de productos para sortear."
@@ -225,7 +225,7 @@
     },
     {
       name: "N2 Fisioterapia",
-      type: "Salud",
+      type: "Bienestar · Salud",
       logo: "img/n2fisio.png",
       description: "Centro especializado en recuperación y tratamiento físico con atención personalizada.",
       contribution: "Dos sesiones de fisioterapia para sortear."
@@ -239,7 +239,7 @@
     },
     {
       name: "La Perla",
-      type: "Bienestar",
+      type: "Bienestar · Salud",
       logo: "img/laperla.png",
       description: "Centro de bienestar y restaurante situado en la playa de La Concha, en San Sebastián.",
       contribution: "Dos entradas para circuito de talasoterapia para sortear."
@@ -253,7 +253,7 @@
     },
     {
       name: "Malie Estética Avanzada",
-      type: "Bienestar",
+      type: "Bienestar · Salud",
       logo: "img/malie.PNG",
       description: "Centro especializado en tratamientos de belleza y cuidado personal.",
       contribution: "Sesiones para sortear."
