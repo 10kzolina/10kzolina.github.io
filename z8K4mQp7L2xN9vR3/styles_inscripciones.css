@@ -1,0 +1,442 @@
+.inscripciones-page h1 {
+  max-width: 760px;
+  margin: 12px 0 18px;
+  color: var(--green-deep);
+  font-size: 4.5rem;
+  line-height: 0.96;
+  letter-spacing: 0;
+}
+
+.inscripciones-page h2 {
+  color: var(--green-deep);
+}
+
+.inscripciones-container {
+  padding-bottom: 72px;
+}
+
+.inscripciones-hero,
+.inscripciones-kpi-card,
+.inscripciones-panel {
+  position: relative;
+  border: 1px solid var(--glass-border);
+  background: var(--glass);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.inscripciones-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+  gap: 28px;
+  align-items: center;
+  overflow: hidden;
+  padding: 42px;
+  border-radius: 32px;
+}
+
+.inscripciones-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(120deg, rgba(183, 243, 74, 0.24), transparent 34%),
+    linear-gradient(315deg, rgba(22, 161, 99, 0.16), transparent 42%);
+}
+
+.inscripciones-hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 42%;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(15, 111, 71, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 111, 71, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(90deg, transparent, black);
+}
+
+.inscripciones-hero-copy,
+.inscripciones-total-panel {
+  position: relative;
+  z-index: 1;
+}
+
+.inscripciones-hero-copy p:not(.eyebrow) {
+  max-width: 690px;
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 1.08rem;
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+.inscripciones-status-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  margin-top: 24px;
+  padding: 10px 14px;
+  border: 1px solid rgba(15, 111, 71, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--green-deep);
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.inscripciones-status-row span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inscripciones-status-dot {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--yellow);
+  box-shadow: 0 0 0 6px rgba(250, 204, 21, 0.16);
+}
+
+.inscripciones-status-dot.is-ready {
+  background: var(--green);
+  box-shadow: 0 0 0 6px rgba(22, 161, 99, 0.15);
+}
+
+.inscripciones-status-dot.is-error {
+  background: var(--red);
+  box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.14);
+}
+
+.inscripciones-total-panel {
+  display: grid;
+  align-content: center;
+  min-height: 260px;
+  padding: 30px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 28px;
+  background:
+    linear-gradient(145deg, rgba(7, 63, 42, 0.96), rgba(15, 111, 71, 0.92)),
+    var(--green-deep);
+  color: white;
+  box-shadow: 0 24px 60px rgba(7, 63, 42, 0.24);
+}
+
+.inscripciones-total-panel::after {
+  content: "";
+  position: absolute;
+  inset: auto -24px -40px 24px;
+  height: 112px;
+  background: linear-gradient(90deg, rgba(183, 243, 74, 0.34), rgba(250, 204, 21, 0.28));
+  transform: skewY(-8deg);
+}
+
+.inscripciones-total-panel span,
+.inscripciones-total-panel small {
+  position: relative;
+  z-index: 1;
+  font-weight: 900;
+}
+
+.inscripciones-total-panel span {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.inscripciones-total-panel strong {
+  position: relative;
+  z-index: 1;
+  margin: 16px 0 10px;
+  font-size: 5.4rem;
+  line-height: 0.9;
+  letter-spacing: 0;
+}
+
+.inscripciones-total-panel small {
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.45;
+}
+
+.inscripciones-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.inscripciones-kpi-card {
+  min-height: 232px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.inscripciones-kpi-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 6px;
+  background: var(--route-color, var(--green));
+}
+
+.txiki-card {
+  --route-color: var(--yellow);
+}
+
+.marcha-card {
+  --route-color: var(--lime);
+}
+
+.carrera5-card {
+  --route-color: var(--green);
+}
+
+.carrera10-card {
+  --route-color: var(--orange);
+}
+
+.route-badge {
+  width: fit-content;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(232, 247, 239, 0.86);
+  color: var(--green-dark);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.kpi-card-head {
+  display: grid;
+  gap: 8px;
+}
+
+.kpi-card-head h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  line-height: 1.1;
+}
+
+.kpi-card-head strong {
+  color: var(--green-deep);
+  font-size: 3.25rem;
+  line-height: 0.95;
+  letter-spacing: 0;
+}
+
+.route-progress {
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(15, 111, 71, 0.1);
+}
+
+.route-progress span {
+  display: block;
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--route-color, var(--green)), rgba(255, 255, 255, 0.45));
+  transition: width 0.7s cubic-bezier(.22, 1, .36, 1);
+}
+
+.inscripciones-kpi-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 900;
+}
+
+.inscripciones-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.78fr);
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.inscripciones-panel {
+  padding: 26px;
+  border-radius: 26px;
+}
+
+.inscripciones-panel h2 {
+  margin-bottom: 0;
+  font-size: 1.55rem;
+  line-height: 1.15;
+}
+
+.route-summary-list {
+  display: grid;
+  gap: 10px;
+}
+
+.route-summary-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  min-height: 54px;
+  padding: 12px 14px;
+  border: 1px solid rgba(15, 111, 71, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.route-summary-row span,
+.route-summary-row strong {
+  color: var(--green-deep);
+  font-weight: 900;
+}
+
+.route-summary-row strong {
+  font-size: 1.4rem;
+}
+
+.inscripciones-warning {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(239, 68, 68, 0.16);
+  border-radius: 14px;
+  background: rgba(254, 226, 226, 0.74);
+  color: #991b1b;
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.inscripciones-source-panel {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+
+.inscripciones-source-panel img {
+  width: 116px;
+  height: 116px;
+  object-fit: contain;
+  border-radius: 20px;
+  background: white;
+  box-shadow: var(--soft-shadow);
+}
+
+.inscripciones-source-panel p:not(.eyebrow) {
+  margin-bottom: 18px;
+  color: var(--muted);
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.source-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.source-actions .primary-button,
+.source-actions .secondary-button {
+  min-height: 44px;
+  padding: 12px 18px;
+}
+
+.source-updated {
+  display: block;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.source-actions button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.inscripciones-noscript {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: white;
+  color: var(--green-deep);
+  font-weight: 900;
+  box-shadow: var(--soft-shadow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-progress span {
+    transition: none;
+  }
+}
+
+@media (max-width: 1080px) {
+  .inscripciones-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .inscripciones-detail-grid,
+  .inscripciones-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .inscripciones-total-panel {
+    min-height: 220px;
+  }
+}
+
+@media (max-width: 720px) {
+  .inscripciones-page h1 {
+    font-size: 3rem;
+  }
+
+  .inscripciones-hero,
+  .inscripciones-panel {
+    padding: 22px;
+    border-radius: 24px;
+  }
+
+  .inscripciones-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inscripciones-status-row {
+    width: 100%;
+  }
+
+  .inscripciones-total-panel {
+    min-height: 190px;
+    padding: 24px;
+  }
+
+  .inscripciones-total-panel strong {
+    font-size: 4rem;
+  }
+
+  .inscripciones-source-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .inscripciones-source-panel img {
+    width: 92px;
+    height: 92px;
+  }
+
+  .source-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
