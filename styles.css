@@ -441,7 +441,6 @@ tbody tr:hover {
   min-height: 36px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 10px;
   margin: 0 auto;
   padding: 4px clamp(18px, 4vw, 52px);
@@ -483,10 +482,43 @@ tbody tr:hover {
   box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12), 0 0 16px rgba(255, 255, 255, 0.28);
 }
 
-.event-topbar-meta {
+.event-topbar-status,
+.event-topbar-cta {
+  position: relative;
+  z-index: 2;
+  flex: 0 0 auto;
+}
+
+.event-topbar-marquee {
+  flex: 1 1 auto;
+  min-width: 80px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, black 22px, black calc(100% - 22px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, black 22px, black calc(100% - 22px), transparent 100%);
+}
+
+.event-topbar-marquee-track {
+  width: max-content;
   display: flex;
+  align-items: center;
+  animation: eventTopbarMarquee 16s linear infinite;
+  will-change: transform;
+}
+
+.event-topbar-marquee-group {
+  display: flex;
+  align-items: center;
   gap: 7px;
-  min-width: 0;
+  padding-right: 18px;
+}
+
+.event-topbar-marquee:hover .event-topbar-marquee-track {
+  animation-play-state: paused;
+}
+
+.event-topbar-marquee .event-topbar-item {
+  flex: 0 0 auto;
+  max-width: none;
 }
 
 .event-topbar-item {
@@ -3237,11 +3269,18 @@ tbody tr:hover {
 
   .event-topbar-status {
     width: auto;
-    max-width: 100%;
+    max-width: 44vw;
     gap: 4px;
     padding: 6px 8px;
+    overflow: hidden;
     font-size: clamp(11px, 3vw, 13px);
-    flex-shrink: 1;
+    text-overflow: ellipsis;
+    flex: 0 0 auto;
+  }
+
+  .event-topbar-status strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .event-topbar-dot {
@@ -3249,10 +3288,19 @@ tbody tr:hover {
     height: 5px;
   }
 
-  .event-topbar-meta {
-    display: flex;
+  .event-topbar-marquee {
+    min-width: 72px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, black 12px, black calc(100% - 12px), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, black 12px, black calc(100% - 12px), transparent 100%);
+  }
+
+  .event-topbar-marquee-track {
+    animation-duration: 12s;
+  }
+
+  .event-topbar-marquee-group {
     gap: 4px;
-    flex-shrink: 1;
+    padding-right: 10px;
   }
 
   .event-topbar-item {
@@ -3260,7 +3308,6 @@ tbody tr:hover {
     gap: 4px;
     padding: 6px 8px;
     font-size: clamp(11px, 3vw, 13px);
-    flex-shrink: 1;
   }
 
   .event-topbar-cta {
@@ -3268,7 +3315,7 @@ tbody tr:hover {
     min-height: 28px;
     padding: 6px 10px;
     font-size: clamp(11px, 3vw, 13px);
-    flex-shrink: 0;
+    flex: 0 0 auto;
   }
 
   .site-header,
@@ -3432,5 +3479,16 @@ tbody tr:hover {
 
   .nav-toggle-label {
     display: none;
+  }
+}
+
+
+@keyframes eventTopbarMarquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-25%, 0, 0);
   }
 }
