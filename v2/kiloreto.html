@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f6f47" />
+  <title>Kiloreto solidario | 10K Zolina</title>
+  <meta name="description" content="Kiloreto de la 10K Zolina: el reto solidario para reunir 1000 kg de alimentos no perecederos. Descubre qué traer y cómo participar.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <meta property="og:title" content="Kiloreto solidario | 10K Zolina">
+  <meta property="og:description" content="Ayúdanos a reunir 1000 kg de alimentos no perecederos para la 10K Zolina.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://10kzolina.github.io/kiloreto.html">
+  <meta property="og:image" content="https://10kzolina.github.io/img/logo-zolina.png">
+  <meta property="og:site_name" content="10K Zolina">
+  <meta property="og:locale" content="es_ES">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kiloreto solidario | 10K Zolina">
+  <meta name="twitter:description" content="Ayuda a reunir 1000 kg de alimentos no perecederos para la 10K Zolina en Badostain.">
+  <meta name="twitter:image" content="https://10kzolina.github.io/img/logo-zolina.png">
+  <link rel="canonical" href="https://10kzolina.github.io/kiloreto.html">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BD2PFX9LL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-9BD2PFX9LL');
+  </script>
+</head>
+<body class="kiloreto-page">
+  <div class="noise"></div>
+
+  <header class="site-header compact-header">
+    <a class="brand" href="index.html" aria-label="Volver a inicio">
+      <img class="brand-logo" src="img/logo-zolina.png" alt="10K Zolina Carrera Solidaria" />
+    </a>
+
+    <input class="nav-toggle" type="checkbox" id="nav-toggle" aria-label="Abrir menú de navegación" />
+    <label class="nav-toggle-button" for="nav-toggle">
+      <span class="nav-toggle-lines" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+      <span class="nav-toggle-label">Menú</span>
+    </label>
+
+    <nav class="nav-actions" id="main-navigation" aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a href="carreras.html">Recorridos</a>
+      <a href="kiloreto.html" class="nav-pill">Kiloreto</a>
+      <a href="challenge.html">KOM Challenge</a>
+      <a href="resultados.html">Resultados</a>
+      <a href="colaboradores.html">Colaboradores</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="kiloreto-hero reveal">
+      <div>
+        <p class="eyebrow">Reto solidario</p>
+        <h1>Kiloreto</h1>
+        <p>
+          Queremos reunir 1000 kg de alimentos no perecederos.
+          Si vienes a la 10K Zolina, trae lo que puedas: cada paquete suma.
+        </p>
+        <div class="hero-actions compact-actions">
+          <a href="#que-traer" class="primary-button kiloreto-button">Qué puedo traer</a>
+          <a href="#participar" class="secondary-button">Cómo participar</a>
+        </div>
+      </div>
+
+      <article class="kiloreto-progress-hero kiloreto-hero-meter" aria-label="Progreso principal del Kiloreto">
+        <p class="eyebrow">Marcador en directo</p>
+        <div class="kiloreto-progress-head">
+          <div>
+            <span class="kiloreto-live-label">Ya llevamos</span>
+            <div class="kiloreto-kg-line">
+              <strong id="kg-actuales-kiloreto">0</strong>
+              <span>/ 1000 kg</span>
+            </div>
+          </div>
+          <span id="porcentaje-kiloreto" class="kiloreto-percent">0%</span>
+        </div>
+
+        <div class="kiloreto-track-wrap">
+          <div class="food-progress kiloreto-main-progress" aria-label="Progreso del Kiloreto">
+            <div id="kiloreto-fill" class="food-progress-fill">
+              <div class="food-progress-shine"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="food-scale">
+          <span>0 kg</span>
+          <span>Objetivo: 1000 kg</span>
+        </div>
+
+        <div class="impact-message" id="kiloreto-message"></div>
+      </article>
+    </section>
+
+    <section class="kiloreto-quick-grid reveal delay-1" aria-label="Datos principales del Kiloreto">
+      <article class="kiloreto-info-card">
+        <span class="contact-icon">🎯</span>
+        <h2>Objetivo</h2>
+        <p>Alcanzar 1000 kg de comida entre todas las personas que forman parte de la carrera.</p>
+      </article>
+
+      <article class="kiloreto-info-card">
+        <span class="contact-icon">📍</span>
+        <h2>Entrega</h2>
+        <p>Trae tus alimentos a la zona habilitada por la organización el día de la carrera en Badostáin.</p>
+      </article>
+    </section>
+
+    <section id="que-traer" class="kiloreto-food-grid reveal delay-2">
+      <article class="kiloreto-info-card">
+        <p class="eyebrow">Alimentos recomendados</p>
+        <h2>Qué traer</h2>
+        <p>Lo que más se necesita ahora mismo es azúcar y aceite, además de comida que aguante bien, sea fácil de transportar y pueda almacenarse sin frío.</p>
+        <ul class="kiloreto-list">
+          <li>Azúcar y aceite, que son la prioridad principal.</li>
+          <li>Legumbres secas o cocidas en conserva.</li>
+          <li>Arroz, pasta, harina y cereales.</li>
+          <li>Leche, caldos y bebidas de larga duración.</li>
+          <li>Conservas de pescado, verduras, tomate o fruta.</li>
+        </ul>
+      </article>
+
+      <article class="kiloreto-info-card kiloreto-care-card">
+        <p class="eyebrow">Para que llegue bien</p>
+        <h2>Mejor evitar</h2>
+        <ul class="kiloreto-list">
+          <li>Productos abiertos, caducados o sin etiqueta.</li>
+          <li>Comida fresca que necesite nevera o congelador.</li>
+          <li>Envases frágiles de cristal si puedes elegir otra opción.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section id="participar" class="kiloreto-cta-section reveal delay-3">
+      <p class="eyebrow">Cada kilo cuenta</p>
+      <h2>Si vienes a correr, trae alimento. Si vienes a animar, también.</h2>
+      <p>
+        Un paquete suma. Dos paquetes suman más. Entre todos podemos llegar a 1000 kg.
+      </p>
+      <div class="kiloreto-cta-actions">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfP2-c1h1SoEjlJCK-kpITiLVKQqqQtFjLKk40hK8ChqXCGGg/viewform?usp=dialog" class="primary-button" target="_blank" rel="noopener">Inscríbete</a>
+        <a href="contacto.html" class="secondary-button">Tengo dudas</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" data-site-footer></footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
