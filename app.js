@@ -99,7 +99,7 @@
     },
     {
       name: "Rocopolis",
-      type: "Deporte",
+      type: "Deporte · Ocio",
       logo: "img/rocopolis.png",
       description: "Rocódromo y centro deportivo especializado en escalada.",
       contribution: "Entradas para el rocódromo para sortear entre participantes."
@@ -141,7 +141,7 @@
     },
     {
       name: "Saltoka Jump",
-      type: "Ocio",
+      type: "Ocio · Deporte",
       logo: "img/saltoka.png",
       description: "Centro de ocio activo con camas elásticas y actividades para disfrutar en grupo.",
       contribution: "Tres entradas, tres mochilas y tres pares de calcetines para sortear."
