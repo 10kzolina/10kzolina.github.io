@@ -433,49 +433,87 @@
     const ctaTarget = state.ctaExternal ? ' target="_blank" rel="noopener"' : "";
     const topbar = document.createElement("aside");
 
-    // Marquee items: repeated twice for seamless loop
-    const marqueeItem = (icon, text, href, extraClass = "") => {
-      const tag = href ? "a" : "span";
-      const attrs = href ? `href="${escapeHtml(href)}"` : "";
-      return `<${tag} class="event-topbar-item${extraClass ? " " + extraClass : ""}" ${attrs}>
-        <span class="event-topbar-item-icon" aria-hidden="true">${icon}</span>
-        <span>${escapeHtml(text)}</span>
-      </${tag}>`;
-    };
-
-    const marqueeContent = [
-      marqueeItem("📅", EVENT_TOPBAR.dateLabel, EVENT_TOPBAR.calendarUrl, "event-topbar-date"),
-      `<span class="event-topbar-sep" aria-hidden="true">·</span>`,
-      marqueeItem("📍", EVENT_TOPBAR.locationLabel, EVENT_TOPBAR.locationUrl, "event-topbar-location"),
-      `<span class="event-topbar-sep" aria-hidden="true">·</span>`,
-      marqueeItem("🏃", state.status, null, "event-topbar-status"),
-      `<span class="event-topbar-sep" aria-hidden="true">·</span>`,
-      marqueeItem("🥫", "Kiloreto solidario · 1000 kg", "kiloreto.html"),
-      `<span class="event-topbar-sep" aria-hidden="true">·</span>`,
-      marqueeItem("⛰️", "Zolina KOM Challenge · Strava", "challenge.html"),
-      `<span class="event-topbar-sep" aria-hidden="true">·</span>`,
-      marqueeItem("🐶", "Pet friendly · ¡Corre con tu perro!", null),
-      `<span class="event-topbar-sep" aria-hidden="true">·</span>`,
-      marqueeItem("🍽️", "Comida popular · ¡Apúntate!", "https://forms.gle/9uEHps9BrEYXebt8A"),
-      `<span class="event-topbar-sep" aria-hidden="true">·</span>`,
-    ].join("");
-
     topbar.className = `event-topbar event-topbar--${state.phase}`;
     topbar.setAttribute("aria-label", "Información rápida de la carrera");
     topbar.innerHTML = `
       <div class="event-topbar-inner">
-        <div class="event-topbar-marquee-wrapper" aria-hidden="true">
-          <div class="event-topbar-marquee">
-            <div class="event-topbar-marquee-track">
-              ${marqueeContent}
-              ${marqueeContent}
+        <div class="event-topbar-status" aria-live="polite">
+          <span class="event-topbar-dot" aria-hidden="true"></span>
+          <strong>${escapeHtml(state.status)}</strong>
+        </div>
+
+        <div class="event-topbar-marquee" aria-label="Fecha, hora y localización de la carrera">
+          <div class="event-topbar-marquee-track">
+            <div class="event-topbar-marquee-group">
+              <a class="event-topbar-item event-topbar-date"
+                href="${EVENT_TOPBAR.calendarUrl}"
+                type="text/calendar"
+                aria-label="Añadir la 10K Zolina al calendario">
+                <span>${escapeHtml(EVENT_TOPBAR.dateLabel)}</span>
+              </a>
+
+              <a class="event-topbar-item event-topbar-location"
+                href="${EVENT_TOPBAR.locationUrl}"
+                target="_blank"
+                rel="noopener"
+                aria-label="Ver ubicación de la 10K Zolina en Google Maps">
+                <span>${escapeHtml(EVENT_TOPBAR.locationLabel)}</span>
+              </a>
+            </div>
+
+            <div class="event-topbar-marquee-group" aria-hidden="true">
+              <a class="event-topbar-item event-topbar-date"
+                href="${EVENT_TOPBAR.calendarUrl}"
+                type="text/calendar"
+                tabindex="-1">
+                <span>${escapeHtml(EVENT_TOPBAR.dateLabel)}</span>
+              </a>
+
+              <a class="event-topbar-item event-topbar-location"
+                href="${EVENT_TOPBAR.locationUrl}"
+                target="_blank"
+                rel="noopener"
+                tabindex="-1">
+                <span>${escapeHtml(EVENT_TOPBAR.locationLabel)}</span>
+              </a>
+            </div>
+            <div class="event-topbar-marquee-group" aria-hidden="true">
+              <a class="event-topbar-item event-topbar-date"
+                href="${EVENT_TOPBAR.calendarUrl}"
+                type="text/calendar"
+                tabindex="-1">
+                <span>${escapeHtml(EVENT_TOPBAR.dateLabel)}</span>
+              </a>
+
+              <a class="event-topbar-item event-topbar-location"
+                href="${EVENT_TOPBAR.locationUrl}"
+                target="_blank"
+                rel="noopener"
+                tabindex="-1">
+                <span>${escapeHtml(EVENT_TOPBAR.locationLabel)}</span>
+              </a>
+            </div>
+            <div class="event-topbar-marquee-group" aria-hidden="true">
+              <a class="event-topbar-item event-topbar-date"
+                href="${EVENT_TOPBAR.calendarUrl}"
+                type="text/calendar"
+                tabindex="-1">
+                <span>${escapeHtml(EVENT_TOPBAR.dateLabel)}</span>
+              </a>
+
+              <a class="event-topbar-item event-topbar-location"
+                href="${EVENT_TOPBAR.locationUrl}"
+                target="_blank"
+                rel="noopener"
+                tabindex="-1">
+                <span>${escapeHtml(EVENT_TOPBAR.locationLabel)}</span>
+              </a>
             </div>
           </div>
         </div>
 
         <a class="event-topbar-cta"
-          href="${state.ctaUrl}"${ctaTarget}
-          aria-label="${escapeHtml(state.ctaLabel)}">
+          href="${state.ctaUrl}"${ctaTarget}>
           ${escapeHtml(state.ctaLabel)}
         </a>
       </div>

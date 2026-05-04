@@ -437,111 +437,141 @@ tbody tr:hover {
   position: relative;
   z-index: 1;
   width: 100%;
+  max-width: 1180px;
   min-height: 36px;
   display: flex;
   align-items: center;
-  gap: 0;
-  overflow: hidden;
+  gap: 10px;
+  margin: 0 auto;
+  padding: 4px clamp(18px, 4vw, 52px);
 }
 
-/* Marquee wrapper: fills all space except the CTA button */
-.event-topbar-marquee-wrapper {
-  flex: 1 1 0;
-  min-width: 0;
-  overflow: hidden;
-  /* Fade edges */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
-}
-
-.event-topbar-marquee {
-  overflow: hidden;
-  width: 100%;
-}
-
-.event-topbar-marquee-track {
-  display: flex;
-  align-items: center;
-  width: max-content;
-  animation: topbarMarquee 38s linear infinite;
-  gap: 0;
-}
-
-.event-topbar-marquee-track:hover {
-  animation-play-state: paused;
-}
-
-@keyframes topbarMarquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-/* Individual items inside marquee */
-.event-topbar-item {
+.event-topbar-status,
+.event-topbar-item,
+.event-topbar-cta {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 14px;
   border-radius: 999px;
-  color: rgba(255, 255, 255, 0.88);
-  font-size: 12px;
-  font-weight: 900;
   line-height: 1;
   text-decoration: none;
   white-space: nowrap;
-  flex-shrink: 0;
-  transition: color 0.15s ease;
 }
 
-a.event-topbar-item:hover {
-  color: var(--lime);
-}
-
-.event-topbar-item-icon {
-  font-size: 13px;
-  flex-shrink: 0;
-}
-
-/* Status item gets a subtle highlight pill */
 .event-topbar-status {
-  padding: 4px 12px;
+  gap: 6px;
+  padding: 4px 8px;
   border: 1px solid rgba(183, 243, 74, 0.30);
   background: rgba(183, 243, 74, 0.13);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
   color: #e9ffc2;
+  font-size: 12px;
+  font-weight: 900;
 }
 
-.event-topbar-sep {
-  flex-shrink: 0;
-  color: rgba(255, 255, 255, 0.22);
-  font-size: 14px;
-  font-weight: 400;
-  padding: 0 2px;
+.event-topbar-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 0 4px rgba(183, 243, 74, 0.14), 0 0 18px rgba(183, 243, 74, 0.58);
 }
 
-/* Fixed CTA button on the right */
+.event-topbar--done .event-topbar-dot {
+  background: white;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12), 0 0 16px rgba(255, 255, 255, 0.28);
+}
+
+.event-topbar-status,
 .event-topbar-cta {
-  flex-shrink: 0;
-  display: inline-flex;
+  position: relative;
+  z-index: 2;
+  flex: 0 0 auto;
+}
+
+.event-topbar-marquee {
+  flex: 1 1 auto;
+  min-width: 80px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, black 22px, black calc(100% - 22px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, black 22px, black calc(100% - 22px), transparent 100%);
+}
+
+.event-topbar-marquee-track {
+  width: max-content;
+  display: flex;
   align-items: center;
+  animation: eventTopbarMarquee 16s linear infinite;
+  will-change: transform;
+}
+
+.event-topbar-marquee-group {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-right: 18px;
+}
+
+.event-topbar-marquee:hover .event-topbar-marquee-track {
+  animation-play-state: paused;
+}
+
+.event-topbar-marquee .event-topbar-item {
+  flex: 0 0 auto;
+  max-width: none;
+}
+
+.event-topbar-item {
+  gap: 6px;
+  max-width: 100%;
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.075);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.event-topbar-item::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: rgba(183, 243, 74, 0.82);
+}
+
+.event-topbar-location::before {
+  width: 7px;
+  height: 7px;
+  border: 2px solid rgba(183, 243, 74, 0.82);
+  background: transparent;
+}
+
+.event-topbar-item span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-topbar-item:hover {
+  border-color: rgba(183, 243, 74, 0.34);
+  background: rgba(183, 243, 74, 0.10);
+}
+
+.event-topbar-cta {
   justify-content: center;
   min-height: 26px;
-  padding: 5px 16px;
-  margin-right: 10px;
-  border-radius: 999px;
+  padding: 4px 12px;
   background: linear-gradient(135deg, var(--lime), #22c55e);
   box-shadow: 0 10px 24px rgba(183, 243, 74, 0.18);
   color: #05251b;
   font-size: 12px;
   font-weight: 900;
-  line-height: 1;
-  text-decoration: none;
-  white-space: nowrap;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .event-topbar-cta:hover {
   transform: translateY(-1px);
-  box-shadow: 0 14px 30px rgba(183, 243, 74, 0.28);
 }
 
 .site-header {
@@ -3204,10 +3234,6 @@ a.event-topbar-item:hover {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-
-  .event-topbar-marquee-track {
-    animation: none !important;
-  }
 }
 
 /* Botón comida popular (variante visual) */
@@ -3231,18 +3257,65 @@ a.event-topbar-item:hover {
 
 @media (max-width: 760px) {
   .event-topbar-inner {
-    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 42px;
+    gap: 4px;
+    padding: 4px 6px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .event-topbar-status {
+    width: auto;
+    max-width: 44vw;
+    gap: 4px;
+    padding: 6px 8px;
+    overflow: hidden;
+    font-size: clamp(11px, 3vw, 13px);
+    text-overflow: ellipsis;
+    flex: 0 0 auto;
+  }
+
+  .event-topbar-status strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .event-topbar-dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .event-topbar-marquee {
+    min-width: 72px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, black 12px, black calc(100% - 12px), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, black 12px, black calc(100% - 12px), transparent 100%);
+  }
+
+  .event-topbar-marquee-track {
+    animation-duration: 12s;
+  }
+
+  .event-topbar-marquee-group {
+    gap: 4px;
+    padding-right: 10px;
   }
 
   .event-topbar-item {
-    font-size: 11px;
-    padding: 3px 10px;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 8px;
+    font-size: clamp(11px, 3vw, 13px);
   }
 
   .event-topbar-cta {
-    font-size: 11px;
-    padding: 5px 12px;
-    margin-right: 6px;
+    justify-content: center;
+    min-height: 28px;
+    padding: 6px 10px;
+    font-size: clamp(11px, 3vw, 13px);
+    flex: 0 0 auto;
   }
 
   .site-header,
@@ -3384,15 +3457,20 @@ a.event-topbar-item:hover {
 }
 
 @media (max-width: 380px) {
+  .event-topbar-inner {
+    padding-inline: 8px;
+  }
+
+  .event-topbar-status {
+    padding-inline: 8px;
+  }
+
   .event-topbar-item {
-    font-size: 10px;
-    padding: 3px 8px;
+    padding-inline: 5px;
   }
 
   .event-topbar-cta {
-    font-size: 10px;
-    padding: 4px 10px;
-    margin-right: 4px;
+    padding-inline: 8px;
   }
 
   .nav-toggle-button {
@@ -3401,5 +3479,16 @@ a.event-topbar-item:hover {
 
   .nav-toggle-label {
     display: none;
+  }
+}
+
+
+@keyframes eventTopbarMarquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-25%, 0, 0);
   }
 }
