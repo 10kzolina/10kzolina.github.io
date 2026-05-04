@@ -410,7 +410,7 @@
       return {
         phase: "race",
         status,
-        ctaLabel: "Recorridos",
+        ctaLabel: "Consulta los recorridos",
         ctaUrl: EVENT_TOPBAR.routesUrl,
         ctaExternal: false
       };
@@ -418,7 +418,7 @@
 
     return {
       phase: "done",
-      status: "Resultados",
+      status: "Resultados disponibles",
       ctaLabel: "Resultados",
       ctaUrl: EVENT_TOPBAR.resultsUrl,
       ctaExternal: false
