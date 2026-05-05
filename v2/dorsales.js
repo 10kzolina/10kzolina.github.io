@@ -2,8 +2,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/fireba
 import {
   getFirestore,
   collection,
-  onSnapshot,
   doc,
+  onSnapshot,
   updateDoc,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
@@ -18,25 +18,33 @@ const firebaseConfig = {
   measurementId: "G-6E53XY30F4"
 };
 
+const COLLECTION_NAME = "corredores";
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const state = {
-  corredores: [],
-  query: "",
-  filtroEstado: "todos"
+  runners: [],
+  search: "",
+  status: "todos",
+  order: "dorsal",
+  loading: true,
+  pendingIds: new Set()
 };
 
-const els = {
+const elements = {
   search: document.getElementById("busqueda-dorsales"),
-  estado: document.getElementById("estado-entrega"),
-  total: document.getElementById("stat-total-corredores"),
-  entregados: document.getElementById("stat-entregados"),
-  pendientes: document.getElementById("stat-pendientes"),
-  tickets: document.getElementById("stat-tickets"),
-  tbody: document.getElementById("tabla-dorsales"),
-  mobile: document.getElementById("mobile-dorsales"),
-  empty: document.getElementById("sin-dorsales"),
+  status: document.getElementById("estado-dorsales"),
+  order: document.getElementById("orden-dorsales"),
+  tableBody: document.getElementById("tabla-corredores"),
+  mobileList: document.getElementById("mobile-corredores"),
+  empty: document.getElementById("sin-corredores"),
+  loading: document.getElementById("loading-state"),
+  visibleCount: document.getElementById("visible-count"),
+  statTotal: document.getElementById("stat-total"),
+  statPending: document.getElementById("stat-pendientes"),
+  statDelivered: document.getElementById("stat-entregados"),
+  statFood: document.getElementById("stat-comida"),
   toast: document.getElementById("toast")
 };
 
@@ -57,276 +65,279 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
-function showToast(message) {
-  if (!els.toast) return;
-
-  els.toast.textContent = message;
-  els.toast.classList.add("show");
-
-  window.clearTimeout(showToast.timeout);
-  showToast.timeout = window.setTimeout(() => {
-    els.toast.classList.remove("show");
-  }, 2200);
+function toSafeInt(value) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) ? parsed : 0;
 }
 
-function getFilteredCorredores() {
-  const q = normalizeText(state.query);
+function getRunnerSearchText(runner) {
+  return normalizeText(`${runner.nombre} ${runner.correo} ${runner.dorsal}`);
+}
 
-  return state.corredores.filter((corredor) => {
-    const matchesSearch =
-      !q ||
-      normalizeText(corredor.nombre).includes(q) ||
-      normalizeText(corredor.correo).includes(q) ||
-      normalizeText(corredor.dorsal).includes(q);
+function getFilteredRunners() {
+  const query = normalizeText(state.search);
 
-    const matchesEstado =
-      state.filtroEstado === "todos" ||
-      (state.filtroEstado === "entregados" && corredor.bolsa_entregada) ||
-      (state.filtroEstado === "pendientes" && !corredor.bolsa_entregada);
+  const filtered = state.runners.filter((runner) => {
+    const matchesSearch = !query || getRunnerSearchText(runner).includes(query);
+    const matchesStatus =
+      state.status === "todos" ||
+      (state.status === "pendientes" && !runner.bolsa_entregada) ||
+      (state.status === "entregados" && runner.bolsa_entregada);
 
-    return matchesSearch && matchesEstado;
+    return matchesSearch && matchesStatus;
+  });
+
+  return filtered.sort((a, b) => {
+    if (state.order === "nombre") {
+      return normalizeText(a.nombre).localeCompare(normalizeText(b.nombre), "es");
+    }
+
+    if (state.order === "estado") {
+      if (a.bolsa_entregada !== b.bolsa_entregada) return a.bolsa_entregada ? 1 : -1;
+    }
+
+    const dorsalA = toSafeInt(a.dorsal);
+    const dorsalB = toSafeInt(b.dorsal);
+    if (dorsalA !== dorsalB) return dorsalA - dorsalB;
+
+    return normalizeText(a.nombre).localeCompare(normalizeText(b.nombre), "es");
   });
 }
 
-function renderStats() {
-  const total = state.corredores.length;
-  const entregados = state.corredores.filter((c) => c.bolsa_entregada).length;
-  const pendientes = total - entregados;
-  const tickets = state.corredores.reduce((acc, c) => acc + Number(c.comida || 0), 0);
-
-  els.total.textContent = total;
-  els.entregados.textContent = entregados;
-  els.pendientes.textContent = pendientes;
-  els.tickets.textContent = tickets;
-}
-
-function getEstadoBadge(corredor) {
-  if (corredor.bolsa_entregada) {
-    return `<span class="delivery-badge delivery-badge--done">Entregado</span>`;
-  }
-
-  return `<span class="delivery-badge delivery-badge--pending">Pendiente</span>`;
-}
-
-function getComidaLabel(comida) {
-  const tickets = Number(comida || 0);
-
-  if (tickets === 0) return "Sin comida";
+function getFoodLabel(comida) {
+  const tickets = toSafeInt(comida);
+  if (tickets <= 0) return "Sin comida";
   if (tickets === 1) return "1 ticket";
   return `${tickets} tickets`;
 }
 
-function renderDesktopRows(corredores) {
-  els.tbody.innerHTML = corredores.map((corredor) => `
-    <tr class="${corredor.bolsa_entregada ? "row-delivered" : ""}">
-      <td>
-        <strong class="bib-number">${escapeHtml(corredor.dorsal || "—")}</strong>
-      </td>
-      <td>
-        <strong>${escapeHtml(corredor.nombre || "Sin nombre")}</strong>
-        <small>${escapeHtml(corredor.correo || "Sin correo")}</small>
-      </td>
-      <td>${escapeHtml(getComidaLabel(corredor.comida))}</td>
-      <td>${getEstadoBadge(corredor)}</td>
-      <td>
-        <input
-          class="notes-input"
-          type="text"
-          value="${escapeHtml(corredor.notas || "")}"
-          placeholder="Añadir nota..."
-          data-action="nota"
-          data-id="${escapeHtml(corredor.id)}"
-        />
-      </td>
-      <td>
-        <div class="delivery-actions">
-          <button
-            class="secondary-button compact-delivery-button"
-            type="button"
-            data-action="guardar-nota"
-            data-id="${escapeHtml(corredor.id)}">
-            Guardar
-          </button>
+function getStatusLabel(delivered) {
+  return delivered ? "Entregado" : "Pendiente";
+}
 
-          <button
-            class="${corredor.bolsa_entregada ? "secondary-button" : "primary-button"} compact-delivery-button"
-            type="button"
-            data-action="${corredor.bolsa_entregada ? "reabrir" : "entregar"}"
-            data-id="${escapeHtml(corredor.id)}">
-            ${corredor.bolsa_entregada ? "Reabrir" : "Entregar"}
+function renderStats(filteredCount) {
+  const total = state.runners.length;
+  const delivered = state.runners.filter((runner) => runner.bolsa_entregada).length;
+  const pending = total - delivered;
+  const foodTickets = state.runners.reduce((sum, runner) => sum + toSafeInt(runner.comida), 0);
+
+  elements.statTotal.textContent = total;
+  elements.statPending.textContent = pending;
+  elements.statDelivered.textContent = delivered;
+  elements.statFood.textContent = foodTickets;
+  elements.visibleCount.textContent = state.loading ? "Cargando..." : `${filteredCount} visibles`;
+}
+
+function renderTableRow(runner) {
+  const delivered = Boolean(runner.bolsa_entregada);
+  const pending = state.pendingIds.has(runner.id);
+  const note = runner.notas || "";
+
+  return `
+    <tr class="${delivered ? "runner-delivered" : ""}" data-runner-id="${escapeHtml(runner.id)}">
+      <td><span class="dorsal-chip">${escapeHtml(runner.dorsal || "--")}</span></td>
+      <td>
+        <div class="runner-main">
+          <span class="runner-name">${escapeHtml(runner.nombre || "Sin nombre")}</span>
+        </div>
+      </td>
+      <td><span class="runner-subtle">${escapeHtml(runner.correo || "Sin correo")}</span></td>
+      <td><span class="food-chip ${toSafeInt(runner.comida) <= 0 ? "no-food" : ""}">${escapeHtml(getFoodLabel(runner.comida))}</span></td>
+      <td><span class="status-chip ${delivered ? "delivered" : "pending"}">${getStatusLabel(delivered)}</span></td>
+      <td>
+        <input class="note-input" type="text" value="${escapeHtml(note)}" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}" />
+      </td>
+      <td>
+        <div class="runner-actions">
+          <button class="action-button save-note-button" type="button" data-action="save-note" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>Guardar nota</button>
+          <button class="action-button ${delivered ? "undo-button" : "deliver-button"}" type="button" data-action="${delivered ? "undo" : "deliver"}" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>
+            ${delivered ? "Reabrir" : "Entregar"}
           </button>
         </div>
       </td>
     </tr>
-  `).join("");
+  `;
 }
 
-function renderMobileCards(corredores) {
-  els.mobile.innerHTML = corredores.map((corredor) => `
-    <article class="delivery-card ${corredor.bolsa_entregada ? "delivery-card--done" : ""}">
-      <div class="delivery-card-header">
-        <div>
-          <span class="bib-number">Dorsal ${escapeHtml(corredor.dorsal || "—")}</span>
-          <h3>${escapeHtml(corredor.nombre || "Sin nombre")}</h3>
-          <p>${escapeHtml(corredor.correo || "Sin correo")}</p>
+function renderMobileCard(runner) {
+  const delivered = Boolean(runner.bolsa_entregada);
+  const pending = state.pendingIds.has(runner.id);
+  const note = runner.notas || "";
+
+  return `
+    <article class="runner-card ${delivered ? "runner-delivered" : ""}" data-runner-id="${escapeHtml(runner.id)}">
+      <div class="runner-card-top">
+        <div class="runner-card-info">
+          <span class="runner-card-name">${escapeHtml(runner.nombre || "Sin nombre")}</span>
+          <span class="runner-card-email">${escapeHtml(runner.correo || "Sin correo")}</span>
         </div>
-        ${getEstadoBadge(corredor)}
+        <span class="dorsal-chip">${escapeHtml(runner.dorsal || "--")}</span>
       </div>
 
-      <div class="delivery-card-meta">
-        <span>${escapeHtml(getComidaLabel(corredor.comida))}</span>
+      <div class="runner-card-meta">
+        <span class="food-chip ${toSafeInt(runner.comida) <= 0 ? "no-food" : ""}">${escapeHtml(getFoodLabel(runner.comida))}</span>
+        <span class="status-chip ${delivered ? "delivered" : "pending"}">${getStatusLabel(delivered)}</span>
       </div>
 
-      <label for="nota-mobile-${escapeHtml(corredor.id)}">Notas</label>
-      <input
-        id="nota-mobile-${escapeHtml(corredor.id)}"
-        class="notes-input"
-        type="text"
-        value="${escapeHtml(corredor.notas || "")}"
-        placeholder="Añadir nota..."
-        data-action="nota"
-        data-id="${escapeHtml(corredor.id)}"
-      />
+      <input class="note-input" type="text" value="${escapeHtml(note)}" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}" />
 
-      <div class="delivery-card-actions">
-        <button
-          class="secondary-button compact-delivery-button"
-          type="button"
-          data-action="guardar-nota"
-          data-id="${escapeHtml(corredor.id)}">
-          Guardar nota
-        </button>
-
-        <button
-          class="${corredor.bolsa_entregada ? "secondary-button" : "primary-button"} compact-delivery-button"
-          type="button"
-          data-action="${corredor.bolsa_entregada ? "reabrir" : "entregar"}"
-          data-id="${escapeHtml(corredor.id)}">
-          ${corredor.bolsa_entregada ? "Reabrir entrega" : "Marcar entregado"}
+      <div class="runner-actions">
+        <button class="action-button save-note-button" type="button" data-action="save-note" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>Guardar nota</button>
+        <button class="action-button ${delivered ? "undo-button" : "deliver-button"}" type="button" data-action="${delivered ? "undo" : "deliver"}" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>
+          ${delivered ? "Reabrir" : "Entregar pack"}
         </button>
       </div>
     </article>
-  `).join("");
+  `;
 }
 
 function render() {
-  const corredores = getFilteredCorredores();
+  const runners = getFilteredRunners();
+  renderStats(runners.length);
 
-  renderStats();
-  renderDesktopRows(corredores);
-  renderMobileCards(corredores);
+  elements.loading.style.display = state.loading ? "block" : "none";
+  elements.empty.style.display = !state.loading && runners.length === 0 ? "block" : "none";
 
-  const hasResults = corredores.length > 0;
-  els.empty.style.display = hasResults ? "none" : "block";
+  elements.tableBody.innerHTML = runners.map(renderTableRow).join("");
+  elements.mobileList.innerHTML = runners.map(renderMobileCard).join("");
 }
 
-function getCorredorRef(id) {
-  return doc(db, "corredores", id);
-}
-
-function getNotaValue(id) {
-  const input = document.querySelector(`.notes-input[data-id="${CSS.escape(id)}"]`);
+function getNoteValue(runnerId, sourceElement) {
+  const container = sourceElement.closest(`[data-runner-id="${CSS.escape(runnerId)}"]`);
+  const input = container?.querySelector(`[data-note-input="${CSS.escape(runnerId)}"]`);
   return input ? input.value.trim() : "";
 }
 
-async function guardarNota(id) {
-  const nota = getNotaValue(id);
-
-  await updateDoc(getCorredorRef(id), {
-    notas: nota,
-    actualizado_en: serverTimestamp()
-  });
-
-  showToast("Nota guardada");
-}
-
-async function entregarPack(id) {
-  const nota = getNotaValue(id);
-
-  await updateDoc(getCorredorRef(id), {
-    bolsa_entregada: true,
-    notas: nota,
-    entregado_en: serverTimestamp(),
-    actualizado_en: serverTimestamp()
-  });
-
-  showToast("Pack marcado como entregado");
-}
-
-async function reabrirEntrega(id) {
-  const nota = getNotaValue(id);
-
-  await updateDoc(getCorredorRef(id), {
-    bolsa_entregada: false,
-    notas: nota,
-    reabierto_en: serverTimestamp(),
-    actualizado_en: serverTimestamp()
-  });
-
-  showToast("Entrega reabierta");
-}
-
-async function handleAction(event) {
-  const button = event.target.closest("[data-action]");
-  if (!button) return;
-
-  const action = button.dataset.action;
-  const id = button.dataset.id;
-
-  if (!id || action === "nota") return;
-
-  button.disabled = true;
+async function updateRunner(runnerId, updates, successMessage) {
+  state.pendingIds.add(runnerId);
+  render();
 
   try {
-    if (action === "guardar-nota") await guardarNota(id);
-    if (action === "entregar") await entregarPack(id);
-    if (action === "reabrir") await reabrirEntrega(id);
+    await updateDoc(doc(db, COLLECTION_NAME, runnerId), {
+      ...updates,
+      actualizado_en: serverTimestamp()
+    });
+
+    showToast(successMessage);
   } catch (error) {
     console.error(error);
-    showToast("Error al guardar. Revisa conexión o permisos.");
+    showToast("No se ha podido guardar el cambio. Revisa permisos de Firestore.", true);
   } finally {
-    button.disabled = false;
+    state.pendingIds.delete(runnerId);
+    render();
+  }
+}
+
+function showToast(message, isError = false) {
+  elements.toast.textContent = message;
+  elements.toast.classList.toggle("is-error", isError);
+  elements.toast.classList.add("is-visible");
+
+  window.clearTimeout(showToast.timeoutId);
+  showToast.timeoutId = window.setTimeout(() => {
+    elements.toast.classList.remove("is-visible", "is-error");
+  }, 2400);
+}
+
+function handleActionClick(event) {
+  const button = event.target.closest("[data-action][data-runner-id]");
+  if (!button) return;
+
+  const runnerId = button.dataset.runnerId;
+  const action = button.dataset.action;
+  const note = getNoteValue(runnerId, button);
+
+  if (action === "save-note") {
+    updateRunner(runnerId, { notas: note }, "Nota guardada");
+    return;
+  }
+
+  if (action === "deliver") {
+    updateRunner(
+      runnerId,
+      {
+        notas: note,
+        bolsa_entregada: true,
+        entregado_en: serverTimestamp()
+      },
+      "Pack marcado como entregado"
+    );
+    return;
+  }
+
+  if (action === "undo") {
+    updateRunner(
+      runnerId,
+      {
+        notas: note,
+        bolsa_entregada: false,
+        reabierto_en: serverTimestamp()
+      },
+      "Entrega reabierta"
+    );
   }
 }
 
 function bindEvents() {
-  els.search.addEventListener("input", (event) => {
-    state.query = event.target.value;
+  elements.search.addEventListener("input", (event) => {
+    state.search = event.target.value;
     render();
   });
 
-  els.estado.addEventListener("change", (event) => {
-    state.filtroEstado = event.target.value;
+  elements.status.addEventListener("change", (event) => {
+    state.status = event.target.value;
     render();
   });
 
-  document.addEventListener("click", handleAction);
+  elements.order.addEventListener("change", (event) => {
+    state.order = event.target.value;
+    render();
+  });
+
+  document.addEventListener("click", handleActionClick);
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") return;
+    const input = event.target.closest(".note-input");
+    if (!input) return;
+
+    event.preventDefault();
+    input.blur();
+  });
 }
 
-function subscribeCorredores() {
-  onSnapshot(collection(db, "corredores"), (snapshot) => {
-    state.corredores = snapshot.docs
-      .map((documentSnapshot) => ({
-        id: documentSnapshot.id,
-        ...documentSnapshot.data()
-      }))
-      .sort((a, b) => {
-        const dorsalA = Number(a.dorsal);
-        const dorsalB = Number(b.dorsal);
+function subscribeToFirestore() {
+  const corredoresRef = collection(db, COLLECTION_NAME);
 
-        if (!Number.isNaN(dorsalA) && !Number.isNaN(dorsalB)) {
-          return dorsalA - dorsalB;
-        }
+  onSnapshot(
+    corredoresRef,
+    (snapshot) => {
+      state.runners = snapshot.docs.map((documentSnapshot) => {
+        const data = documentSnapshot.data();
 
-        return String(a.nombre || "").localeCompare(String(b.nombre || ""), "es");
+        return {
+          id: documentSnapshot.id,
+          correo: data.correo || "",
+          nombre: data.nombre || "",
+          dorsal: data.dorsal || "",
+          comida: Number.isFinite(Number(data.comida)) ? Number(data.comida) : 0,
+          bolsa_entregada: Boolean(data.bolsa_entregada),
+          notas: data.notas || ""
+        };
       });
 
-    render();
-  }, (error) => {
-    console.error(error);
-    showToast("No se han podido cargar los corredores.");
-  });
+      state.loading = false;
+      render();
+    },
+    (error) => {
+      console.error(error);
+      state.loading = false;
+      render();
+      showToast("No se han podido cargar los corredores. Revisa reglas de Firestore.", true);
+    }
+  );
 }
 
 bindEvents();
-subscribeCorredores();
+render();
+subscribeToFirestore();
