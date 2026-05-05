@@ -466,3 +466,116 @@
   font-weight: 950;
   white-space: nowrap;
 }
+
+/* ===== TABLA MÁS ANCHA EN ESCRITORIO, SIN SCROLL ===== */
+@media (min-width: 1000px) {
+  /* Usa casi todo el ancho disponible del navegador, pero con límite para que no quede desparramada. */
+  .dorsales-container {
+    width: min(1640px, calc(100vw - 32px));
+    max-width: 1640px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .dorsales-card {
+    overflow: visible;
+  }
+
+  .dorsales-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+  }
+
+  .dorsales-table th,
+  .dorsales-table td {
+    padding: 10px 10px;
+  }
+
+  /* Reparto pensado para que correo y acciones tengan espacio real. */
+  .dorsales-table th:nth-child(1),
+  .dorsales-table td:nth-child(1) {
+    width: 6%;
+  }
+
+  .dorsales-table th:nth-child(2),
+  .dorsales-table td:nth-child(2) {
+    width: 15%;
+  }
+
+  .dorsales-table th:nth-child(3),
+  .dorsales-table td:nth-child(3) {
+    width: 25%;
+  }
+
+  .dorsales-table th:nth-child(4),
+  .dorsales-table td:nth-child(4) {
+    width: 11%;
+  }
+
+  .dorsales-table th:nth-child(5),
+  .dorsales-table td:nth-child(5) {
+    width: 9%;
+  }
+
+  .dorsales-table th:nth-child(6),
+  .dorsales-table td:nth-child(6) {
+    width: 9%;
+  }
+
+  .dorsales-table th:nth-child(7),
+  .dorsales-table td:nth-child(7) {
+    width: 12%;
+    min-width: 0;
+  }
+
+  .dorsales-table th:nth-child(8),
+  .dorsales-table td:nth-child(8) {
+    width: 13%;
+    min-width: 180px;
+  }
+
+  .runner-subtle {
+    display: block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    overflow-wrap: normal;
+    text-overflow: ellipsis;
+  }
+
+  .dorsales-table .runner-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: 7px;
+    min-width: 0;
+  }
+
+  .dorsales-table .action-button {
+    width: 100%;
+    min-height: 38px;
+    padding: 8px 10px;
+    font-size: 12px;
+    line-height: 1.15;
+    white-space: nowrap;
+  }
+
+  .dorsales-table .undo-button {
+    white-space: normal;
+  }
+}
+
+@media (min-width: 1400px) {
+  .dorsales-container {
+    width: min(1680px, calc(100vw - 48px));
+    max-width: 1680px;
+  }
+
+  .dorsales-table th,
+  .dorsales-table td {
+    padding: 12px 12px;
+  }
+}
