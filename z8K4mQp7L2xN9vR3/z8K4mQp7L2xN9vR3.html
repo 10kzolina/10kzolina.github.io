@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f6f47" />
+  <title>Inscripciones | 10K Zolina</title>
+  <meta name="description" content="Consulta el total de corredores inscritos en la 10K Zolina y el reparto por recorrido: Txiki, 5K marcha, 5K carrera y 10K carrera.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="./styles_inscripciones.css" />
+
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" href="../favicon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <meta property="og:title" content="Inscripciones | 10K Zolina">
+  <meta property="og:description" content="Total de corredores inscritos y reparto por recorrido.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://10kzolina.github.io/inscripciones.html">
+  <meta property="og:image" content="https://10kzolina.github.io/img/logo-zolina.png">
+  <meta property="og:site_name" content="10K Zolina">
+  <meta property="og:locale" content="es_ES">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Inscripciones | 10K Zolina">
+  <meta name="twitter:description" content="Consulta el total de corredores inscritos y el reparto por recorrido.">
+  <meta name="twitter:image" content="https://10kzolina.github.io/img/logo-zolina.png">
+  <link rel="canonical" href="https://10kzolina.github.io/inscripciones.html">
+</head>
+<body class="inscripciones-page">
+  <div class="noise"></div>
+
+  <header class="site-header compact-header">
+    <a class="brand" href="index.html" aria-label="Volver a inicio">
+      <img class="brand-logo" src="img/logo-zolina.png" alt="10K Zolina Carrera Solidaria" />
+    </a>
+
+    <input class="nav-toggle" type="checkbox" id="nav-toggle" aria-label="Abrir menú de navegación" />
+    <label class="nav-toggle-button" for="nav-toggle">
+      <span class="nav-toggle-lines" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+      <span class="nav-toggle-label">Menú</span>
+    </label>
+
+    <nav class="nav-actions" id="main-navigation" aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a href="carreras.html">Recorridos</a>
+      <a href="inscripciones.html" class="nav-pill">Inscripciones</a>
+      <a href="kiloreto.html">Kiloreto</a>
+      <a href="challenge.html">KOM Challenge</a>
+      <a href="resultados.html">Resultados</a>
+      <a href="colaboradores.html">Colaboradores</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+  <main class="container inscripciones-container" data-inscripciones-page>
+    <section class="inscripciones-hero reveal" aria-labelledby="inscripciones-title">
+      <div class="inscripciones-hero-copy">
+        <p class="eyebrow">Inscripciones en directo</p>
+        <h1 id="inscripciones-title">Corredores inscritos</h1>
+        <p>
+          Recuento automático a partir de la hoja pública de respuestas. Cada fila puede contener varios corredores,
+          por eso se contabiliza cada columna de recorrido completada.
+        </p>
+
+        <div class="inscripciones-status-row" aria-live="polite">
+          <span class="inscripciones-status-dot" data-status-dot></span>
+          <span id="inscripciones-status">Cargando datos de la hoja...</span>
+        </div>
+      </div>
+
+      <aside class="inscripciones-total-panel" aria-label="Total de corredores">
+        <span>Total corredores</span>
+        <strong data-total-count>...</strong>
+        <small data-total-caption>Calculando inscripciones</small>
+      </aside>
+    </section>
+
+    <section class="inscripciones-kpi-grid reveal delay-1" aria-label="Corredores por recorrido">
+      <article class="inscripciones-kpi-card txiki-card" data-route-card="txiki">
+        <span class="route-badge">Txiki</span>
+        <div class="kpi-card-head">
+          <h2>Txiki</h2>
+          <strong data-route-count="txiki">...</strong>
+        </div>
+        <div class="route-progress" aria-hidden="true">
+          <span data-route-bar="txiki"></span>
+        </div>
+        <p><span data-route-percent="txiki">0%</span> del total de corredores</p>
+      </article>
+
+      <article class="inscripciones-kpi-card marcha-card" data-route-card="marcha5k">
+        <span class="route-badge">5K marcha</span>
+        <div class="kpi-card-head">
+          <h2>5K Marcha</h2>
+          <strong data-route-count="marcha5k">...</strong>
+        </div>
+        <div class="route-progress" aria-hidden="true">
+          <span data-route-bar="marcha5k"></span>
+        </div>
+        <p><span data-route-percent="marcha5k">0%</span> del total de corredores</p>
+      </article>
+
+      <article class="inscripciones-kpi-card carrera5-card" data-route-card="carrera5k">
+        <span class="route-badge">5K carrera</span>
+        <div class="kpi-card-head">
+          <h2>5K Carrera</h2>
+          <strong data-route-count="carrera5k">...</strong>
+        </div>
+        <div class="route-progress" aria-hidden="true">
+          <span data-route-bar="carrera5k"></span>
+        </div>
+        <p><span data-route-percent="carrera5k">0%</span> del total de corredores</p>
+      </article>
+
+      <article class="inscripciones-kpi-card carrera10-card" data-route-card="carrera10k">
+        <span class="route-badge">10K carrera</span>
+        <div class="kpi-card-head">
+          <h2>10K Carrera</h2>
+          <strong data-route-count="carrera10k">...</strong>
+        </div>
+        <div class="route-progress" aria-hidden="true">
+          <span data-route-bar="carrera10k"></span>
+        </div>
+        <p><span data-route-percent="carrera10k">0%</span> del total de corredores</p>
+      </article>
+    </section>
+
+    <section class="inscripciones-detail-grid reveal delay-2">
+      <article class="inscripciones-panel">
+        <div class="section-title-row">
+          <div>
+            <p class="eyebrow">Resumen</p>
+            <h2>Participación por recorrido</h2>
+          </div>
+          <span class="soft-pill" data-registration-count>0 inscripciones</span>
+        </div>
+
+        <div class="route-summary-list">
+          <div class="route-summary-row">
+            <span>Txiki</span>
+            <strong data-route-list-count="txiki">0</strong>
+          </div>
+          <div class="route-summary-row">
+            <span>5K Marcha</span>
+            <strong data-route-list-count="marcha5k">0</strong>
+          </div>
+          <div class="route-summary-row">
+            <span>5K Carrera</span>
+            <strong data-route-list-count="carrera5k">0</strong>
+          </div>
+          <div class="route-summary-row">
+            <span>10K Carrera</span>
+            <strong data-route-list-count="carrera10k">0</strong>
+          </div>
+        </div>
+
+        <p class="inscripciones-warning" data-warning hidden></p>
+      </article>
+
+      <aside class="inscripciones-panel inscripciones-source-panel">
+        <img src="../img/logo-zolina-vertical.jpeg" alt="Logo vertical 10K Zolina" />
+        <div>
+          <p class="eyebrow">Fuente</p>
+          <h2>Google Sheets</h2>
+          <p>
+            La página lee la hoja de respuestas sin publicar datos personales. Solo suma los recorridos indicados
+            en cada inscripción.
+          </p>
+          <div class="source-actions">
+            <a class="secondary-button" href="https://docs.google.com/spreadsheets/d/1sb-6U1vdkLhYuXA5oIiC8RiZHUQu2xwaJMZJo65mOj4/edit?usp=sharing" target="_blank" rel="noopener">Ver hoja</a>
+            <button class="primary-button" type="button" data-refresh-inscripciones>Actualizar</button>
+          </div>
+          <span class="source-updated" data-last-updated>Datos pendientes de cargar</span>
+        </div>
+      </aside>
+    </section>
+
+    <noscript>
+      <p class="inscripciones-noscript">
+        Activa JavaScript para cargar el recuento actualizado desde Google Sheets.
+      </p>
+    </noscript>
+  </main>
+
+  <footer class="site-footer" data-site-footer></footer>
+
+  <script src="app.js"></script>
+  <script src="inscripciones.js"></script>
+</body>
+</html>
