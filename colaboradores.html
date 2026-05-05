@@ -4,30 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0f6f47" />
-  <title>Reto Strava | 10K Zolina</title>
-  <meta name="description" content="Reto Strava de la 10K Zolina: completa el segmento oficial, sube tu actividad y compite por el mejor tiempo antes del 22 de mayo.">
+  <title>Colaboradores | 10K Zolina</title>
+  <meta name="description" content="Conoce a las empresas, clubes y entidades colaboradoras que apoyan la 10K Zolina con material, alimentos, servicios e infraestructura.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <meta property="og:title" content="Reto Strava | 10K Zolina">
-  <meta property="og:description" content="Completa el segmento oficial de la 10K Zolina, sube la actividad a Strava y participa en el KOM Challenge.">
+  <meta property="og:title" content="Colaboradores | 10K Zolina">
+  <meta property="og:description" content="Empresas, clubes y entidades que hacen posible la 10K Zolina y su reto solidario.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://10kzolina.github.io/challenge.html">
-  <meta property="og:image" content="https://10kzolina.github.io/img/cartel-kom-challenge.jpg">
+  <meta property="og:url" content="https://10kzolina.github.io/colaboradores.html">
+  <meta property="og:image" content="https://10kzolina.github.io/img/logo-zolina.png">
   <meta property="og:site_name" content="10K Zolina">
   <meta property="og:locale" content="es_ES">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Reto Strava | 10K Zolina">
-  <meta name="twitter:description" content="Segmento oficial, premios y condiciones del KOM Challenge de la 10K Zolina.">
-  <meta name="twitter:image" content="https://10kzolina.github.io/img/cartel-kom-challenge.jpg">
-  <link rel="canonical" href="https://10kzolina.github.io/challenge.html">
+  <meta name="twitter:title" content="Colaboradores | 10K Zolina">
+  <meta name="twitter:description" content="Listado de colaboradores y patrocinadores de la 10K Zolina.">
+  <meta name="twitter:image" content="https://10kzolina.github.io/img/logo-zolina.png">
+  <link rel="canonical" href="https://10kzolina.github.io/colaboradores.html">
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BD2PFX9LL"></script>
@@ -38,8 +37,9 @@
 
     gtag('config', 'G-9BD2PFX9LL');
   </script>
+
 </head>
-<body class="challenge-page">
+<body class="partners-page">
   <div class="noise"></div>
 
   <header class="site-header compact-header">
@@ -61,80 +61,59 @@
       <a href="index.html">Inicio</a>
       <a href="carreras.html">Recorridos</a>
       <a href="kiloreto.html">Kiloreto</a>
-      <a href="challenge.html" class="nav-pill">KOM Challenge</a>
+      <a href="challenge.html">KOM Challenge</a>
       <a href="resultados.html">Resultados</a>
-      <a href="colaboradores.html">Colaboradores</a>
+      <a href="colaboradores.html" class="nav-pill">Colaboradores</a>
       <a href="contacto.html">Contacto</a>
     </nav>
   </header>
 
+
   <main class="container">
-    <section class="challenge-hero reveal">
+    <section class="partners-hero reveal">
       <div>
-        <p class="eyebrow">Segmento Zolina</p>
-        <h1>KOM Challenge</h1>
+        <p class="eyebrow">Gracias por hacerlo posible</p>
+        <h1>Colaboradores</h1>
         <p>
-          ¡Premio asegurado! Completa el recorrido oficial de la 10K Zolina, sube la actividad a Strava
-          y demuestra quién marca el mejor tiempo en el segmento.
+          Empresas y entidades que apoyan la 10K Zolina con material, comida,
+          infraestructura o ayuda para que la carrera salga adelante.
         </p>
-        <div class="hero-actions compact-actions">
-          <a href="https://strava.app.link/L0Bdf7REB2b" class="primary-button" target="_blank" rel="noopener">Abrir Strava</a>
-          <a href="img/cartel-kom-challenge.jpg" class="secondary-button" target="_blank" rel="noopener">Ver cartel oficial</a>
+        <div class="hero-actions compact-actions single-action">
+          <a href="https://forms.gle/9uEHps9BrEYXebt8A" class="primary-button collaborate-button" target="_blank" rel="noopener">Hazte Voluntario</a>
         </div>
       </div>
 
-      <div class="challenge-hero-card">
-        <span>🏆</span>
-        <strong>Premio sorpresa</strong>
-        <small>para todos los participantes + premio especial para el mejor tiempo</small>
+      <div class="partners-hero-card">
+        <span>🤝</span>
+        <strong id="partner-count">0</strong>
+        <small>colaboradores</small>
       </div>
     </section>
 
-    <section class="challenge-detail-grid reveal delay-1">
-      <article class="challenge-info-card">
-        <span class="contact-icon">🎁</span>
-        <h2>Premio</h2>
-        <p>Todos los participantes reciben un pequeño premio. La persona que consiga el mejor tiempo validado en el segmento oficial se llevará un premio especial.</p>
-        
-      </article>
-
-      <article class="challenge-info-card">
-        <span class="contact-icon">📍</span>
-        <h2>Recorrido</h2>
-        <p>Segmento oficial de la 10K Zolina con salida y zona de referencia en Badostáin.</p>
-        <ul class="challenge-list">
-          <li><strong>Distancia:</strong> 10,22 km</li>
-          <li><strong>Desnivel positivo:</strong> 267 m</li>
-          <li><strong>Plazo:</strong> del 25 de abril al 22 de mayo a las 23:59 h</li>
-        </ul>
-      </article>
-
-      <article class="challenge-info-card">
-        <span class="contact-icon">✅</span>
-        <h2>Condiciones</h2>
-        <p>Para entrar en la clasificación del reto debes cumplir las condiciones indicadas por la organización.</p>
-        <ul class="challenge-list">
-          <li>Subir la actividad a Strava.</li>
-          <li>Estar inscrito en la 10K Zolina.</li>
-          <li>Seguir a la carrera en Instagram: <a href="https://www.instagram.com/10kzolina" target="_blank" rel="noopener">@10kzolina</a>.</li>
-        </ul>
-        <a href="contacto.html" class="secondary-button challenge-inline-button">Tengo dudas</a>
-      </article>
-    </section>
-
-    <section class="poster-section reveal delay-2">
-      <div class="section-title-row">
-        <div>
-          <p class="eyebrow">Cartel oficial</p>
-          <h2>Segmento Zolina KOM Challenge</h2>
-        </div>
-        <span class="soft-pill">Strava · 10K Zolina</span>
+    <section class="partners-toolbar reveal delay-1" aria-label="Filtros de colaboradores">
+      <div class="filter-group search-group">
+        <label for="buscar-colaborador">Buscar colaborador</label>
+        <input id="buscar-colaborador" type="search" placeholder="Nombre, donación, descripción..." autocomplete="off" />
       </div>
-      <img class="challenge-poster" src="img/cartel-kom-challenge.jpg" alt="Cartel oficial Segmento Zolina KOM Challenge" />
+
+      <div class="filter-group">
+        <label for="tipo-colaborador">Tipo</label>
+        <select id="tipo-colaborador">
+          <option value="Todos">Todos</option>
+          <option value="Material">Material</option>
+          <option value="Alimentos">Alimentos</option>
+          <option value="Servicios">Servicios</option>
+          <option value="Institucional">Institucional</option>
+        </select>
+      </div>
     </section>
+
+    <section id="partners-grid" class="partners-grid reveal delay-2" aria-label="Listado de colaboradores"></section>
+    <p id="sin-colaboradores" class="empty-message">No hay colaboradores para esta búsqueda.</p>
   </main>
 
   <footer class="site-footer" data-site-footer></footer>
+
   <script src="app.js"></script>
 </body>
 </html>

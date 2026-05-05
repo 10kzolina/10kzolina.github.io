@@ -1,468 +1,541 @@
-/* Página interna de recogida de dorsales. Se añade como CSS extra, sin modificar styles.css. */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  doc,
+  onSnapshot,
+  updateDoc,
+  runTransaction,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
-.dorsales-page .site-header {
-  top: 0;
+const firebaseConfig = {
+  apiKey: "AIzaSyCyEfdhjarJRPKIL4vB6uDOFumWdOJi124",
+  authDomain: "dorsales-b3177.firebaseapp.com",
+  projectId: "dorsales-b3177",
+  storageBucket: "dorsales-b3177.firebasestorage.app",
+  messagingSenderId: "775171249677",
+  appId: "1:775171249677:web:390c17ec6e7e266c7ba744",
+  measurementId: "G-6E53XY30F4"
+};
+
+const COLLECTION_NAME = "corredores";
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const state = {
+  runners: [],
+  search: "",
+  status: "todos",
+  order: "dorsal",
+  loading: true,
+  pendingIds: new Set(),
+  dirtyNotes: new Map()
+};
+
+const elements = {
+  search: document.getElementById("busqueda-dorsales"),
+  status: document.getElementById("estado-dorsales"),
+  order: document.getElementById("orden-dorsales"),
+  tableBody: document.getElementById("tabla-corredores"),
+  mobileList: document.getElementById("mobile-corredores"),
+  empty: document.getElementById("sin-corredores"),
+  loading: document.getElementById("loading-state"),
+  visibleCount: document.getElementById("visible-count"),
+  statTotal: document.getElementById("stat-total"),
+  statPending: document.getElementById("stat-pendientes"),
+  statDelivered: document.getElementById("stat-entregados"),
+  statFood: document.getElementById("stat-comida"),
+  toast: document.getElementById("toast")
+};
+
+function normalizeText(value) {
+  return String(value || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
 }
 
-.private-header {
-  min-height: 72px;
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
-.private-header-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  border: 1px solid rgba(15, 111, 71, 0.14);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
-  color: var(--green-deep);
-  font-size: 13px;
-  font-weight: 900;
-  white-space: nowrap;
+function toSafeInt(value) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) ? parsed : 0;
 }
 
-.private-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 0 5px rgba(22, 161, 99, 0.12);
+function normalizeRunner(documentId, data = {}) {
+  return {
+    id: documentId,
+    correo: data.correo || "",
+    nombre: data.nombre || "",
+    dorsal: data.dorsal || "",
+    carrera: data.carrera || "",
+    comida: Number.isFinite(Number(data.comida)) ? Number(data.comida) : 0,
+    bolsa_entregada: Boolean(data.bolsa_entregada),
+    notas: typeof data.notas === "string" ? data.notas : String(data.notas || "")
+  };
 }
 
-.dorsales-container {
-  padding-top: 28px;
-}
+function mergeRunnerFromFirestore(runnerId, data = {}) {
+  const index = state.runners.findIndex((runner) => runner.id === runnerId);
+  const normalized = normalizeRunner(runnerId, data);
 
-.dorsales-hero {
-  margin-bottom: 18px;
-  border-radius: 34px;
-  padding: clamp(24px, 5vw, 48px);
-}
-
-.dorsales-hero h1 {
-  margin-bottom: 14px;
-  font-size: clamp(54px, 10vw, 112px);
-}
-
-.dorsales-hero p:not(.eyebrow) {
-  max-width: 720px;
-  color: var(--muted);
-  font-size: clamp(16px, 2vw, 21px);
-  font-weight: 750;
-  line-height: 1.48;
-}
-
-.dorsales-summary {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.dorsales-filters {
-  display: grid;
-  grid-template-columns: minmax(240px, 1fr) minmax(150px, 0.25fr) minmax(160px, 0.25fr);
-  gap: 14px;
-  margin-bottom: 18px;
-  padding: 18px;
-  border-radius: 28px;
-}
-
-.dorsales-card {
-  overflow: hidden;
-  border-radius: 30px;
-}
-
-.dorsales-title-row {
-  padding: 24px 24px 0;
-}
-
-.dorsales-title-row h2 {
-  margin: 0;
-  color: var(--green-deep);
-  font-size: clamp(28px, 4vw, 42px);
-  letter-spacing: -0.05em;
-}
-
-.dorsales-loading {
-  margin: 18px 24px 24px;
-  padding: 18px;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.74);
-  color: var(--muted);
-  font-weight: 850;
-}
-
-.dorsales-table th,
-.dorsales-table td {
-  vertical-align: middle;
-}
-
-.dorsales-table td:nth-child(7) {
-  min-width: 260px;
-}
-
-.runner-main {
-  display: grid;
-  gap: 4px;
-}
-
-.runner-name {
-  color: var(--green-deep);
-  font-weight: 950;
-}
-
-.runner-subtle {
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 750;
-  overflow-wrap: anywhere;
-}
-
-.dorsal-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 58px;
-  min-height: 38px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--green-deep), var(--green));
-  color: white;
-  font-size: 17px;
-  font-weight: 950;
-  letter-spacing: -0.03em;
-}
-
-.food-chip,
-.race-chip,
-.status-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 34px;
-  padding: 7px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 950;
-  white-space: nowrap;
-}
-
-.race-chip {
-  border: 1px solid rgba(15, 111, 71, 0.16);
-  background: rgba(232, 247, 239, 0.92);
-  color: var(--green-deep);
-}
-
-.food-chip {
-  border: 1px solid rgba(251, 146, 60, 0.24);
-  background: #fff7ed;
-  color: #9a3412;
-}
-
-.food-chip.no-food {
-  border-color: var(--border);
-  background: rgba(232, 247, 239, 0.72);
-  color: var(--muted);
-}
-
-.status-chip.delivered {
-  background: rgba(22, 161, 99, 0.12);
-  color: var(--green-dark);
-}
-
-.status-chip.pending {
-  background: rgba(250, 204, 21, 0.18);
-  color: #854d0e;
-}
-
-.note-cell {
-  display: grid;
-  gap: 8px;
-}
-
-
-.note-input {
-  width: 100%;
-  min-height: 46px;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  resize: vertical;
-  background: white;
-  color: var(--text);
-  font: inherit;
-  font-size: 14px;
-  line-height: 1.35;
-}
-
-.note-input:focus {
-  border-color: rgba(22, 161, 99, 0.5);
-  box-shadow: 0 0 0 4px rgba(22, 161, 99, 0.12);
-  outline: none;
-}
-
-.runner-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
-
-.action-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 40px;
-  padding: 10px 13px;
-  border: 0;
-  border-radius: 999px;
-  cursor: pointer;
-  font: inherit;
-  font-size: 13px;
-  font-weight: 950;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
-}
-
-.action-button:hover:not(:disabled) {
-  transform: translateY(-1px);
-}
-
-.action-button:disabled {
-  cursor: wait;
-  opacity: 0.66;
-}
-
-.deliver-button {
-  background: linear-gradient(135deg, var(--green-deep), var(--green));
-  box-shadow: 0 12px 26px rgba(15, 111, 71, 0.18);
-  color: white;
-}
-
-.save-note-button {
-  border: 1px solid var(--border);
-  background: white;
-  color: var(--green-deep);
-}
-
-.undo-button {
-  border: 1px solid rgba(251, 146, 60, 0.5);
-  background: linear-gradient(135deg, #ffedd5, #fdba74);
-  box-shadow: 0 12px 26px rgba(251, 146, 60, 0.16);
-  color: #7c2d12;
-}
-
-.runner-delivered {
-  background: rgba(232, 247, 239, 0.46);
-}
-
-.runner-delivered .dorsal-chip {
-  background: linear-gradient(135deg, #64748b, var(--green-dark));
-}
-
-.dorsales-mobile-results {
-  display: none;
-}
-
-.runner-card {
-  display: grid;
-  gap: 13px;
-  padding: 16px;
-  border: 1px solid var(--border);
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.86);
-  box-shadow: 0 14px 34px rgba(15, 111, 71, 0.07);
-}
-
-.runner-card.runner-delivered {
-  border-color: rgba(22, 161, 99, 0.24);
-  background: rgba(232, 247, 239, 0.86);
-}
-
-.runner-card-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.runner-card-info {
-  min-width: 0;
-  display: grid;
-  gap: 6px;
-}
-
-.runner-card-name {
-  color: var(--green-deep);
-  font-size: 18px;
-  font-weight: 950;
-  line-height: 1.15;
-}
-
-.runner-card-email {
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 750;
-  overflow-wrap: anywhere;
-}
-
-.runner-card-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.runner-card .note-input {
-  min-height: 58px;
-  font-size: 16px;
-}
-
-.runner-card .runner-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-.runner-card .deliver-button,
-.runner-card .undo-button {
-  grid-column: 1 / -1;
-}
-
-.toast {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 60;
-  max-width: min(420px, calc(100vw - 36px));
-  padding: 13px 16px;
-  border-radius: 16px;
-  background: var(--green-deep);
-  color: white;
-  box-shadow: 0 20px 55px rgba(7, 63, 42, 0.28);
-  font-size: 14px;
-  font-weight: 900;
-  opacity: 0;
-  transform: translateY(12px);
-  pointer-events: none;
-  transition: opacity 0.18s ease, transform 0.18s ease;
-}
-
-.toast.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.toast.is-error {
-  background: #991b1b;
-}
-
-@media (max-width: 900px) {
-  .dorsales-summary {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  if (index === -1) {
+    state.runners.push(normalized);
+    return;
   }
 
-  .dorsales-filters {
-    grid-template-columns: 1fr;
+  state.runners[index] = {
+    ...state.runners[index],
+    ...normalized
+  };
+}
+
+function getRunner(runnerId) {
+  return state.runners.find((runner) => runner.id === runnerId) || null;
+}
+
+function getRunnerSearchText(runner) {
+  const visibleNote = state.dirtyNotes.has(runner.id) ? state.dirtyNotes.get(runner.id) : runner.notas;
+  return normalizeText(`${runner.nombre} ${runner.correo} ${runner.dorsal} ${runner.carrera} ${visibleNote}`);
+}
+
+function compareByDorsal(a, b) {
+  const dorsalA = toSafeInt(a.dorsal);
+  const dorsalB = toSafeInt(b.dorsal);
+
+  if (dorsalA !== dorsalB) return dorsalA - dorsalB;
+  return normalizeText(a.nombre).localeCompare(normalizeText(b.nombre), "es");
+}
+
+function getFilteredRunners() {
+  const query = normalizeText(state.search);
+
+  const filtered = state.runners.filter((runner) => {
+    const matchesSearch = !query || getRunnerSearchText(runner).includes(query);
+    const matchesStatus =
+      state.status === "todos" ||
+      (state.status === "pendientes" && !runner.bolsa_entregada) ||
+      (state.status === "entregados" && runner.bolsa_entregada);
+
+    return matchesSearch && matchesStatus;
+  });
+
+  return filtered.sort((a, b) => {
+    if (state.order === "nombre") {
+      return normalizeText(a.nombre).localeCompare(normalizeText(b.nombre), "es");
+    }
+
+    if (state.order === "carrera") {
+      const byRace = normalizeText(a.carrera).localeCompare(normalizeText(b.carrera), "es");
+      if (byRace !== 0) return byRace;
+      return compareByDorsal(a, b);
+    }
+
+    if (state.order === "estado") {
+      if (a.bolsa_entregada !== b.bolsa_entregada) return a.bolsa_entregada ? 1 : -1;
+      return compareByDorsal(a, b);
+    }
+
+    return compareByDorsal(a, b);
+  });
+}
+
+function getFoodLabel(comida) {
+  const tickets = toSafeInt(comida);
+  if (tickets <= 0) return "Sin comida";
+  if (tickets === 1) return "1 ticket";
+  return `${tickets} tickets`;
+}
+
+function getRaceLabel(carrera) {
+  const cleanRace = String(carrera || "").trim();
+  return cleanRace || "Sin carrera";
+}
+
+function getStatusLabel(delivered) {
+  return delivered ? "Entregado" : "Pendiente";
+}
+
+function getCurrentNote(runner) {
+  if (state.dirtyNotes.has(runner.id)) {
+    return state.dirtyNotes.get(runner.id);
+  }
+
+  return runner.notas || "";
+}
+
+function getNoteDirtyMarkup(isDirty) {
+  return isDirty ? `<span class="note-dirty-label">Sin guardar</span>` : "";
+}
+
+function renderStats(filteredCount) {
+  const total = state.runners.length;
+  const delivered = state.runners.filter((runner) => runner.bolsa_entregada).length;
+  const pending = total - delivered;
+  const foodTickets = state.runners.reduce((sum, runner) => sum + toSafeInt(runner.comida), 0);
+
+  elements.statTotal.textContent = total;
+  elements.statPending.textContent = pending;
+  elements.statDelivered.textContent = delivered;
+  elements.statFood.textContent = foodTickets;
+  elements.visibleCount.textContent = state.loading ? "Cargando..." : `${filteredCount} visibles`;
+}
+
+function renderTableRow(runner) {
+  const delivered = Boolean(runner.bolsa_entregada);
+  const pending = state.pendingIds.has(runner.id);
+  const isDirty = state.dirtyNotes.has(runner.id);
+  const note = getCurrentNote(runner);
+
+  return `
+    <tr class="${delivered ? "runner-delivered" : ""}" data-runner-id="${escapeHtml(runner.id)}">
+      <td><span class="dorsal-chip">${escapeHtml(runner.dorsal || "--")}</span></td>
+      <td>
+        <div class="runner-main">
+          <span class="runner-name">${escapeHtml(runner.nombre || "Sin nombre")}</span>
+        </div>
+      </td>
+      <td><span class="runner-subtle">${escapeHtml(runner.correo || "Sin correo")}</span></td>
+      <td><span class="race-chip">${escapeHtml(getRaceLabel(runner.carrera))}</span></td>
+      <td><span class="food-chip ${toSafeInt(runner.comida) <= 0 ? "no-food" : ""}">${escapeHtml(getFoodLabel(runner.comida))}</span></td>
+      <td><span class="status-chip ${delivered ? "delivered" : "pending"}">${getStatusLabel(delivered)}</span></td>
+      <td>
+        <div class="note-cell">
+          <textarea class="note-input" rows="2" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}">${escapeHtml(note)}</textarea>
+          ${getNoteDirtyMarkup(isDirty)}
+        </div>
+      </td>
+      <td>
+        <div class="runner-actions">
+          <button class="action-button save-note-button" type="button" data-action="save-note" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>Guardar nota</button>
+          <button class="action-button ${delivered ? "undo-button" : "deliver-button"}" type="button" data-action="${delivered ? "undo" : "deliver"}" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>
+            ${delivered ? "Entregado · reabrir" : "Entregar"}
+          </button>
+        </div>
+      </td>
+    </tr>
+  `;
+}
+
+function renderMobileCard(runner) {
+  const delivered = Boolean(runner.bolsa_entregada);
+  const pending = state.pendingIds.has(runner.id);
+  const isDirty = state.dirtyNotes.has(runner.id);
+  const note = getCurrentNote(runner);
+
+  return `
+    <article class="runner-card ${delivered ? "runner-delivered" : ""}" data-runner-id="${escapeHtml(runner.id)}">
+      <div class="runner-card-top">
+        <div class="runner-card-info">
+          <span class="runner-card-name">${escapeHtml(runner.nombre || "Sin nombre")}</span>
+          <span class="runner-card-email">${escapeHtml(runner.correo || "Sin correo")}</span>
+        </div>
+        <span class="dorsal-chip">${escapeHtml(runner.dorsal || "--")}</span>
+      </div>
+
+      <div class="runner-card-meta">
+        <span class="race-chip">${escapeHtml(getRaceLabel(runner.carrera))}</span>
+        <span class="food-chip ${toSafeInt(runner.comida) <= 0 ? "no-food" : ""}">${escapeHtml(getFoodLabel(runner.comida))}</span>
+        <span class="status-chip ${delivered ? "delivered" : "pending"}">${getStatusLabel(delivered)}</span>
+      </div>
+
+      <div class="note-cell">
+        <textarea class="note-input" rows="2" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}">${escapeHtml(note)}</textarea>
+        ${getNoteDirtyMarkup(isDirty)}
+      </div>
+
+      <div class="runner-actions">
+        <button class="action-button save-note-button" type="button" data-action="save-note" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>Guardar nota</button>
+        <button class="action-button ${delivered ? "undo-button" : "deliver-button"}" type="button" data-action="${delivered ? "undo" : "deliver"}" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>
+          ${delivered ? "Entregado · reabrir" : "Entregar pack"}
+        </button>
+      </div>
+    </article>
+  `;
+}
+
+function render() {
+  const runners = getFilteredRunners();
+  renderStats(runners.length);
+
+  elements.loading.style.display = state.loading ? "block" : "none";
+  elements.empty.style.display = !state.loading && runners.length === 0 ? "block" : "none";
+
+  elements.tableBody.innerHTML = runners.map(renderTableRow).join("");
+  elements.mobileList.innerHTML = runners.map(renderMobileCard).join("");
+}
+
+function showToast(message, isError = false) {
+  elements.toast.textContent = message;
+  elements.toast.classList.toggle("is-error", isError);
+  elements.toast.classList.add("is-visible");
+
+  window.clearTimeout(showToast.timeoutId);
+  showToast.timeoutId = window.setTimeout(() => {
+    elements.toast.classList.remove("is-visible", "is-error");
+  }, 3200);
+}
+
+function getNoteValue(runnerId, sourceElement) {
+  const container = sourceElement.closest(`[data-runner-id="${CSS.escape(runnerId)}"]`);
+  const input = container?.querySelector(`[data-note-input="${CSS.escape(runnerId)}"]`);
+
+  if (input) return input.value.trim();
+  if (state.dirtyNotes.has(runnerId)) return state.dirtyNotes.get(runnerId).trim();
+
+  const runner = getRunner(runnerId);
+  return runner ? String(runner.notas || "").trim() : "";
+}
+
+function updateLocalRunner(runnerId, updates) {
+  const index = state.runners.findIndex((runner) => runner.id === runnerId);
+  if (index === -1) return;
+
+  state.runners[index] = {
+    ...state.runners[index],
+    ...updates
+  };
+}
+
+async function saveNote(runnerId, note, options = {}) {
+  const { showSuccess = true } = options;
+
+  state.pendingIds.add(runnerId);
+  render();
+
+  try {
+    await updateDoc(doc(db, COLLECTION_NAME, runnerId), {
+      notas: note,
+      actualizado_en: serverTimestamp()
+    });
+
+    state.dirtyNotes.delete(runnerId);
+    updateLocalRunner(runnerId, { notas: note });
+    render();
+
+    if (showSuccess) showToast("Nota guardada");
+    return true;
+  } catch (error) {
+    console.error("Error guardando nota", error);
+    showToast("No se ha podido guardar la nota. Revisa que las reglas permitan actualizar el campo 'notas'.", true);
+    return false;
+  } finally {
+    state.pendingIds.delete(runnerId);
+    render();
   }
 }
 
-@media (max-width: 760px) {
-  .private-header {
-    min-height: 66px;
-    gap: 10px;
-    padding: 12px 14px;
-  }
+async function updateRunner(runnerId, updates, successMessage) {
+  state.pendingIds.add(runnerId);
+  render();
 
-  .private-header .brand-logo {
-    width: min(44vw, 168px);
-  }
+  try {
+    await updateDoc(doc(db, COLLECTION_NAME, runnerId), {
+      ...updates,
+      actualizado_en: serverTimestamp()
+    });
 
-  .private-header-status {
-    padding: 8px 10px;
-    font-size: 12px;
-  }
+    if (Object.prototype.hasOwnProperty.call(updates, "notas")) {
+      state.dirtyNotes.delete(runnerId);
+    }
 
-  .dorsales-container {
-    padding: 18px 12px 44px;
-  }
-
-  .dorsales-hero {
-    padding: 22px;
-    border-radius: 28px;
-  }
-
-  .dorsales-hero h1 {
-    font-size: clamp(48px, 19vw, 78px);
-  }
-
-  .dorsales-summary {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-  }
-
-  .dorsales-summary .summary-card {
-    padding: 14px;
-  }
-
-  .dorsales-filters {
-    padding: 14px;
-    border-radius: 24px;
-  }
-
-  .dorsales-title-row {
-    padding: 18px 16px 0;
-  }
-
-  .dorsales-loading {
-    margin: 14px 16px 18px;
-  }
-
-  .dorsales-mobile-results {
-    display: grid;
-    gap: 12px;
-    padding: 14px;
-  }
-
-  .dorsales-table {
-    display: none;
-  }
-
-  .toast {
-    right: 12px;
-    bottom: 12px;
-    max-width: calc(100vw - 24px);
+    updateLocalRunner(runnerId, updates);
+    render();
+    showToast(successMessage);
+  } catch (error) {
+    console.error("Error actualizando corredor", error);
+    showToast("No se ha podido guardar el cambio. Revisa permisos de Firestore.", true);
+  } finally {
+    state.pendingIds.delete(runnerId);
+    render();
   }
 }
 
-@media (max-width: 430px) {
-  .private-header-status span:not(.private-dot) {
-    max-width: 118px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+async function deliverRunnerSafely(runnerId, note) {
+  state.pendingIds.add(runnerId);
+  render();
 
-  .dorsales-summary {
-    grid-template-columns: 1fr 1fr;
-  }
+  try {
+    const runnerRef = doc(db, COLLECTION_NAME, runnerId);
 
-  .runner-card .runner-actions {
-    grid-template-columns: 1fr;
-  }
+    const result = await runTransaction(db, async (transaction) => {
+      const runnerSnapshot = await transaction.get(runnerRef);
 
-  .runner-card .deliver-button,
-  .runner-card .undo-button {
-    grid-column: auto;
+      if (!runnerSnapshot.exists()) {
+        throw new Error("runner-not-found");
+      }
+
+      const data = runnerSnapshot.data();
+
+      if (data.bolsa_entregada === true) {
+        return {
+          alreadyDelivered: true,
+          data
+        };
+      }
+
+      transaction.update(runnerRef, {
+        notas: note,
+        bolsa_entregada: true,
+        entregado_en: serverTimestamp(),
+        actualizado_en: serverTimestamp()
+      });
+
+      return {
+        alreadyDelivered: false,
+        data: {
+          ...data,
+          notas: note,
+          bolsa_entregada: true
+        }
+      };
+    });
+
+    state.dirtyNotes.delete(runnerId);
+    mergeRunnerFromFirestore(runnerId, result.data);
+    render();
+
+    if (result.alreadyDelivered) {
+      showToast("Este dorsal ya estaba entregado. Tabla actualizada.", true);
+      return;
+    }
+
+    showToast("Pack marcado como entregado");
+  } catch (error) {
+    console.error("Error entregando pack", error);
+    const message = error.message === "runner-not-found"
+      ? "No se ha encontrado este corredor en Firestore."
+      : "No se ha podido entregar. Revisa permisos o conexión.";
+    showToast(message, true);
+  } finally {
+    state.pendingIds.delete(runnerId);
+    render();
   }
 }
 
-.note-dirty-label {
-  width: fit-content;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px 8px;
-  border-radius: 999px;
-  background: rgba(250, 204, 21, 0.26);
-  color: #854d0e;
-  font-size: 11px;
-  font-weight: 950;
-  white-space: nowrap;
+function handleActionClick(event) {
+  const button = event.target.closest("[data-action][data-runner-id]");
+  if (!button) return;
+
+  const runnerId = button.dataset.runnerId;
+  const action = button.dataset.action;
+  const note = getNoteValue(runnerId, button);
+
+  if (action === "save-note") {
+    saveNote(runnerId, note);
+    return;
+  }
+
+  if (action === "deliver") {
+    deliverRunnerSafely(runnerId, note);
+    return;
+  }
+
+  if (action === "undo") {
+    updateRunner(
+      runnerId,
+      {
+        notas: note,
+        bolsa_entregada: false,
+        reabierto_en: serverTimestamp()
+      },
+      "Entrega reabierta"
+    );
+  }
 }
+
+function handleNoteInput(event) {
+  const input = event.target.closest("[data-note-input]");
+  if (!input) return;
+
+  const runnerId = input.dataset.noteInput;
+  const value = input.value;
+  const runner = getRunner(runnerId);
+
+  if (runner && value === String(runner.notas || "")) {
+    state.dirtyNotes.delete(runnerId);
+  } else {
+    state.dirtyNotes.set(runnerId, value);
+  }
+
+  // Sincroniza el textarea duplicado de la tabla/card para que móvil y escritorio no se pisen.
+  document.querySelectorAll(`[data-note-input="${CSS.escape(runnerId)}"]`).forEach((otherInput) => {
+    if (otherInput !== input) otherInput.value = value;
+  });
+}
+
+function handleNoteBlur(event) {
+  const input = event.target.closest("[data-note-input]");
+  if (!input) return;
+
+  const runnerId = input.dataset.noteInput;
+  if (!state.dirtyNotes.has(runnerId)) return;
+
+  saveNote(runnerId, input.value.trim(), { showSuccess: false });
+}
+
+function bindEvents() {
+  elements.search.addEventListener("input", (event) => {
+    state.search = event.target.value;
+    render();
+  });
+
+  elements.status.addEventListener("change", (event) => {
+    state.status = event.target.value;
+    render();
+  });
+
+  elements.order.addEventListener("change", (event) => {
+    state.order = event.target.value;
+    render();
+  });
+
+  document.addEventListener("click", handleActionClick);
+  document.addEventListener("input", handleNoteInput);
+  document.addEventListener("blur", handleNoteBlur, true);
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") return;
+    const input = event.target.closest(".note-input");
+    if (!input) return;
+
+    event.preventDefault();
+    input.blur();
+  });
+}
+
+function subscribeToFirestore() {
+  const corredoresRef = collection(db, COLLECTION_NAME);
+
+  onSnapshot(
+    corredoresRef,
+    (snapshot) => {
+      state.runners = snapshot.docs.map((documentSnapshot) => {
+        return normalizeRunner(documentSnapshot.id, documentSnapshot.data());
+      });
+
+      state.loading = false;
+      render();
+    },
+    (error) => {
+      console.error("Error cargando corredores", error);
+      state.loading = false;
+      render();
+      showToast("No se han podido cargar los corredores. Revisa reglas de Firestore.", true);
+    }
+  );
+}
+
+bindEvents();
+render();
+subscribeToFirestore();

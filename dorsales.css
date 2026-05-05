@@ -1,104 +1,468 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0f6f47" />
-  <title>Contacto | 10K Zolina</title>
-  <meta name="description" content="Contacta con la organización de la 10K Zolina para dudas sobre inscripciones, resultados, voluntariado, colaboradores o el Kiloreto solidario.">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-  
-  <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="manifest" href="site.webmanifest">
+/* Página interna de recogida de dorsales. Se añade como CSS extra, sin modificar styles.css. */
 
-  <meta property="og:title" content="Contacto | 10K Zolina">
-  <meta property="og:description" content="Correo e Instagram oficiales para contactar con la organización de la 10K Zolina.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://10kzolina.github.io/contacto.html">
-  <meta property="og:image" content="https://10kzolina.github.io/img/logo-zolina.png">
-  <meta property="og:site_name" content="10K Zolina">
-  <meta property="og:locale" content="es_ES">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Contacto | 10K Zolina">
-  <meta name="twitter:description" content="Escríbenos por correo o Instagram para cualquier duda sobre la carrera.">
-  <meta name="twitter:image" content="https://10kzolina.github.io/img/logo-zolina.png">
-  <link rel="canonical" href="https://10kzolina.github.io/contacto.html">
+.dorsales-page .site-header {
+  top: 0;
+}
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BD2PFX9LL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+.private-header {
+  min-height: 72px;
+}
 
-    gtag('config', 'G-9BD2PFX9LL');
-  </script>
-</head>
-<body class="contact-page">
-  <div class="noise"></div>
+.private-header-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid rgba(15, 111, 71, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--green-deep);
+  font-size: 13px;
+  font-weight: 900;
+  white-space: nowrap;
+}
 
-  <header class="site-header compact-header">
-    <a class="brand" href="index.html" aria-label="Volver a inicio">
-      <img class="brand-logo" src="img/logo-zolina.png" alt="10K Zolina Carrera Solidaria" />
-    </a>
+.private-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 5px rgba(22, 161, 99, 0.12);
+}
 
-    <input class="nav-toggle" type="checkbox" id="nav-toggle" aria-label="Abrir menú de navegación" />
-    <label class="nav-toggle-button" for="nav-toggle">
-      <span class="nav-toggle-lines" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-      </span>
-      <span class="nav-toggle-label">Menú</span>
-    </label>
+.dorsales-container {
+  padding-top: 28px;
+}
 
-    <nav class="nav-actions" id="main-navigation" aria-label="Navegación principal">
-      <a href="index.html">Inicio</a>
-      <a href="carreras.html">Recorridos</a>
-      <a href="kiloreto.html">Kiloreto</a>
-      <a href="challenge.html">KOM Challenge</a>
-      <a href="resultados.html">Resultados</a>
-      <a href="colaboradores.html">Colaboradores</a>
-      <a href="contacto.html" class="nav-pill">Contacto</a>
-    </nav>
-  </header>
+.dorsales-hero {
+  margin-bottom: 18px;
+  border-radius: 34px;
+  padding: clamp(24px, 5vw, 48px);
+}
+
+.dorsales-hero h1 {
+  margin-bottom: 14px;
+  font-size: clamp(54px, 10vw, 112px);
+}
+
+.dorsales-hero p:not(.eyebrow) {
+  max-width: 720px;
+  color: var(--muted);
+  font-size: clamp(16px, 2vw, 21px);
+  font-weight: 750;
+  line-height: 1.48;
+}
+
+.dorsales-summary {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.dorsales-filters {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) minmax(150px, 0.25fr) minmax(160px, 0.25fr);
+  gap: 14px;
+  margin-bottom: 18px;
+  padding: 18px;
+  border-radius: 28px;
+}
+
+.dorsales-card {
+  overflow: hidden;
+  border-radius: 30px;
+}
+
+.dorsales-title-row {
+  padding: 24px 24px 0;
+}
+
+.dorsales-title-row h2 {
+  margin: 0;
+  color: var(--green-deep);
+  font-size: clamp(28px, 4vw, 42px);
+  letter-spacing: -0.05em;
+}
+
+.dorsales-loading {
+  margin: 18px 24px 24px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.74);
+  color: var(--muted);
+  font-weight: 850;
+}
+
+.dorsales-table th,
+.dorsales-table td {
+  vertical-align: middle;
+}
+
+.dorsales-table td:nth-child(7) {
+  min-width: 260px;
+}
+
+.runner-main {
+  display: grid;
+  gap: 4px;
+}
+
+.runner-name {
+  color: var(--green-deep);
+  font-weight: 950;
+}
+
+.runner-subtle {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.dorsal-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  min-height: 38px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--green-deep), var(--green));
+  color: white;
+  font-size: 17px;
+  font-weight: 950;
+  letter-spacing: -0.03em;
+}
+
+.food-chip,
+.race-chip,
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.race-chip {
+  border: 1px solid rgba(15, 111, 71, 0.16);
+  background: rgba(232, 247, 239, 0.92);
+  color: var(--green-deep);
+}
+
+.food-chip {
+  border: 1px solid rgba(251, 146, 60, 0.24);
+  background: #fff7ed;
+  color: #9a3412;
+}
+
+.food-chip.no-food {
+  border-color: var(--border);
+  background: rgba(232, 247, 239, 0.72);
+  color: var(--muted);
+}
+
+.status-chip.delivered {
+  background: rgba(22, 161, 99, 0.12);
+  color: var(--green-dark);
+}
+
+.status-chip.pending {
+  background: rgba(250, 204, 21, 0.18);
+  color: #854d0e;
+}
+
+.note-cell {
+  display: grid;
+  gap: 8px;
+}
 
 
-  <main class="container">
-    <section class="contact-hero reveal">
-      <div>
-        <p class="eyebrow">Contacto</p>
-        <img class="section-logo" src="img/logo-zolina.png" alt="10K Zolina Carrera Solidaria" />
-        <p>
-          Para dudas sobre inscripciones, resultados, voluntariado o colaboraciones,
-          puedes escribirnos por correo o contactarnos en Instagram.
-        </p>
-      </div>
-    </section>
+.note-input {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  resize: vertical;
+  background: white;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.35;
+}
 
-    <section class="contact-grid reveal delay-1" aria-label="Datos de contacto">
-      <article class="contact-card">
-        <span class="contact-icon">✉️</span>
-        <h2>Correo electrónico</h2>
-        <a href="mailto:10kzolinacarrera@gmail.com">10kzolinacarrera@gmail.com</a>
-        <p>Escribe a este correo para cualquier duda.</p>
-      </article>
+.note-input:focus {
+  border-color: rgba(22, 161, 99, 0.5);
+  box-shadow: 0 0 0 4px rgba(22, 161, 99, 0.12);
+  outline: none;
+}
 
-      <article class="contact-card">
-        <span class="contact-icon">📸</span>
-        <h2>Instagram</h2>
-        <a href="https://www.instagram.com/10kzolina" target="_blank" rel="noopener">@10kzolina</a>
-        <p>¡Échale un vistazo al Instagram! También puedes escribirnos por mensaje directo.</p>
-      </article>
-    </section>
-  </main>
+.runner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
 
-  <footer class="site-footer" data-site-footer></footer>
-  <script src="app.js"></script>
-</body>
-</html>
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 10px 13px;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 950;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+
+.action-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.action-button:disabled {
+  cursor: wait;
+  opacity: 0.66;
+}
+
+.deliver-button {
+  background: linear-gradient(135deg, var(--green-deep), var(--green));
+  box-shadow: 0 12px 26px rgba(15, 111, 71, 0.18);
+  color: white;
+}
+
+.save-note-button {
+  border: 1px solid var(--border);
+  background: white;
+  color: var(--green-deep);
+}
+
+.undo-button {
+  border: 1px solid rgba(251, 146, 60, 0.5);
+  background: linear-gradient(135deg, #ffedd5, #fdba74);
+  box-shadow: 0 12px 26px rgba(251, 146, 60, 0.16);
+  color: #7c2d12;
+}
+
+.runner-delivered {
+  background: rgba(232, 247, 239, 0.46);
+}
+
+.runner-delivered .dorsal-chip {
+  background: linear-gradient(135deg, #64748b, var(--green-dark));
+}
+
+.dorsales-mobile-results {
+  display: none;
+}
+
+.runner-card {
+  display: grid;
+  gap: 13px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 14px 34px rgba(15, 111, 71, 0.07);
+}
+
+.runner-card.runner-delivered {
+  border-color: rgba(22, 161, 99, 0.24);
+  background: rgba(232, 247, 239, 0.86);
+}
+
+.runner-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.runner-card-info {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.runner-card-name {
+  color: var(--green-deep);
+  font-size: 18px;
+  font-weight: 950;
+  line-height: 1.15;
+}
+
+.runner-card-email {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.runner-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.runner-card .note-input {
+  min-height: 58px;
+  font-size: 16px;
+}
+
+.runner-card .runner-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.runner-card .deliver-button,
+.runner-card .undo-button {
+  grid-column: 1 / -1;
+}
+
+.toast {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 60;
+  max-width: min(420px, calc(100vw - 36px));
+  padding: 13px 16px;
+  border-radius: 16px;
+  background: var(--green-deep);
+  color: white;
+  box-shadow: 0 20px 55px rgba(7, 63, 42, 0.28);
+  font-size: 14px;
+  font-weight: 900;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast.is-error {
+  background: #991b1b;
+}
+
+@media (max-width: 900px) {
+  .dorsales-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dorsales-filters {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .private-header {
+    min-height: 66px;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+
+  .private-header .brand-logo {
+    width: min(44vw, 168px);
+  }
+
+  .private-header-status {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .dorsales-container {
+    padding: 18px 12px 44px;
+  }
+
+  .dorsales-hero {
+    padding: 22px;
+    border-radius: 28px;
+  }
+
+  .dorsales-hero h1 {
+    font-size: clamp(48px, 19vw, 78px);
+  }
+
+  .dorsales-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .dorsales-summary .summary-card {
+    padding: 14px;
+  }
+
+  .dorsales-filters {
+    padding: 14px;
+    border-radius: 24px;
+  }
+
+  .dorsales-title-row {
+    padding: 18px 16px 0;
+  }
+
+  .dorsales-loading {
+    margin: 14px 16px 18px;
+  }
+
+  .dorsales-mobile-results {
+    display: grid;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .dorsales-table {
+    display: none;
+  }
+
+  .toast {
+    right: 12px;
+    bottom: 12px;
+    max-width: calc(100vw - 24px);
+  }
+}
+
+@media (max-width: 430px) {
+  .private-header-status span:not(.private-dot) {
+    max-width: 118px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dorsales-summary {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .runner-card .runner-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .runner-card .deliver-button,
+  .runner-card .undo-button {
+    grid-column: auto;
+  }
+}
+
+.note-dirty-label {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(250, 204, 21, 0.26);
+  color: #854d0e;
+  font-size: 11px;
+  font-weight: 950;
+  white-space: nowrap;
+}
