@@ -5,6 +5,7 @@ import {
   doc,
   onSnapshot,
   updateDoc,
+  runTransaction,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
@@ -70,8 +71,34 @@ function toSafeInt(value) {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
+function normalizeRunner(documentId, data = {}) {
+  return {
+    id: documentId,
+    correo: data.correo || "",
+    nombre: data.nombre || "",
+    dorsal: data.dorsal || "",
+    comida: Number.isFinite(Number(data.comida)) ? Number(data.comida) : 0,
+    bolsa_entregada: Boolean(data.bolsa_entregada),
+    notas: data.notas || ""
+  };
+}
+
+function mergeRunnerFromFirestore(runnerId, data = {}) {
+  const index = state.runners.findIndex((runner) => runner.id === runnerId);
+  const normalized = normalizeRunner(runnerId, data);
+
+  if (index === -1) {
+    state.runners.push(normalized);
+  } else {
+    state.runners[index] = {
+      ...state.runners[index],
+      ...normalized
+    };
+  }
+}
+
 function getRunnerSearchText(runner) {
-  return normalizeText(`${runner.nombre} ${runner.correo} ${runner.dorsal}`);
+  return normalizeText(`${runner.nombre} ${runner.correo} ${runner.dorsal} ${runner.notas}`);
 }
 
 function getFilteredRunners() {
@@ -115,6 +142,16 @@ function getStatusLabel(delivered) {
   return delivered ? "Entregado" : "Pendiente";
 }
 
+function getNoteDisplayMarkup(note) {
+  const cleanNote = String(note || "").trim();
+
+  if (!cleanNote) {
+    return `<div class="note-display note-display--empty">Sin notas</div>`;
+  }
+
+  return `<div class="note-display">${escapeHtml(cleanNote)}</div>`;
+}
+
 function renderStats(filteredCount) {
   const total = state.runners.length;
   const delivered = state.runners.filter((runner) => runner.bolsa_entregada).length;
@@ -145,13 +182,16 @@ function renderTableRow(runner) {
       <td><span class="food-chip ${toSafeInt(runner.comida) <= 0 ? "no-food" : ""}">${escapeHtml(getFoodLabel(runner.comida))}</span></td>
       <td><span class="status-chip ${delivered ? "delivered" : "pending"}">${getStatusLabel(delivered)}</span></td>
       <td>
-        <input class="note-input" type="text" value="${escapeHtml(note)}" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}" />
+        <div class="note-cell">
+          ${getNoteDisplayMarkup(note)}
+          <input class="note-input" type="text" value="${escapeHtml(note)}" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}" />
+        </div>
       </td>
       <td>
         <div class="runner-actions">
           <button class="action-button save-note-button" type="button" data-action="save-note" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>Guardar nota</button>
           <button class="action-button ${delivered ? "undo-button" : "deliver-button"}" type="button" data-action="${delivered ? "undo" : "deliver"}" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>
-            ${delivered ? "Reabrir" : "Entregar"}
+            ${delivered ? "Entregado · reabrir" : "Entregar"}
           </button>
         </div>
       </td>
@@ -179,12 +219,15 @@ function renderMobileCard(runner) {
         <span class="status-chip ${delivered ? "delivered" : "pending"}">${getStatusLabel(delivered)}</span>
       </div>
 
-      <input class="note-input" type="text" value="${escapeHtml(note)}" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}" />
+      <div class="note-cell">
+        ${getNoteDisplayMarkup(note)}
+        <input class="note-input" type="text" value="${escapeHtml(note)}" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}" />
+      </div>
 
       <div class="runner-actions">
         <button class="action-button save-note-button" type="button" data-action="save-note" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>Guardar nota</button>
         <button class="action-button ${delivered ? "undo-button" : "deliver-button"}" type="button" data-action="${delivered ? "undo" : "deliver"}" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>
-          ${delivered ? "Reabrir" : "Entregar pack"}
+          ${delivered ? "Entregado · reabrir" : "Entregar pack"}
         </button>
       </div>
     </article>
@@ -228,6 +271,67 @@ async function updateRunner(runnerId, updates, successMessage) {
   }
 }
 
+async function deliverRunnerSafely(runnerId, note) {
+  state.pendingIds.add(runnerId);
+  render();
+
+  try {
+    const runnerRef = doc(db, COLLECTION_NAME, runnerId);
+
+    const result = await runTransaction(db, async (transaction) => {
+      const runnerSnapshot = await transaction.get(runnerRef);
+
+      if (!runnerSnapshot.exists()) {
+        throw new Error("runner-not-found");
+      }
+
+      const data = runnerSnapshot.data();
+
+      if (data.bolsa_entregada === true) {
+        return {
+          alreadyDelivered: true,
+          data
+        };
+      }
+
+      transaction.update(runnerRef, {
+        notas: note,
+        bolsa_entregada: true,
+        entregado_en: serverTimestamp(),
+        actualizado_en: serverTimestamp()
+      });
+
+      return {
+        alreadyDelivered: false,
+        data: {
+          ...data,
+          notas: note,
+          bolsa_entregada: true
+        }
+      };
+    });
+
+    mergeRunnerFromFirestore(runnerId, result.data);
+    render();
+
+    if (result.alreadyDelivered) {
+      showToast("Este dorsal ya estaba entregado. Tabla actualizada.", true);
+      return;
+    }
+
+    showToast("Pack marcado como entregado");
+  } catch (error) {
+    console.error(error);
+    const message = error.message === "runner-not-found"
+      ? "No se ha encontrado este corredor en Firestore."
+      : "No se ha podido entregar. Revisa permisos o conexión.";
+    showToast(message, true);
+  } finally {
+    state.pendingIds.delete(runnerId);
+    render();
+  }
+}
+
 function showToast(message, isError = false) {
   elements.toast.textContent = message;
   elements.toast.classList.toggle("is-error", isError);
@@ -236,7 +340,7 @@ function showToast(message, isError = false) {
   window.clearTimeout(showToast.timeoutId);
   showToast.timeoutId = window.setTimeout(() => {
     elements.toast.classList.remove("is-visible", "is-error");
-  }, 2400);
+  }, 3200);
 }
 
 function handleActionClick(event) {
@@ -253,15 +357,7 @@ function handleActionClick(event) {
   }
 
   if (action === "deliver") {
-    updateRunner(
-      runnerId,
-      {
-        notas: note,
-        bolsa_entregada: true,
-        entregado_en: serverTimestamp()
-      },
-      "Pack marcado como entregado"
-    );
+    deliverRunnerSafely(runnerId, note);
     return;
   }
 
@@ -313,17 +409,7 @@ function subscribeToFirestore() {
     corredoresRef,
     (snapshot) => {
       state.runners = snapshot.docs.map((documentSnapshot) => {
-        const data = documentSnapshot.data();
-
-        return {
-          id: documentSnapshot.id,
-          correo: data.correo || "",
-          nombre: data.nombre || "",
-          dorsal: data.dorsal || "",
-          comida: Number.isFinite(Number(data.comida)) ? Number(data.comida) : 0,
-          bolsa_entregada: Boolean(data.bolsa_entregada),
-          notas: data.notas || ""
-        };
+        return normalizeRunner(documentSnapshot.id, documentSnapshot.data());
       });
 
       state.loading = false;

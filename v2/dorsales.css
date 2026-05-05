@@ -431,3 +431,42 @@
     grid-column: auto;
   }
 }
+
+/* Mejoras para notas visibles y entregas reabiertas */
+.note-cell {
+  display: grid;
+  gap: 8px;
+}
+
+.note-display {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid rgba(251, 146, 60, 0.28);
+  border-radius: 14px;
+  background: #fff7ed;
+  color: #7c2d12;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.note-display--empty {
+  border-color: rgba(15, 111, 71, 0.1);
+  background: rgba(255, 255, 255, 0.62);
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.undo-button {
+  border-color: rgba(251, 146, 60, 0.42);
+  background: linear-gradient(135deg, #fff7ed, #fed7aa);
+  color: #9a3412;
+  box-shadow: 0 12px 26px rgba(251, 146, 60, 0.16);
+}
+
+.runner-delivered .undo-button {
+  border-color: rgba(251, 146, 60, 0.5);
+  background: linear-gradient(135deg, #ffedd5, #fdba74);
+  color: #7c2d12;
+}
