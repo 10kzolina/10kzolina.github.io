@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f6f47" />
+  <title>Colaboradores | 10K Zolina</title>
+  <meta name="description" content="Conoce a las empresas, clubes y entidades colaboradoras que apoyan la 10K Zolina con material, alimentos, servicios e infraestructura.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <meta property="og:title" content="Colaboradores | 10K Zolina">
+  <meta property="og:description" content="Empresas, clubes y entidades que hacen posible la 10K Zolina y su reto solidario.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://10kzolina.github.io/colaboradores.html">
+  <meta property="og:image" content="https://10kzolina.github.io/img/logo-zolina.png">
+  <meta property="og:site_name" content="10K Zolina">
+  <meta property="og:locale" content="es_ES">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Colaboradores | 10K Zolina">
+  <meta name="twitter:description" content="Listado de colaboradores y patrocinadores de la 10K Zolina.">
+  <meta name="twitter:image" content="https://10kzolina.github.io/img/logo-zolina.png">
+  <link rel="canonical" href="https://10kzolina.github.io/colaboradores.html">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BD2PFX9LL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-9BD2PFX9LL');
+  </script>
+
+</head>
+<body class="partners-page">
+  <div class="noise"></div>
+
+  <header class="site-header compact-header">
+    <a class="brand" href="index.html" aria-label="Volver a inicio">
+      <img class="brand-logo" src="img/logo-zolina.png" alt="10K Zolina Carrera Solidaria" />
+    </a>
+
+    <input class="nav-toggle" type="checkbox" id="nav-toggle" aria-label="Abrir menú de navegación" />
+    <label class="nav-toggle-button" for="nav-toggle">
+      <span class="nav-toggle-lines" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+      <span class="nav-toggle-label">Menú</span>
+    </label>
+
+    <nav class="nav-actions" id="main-navigation" aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a href="carreras.html">Recorridos</a>
+      <a href="kiloreto.html">Kiloreto</a>
+      <a href="challenge.html">KOM Challenge</a>
+      <a href="resultados.html">Resultados</a>
+      <a href="colaboradores.html" class="nav-pill">Colaboradores</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+
+  <main class="container">
+    <section class="partners-hero reveal">
+      <div>
+        <p class="eyebrow">Gracias por hacerlo posible</p>
+        <h1>Colaboradores</h1>
+        <p>
+          Empresas y entidades que apoyan la 10K Zolina con material, comida,
+          infraestructura o ayuda para que la carrera salga adelante.
+        </p>
+        <div class="hero-actions compact-actions single-action">
+          <a href="https://forms.gle/9uEHps9BrEYXebt8A" class="primary-button collaborate-button" target="_blank" rel="noopener">Hazte Voluntario</a>
+        </div>
+      </div>
+
+      <div class="partners-hero-card">
+        <span>🤝</span>
+        <strong id="partner-count">0</strong>
+        <small>colaboradores</small>
+      </div>
+    </section>
+
+    <section class="partners-toolbar reveal delay-1" aria-label="Filtros de colaboradores">
+      <div class="filter-group search-group">
+        <label for="buscar-colaborador">Buscar colaborador</label>
+        <input id="buscar-colaborador" type="search" placeholder="Nombre, donación, descripción..." autocomplete="off" />
+      </div>
+
+      <div class="filter-group">
+        <label for="tipo-colaborador">Tipo</label>
+        <select id="tipo-colaborador">
+          <option value="Todos">Todos</option>
+          <option value="Material">Material</option>
+          <option value="Alimentos">Alimentos</option>
+          <option value="Servicios">Servicios</option>
+          <option value="Institucional">Institucional</option>
+        </select>
+      </div>
+    </section>
+
+    <section id="partners-grid" class="partners-grid reveal delay-2" aria-label="Listado de colaboradores"></section>
+    <p id="sin-colaboradores" class="empty-message">No hay colaboradores para esta búsqueda.</p>
+  </main>
+
+  <footer class="site-footer" data-site-footer></footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

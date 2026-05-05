@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f6f47" />
+  <title>Resultados | 10K Zolina</title>
+  <meta name="description" content="Resultados oficiales de la 10K Zolina: podio, clasificación por distancia, tiempos, dorsal y opción para compartir cada resultado.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <meta property="og:title" content="Resultados | 10K Zolina">
+  <meta property="og:description" content="Consulta la clasificación oficial, podios y tiempos de la 10K Zolina.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://10kzolina.github.io/resultados.html">
+  <meta property="og:image" content="https://10kzolina.github.io/img/logo-zolina.png">
+  <meta property="og:site_name" content="10K Zolina">
+  <meta property="og:locale" content="es_ES">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Resultados | 10K Zolina">
+  <meta name="twitter:description" content="Clasificación oficial, filtros por distancia y podio de la 10K Zolina.">
+  <meta name="twitter:image" content="https://10kzolina.github.io/img/logo-zolina.png">
+  <link rel="canonical" href="https://10kzolina.github.io/resultados.html">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BD2PFX9LL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-9BD2PFX9LL');
+  </script>
+</head>
+<body class="results-page">
+  <div class="noise"></div>
+
+  <header class="site-header compact-header">
+    <a class="brand" href="index.html" aria-label="Volver a inicio">
+      <img class="brand-logo" src="img/logo-zolina.png" alt="10K Zolina Carrera Solidaria" />
+    </a>
+
+    <input class="nav-toggle" type="checkbox" id="nav-toggle" aria-label="Abrir menú de navegación" />
+    <label class="nav-toggle-button" for="nav-toggle">
+      <span class="nav-toggle-lines" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+      <span class="nav-toggle-label">Menú</span>
+    </label>
+
+    <nav class="nav-actions" id="main-navigation" aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a href="carreras.html">Recorridos</a>
+      <a href="kiloreto.html">Kiloreto</a>
+      <a href="challenge.html">KOM Challenge</a>
+      <a href="resultados.html" class="nav-pill">Resultados</a>
+      <a href="colaboradores.html">Colaboradores</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+
+  <main class="container" id="resultados">
+    <section class="results-hero reveal">
+      <div>
+        <p class="eyebrow">Clasificación oficial</p>
+        <h1>Resultados</h1>
+        <p>Busca participantes, filtra por distancia/categoría y comparte el resultado en un toque.</p>
+      </div>
+
+      <div class="summary-grid" aria-label="Resumen de resultados">
+        <div class="summary-card">
+          <span>Total</span>
+          <strong id="stat-total">0</strong>
+        </div>
+        <div class="summary-card">
+          <span>Mejor tiempo</span>
+          <strong id="stat-best">--:--</strong>
+        </div>
+        <div class="summary-card">
+          <span>Distancia</span>
+          <strong id="stat-distance">10K</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="filters-panel reveal delay-2">
+      <div class="filter-group search-group">
+        <label for="busqueda">Buscar</label>
+        <input id="busqueda" type="search" placeholder="Nombre, dorsal..." autocomplete="off" />
+      </div>
+
+      <div class="filter-group">
+        <label for="distancia">Distancia</label>
+        <select id="distancia">
+          <option value="10k">10K</option>
+          <option value="5k">5K</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="genero">Categoría</label>
+        <select id="genero">
+          <option value="General">General</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="podium-card reveal delay-1" aria-label="Podio de la selección actual">
+      <div class="section-title-row">
+        <div>
+          <p class="eyebrow">Top 3</p>
+          <h2 id="podium-title">Podio 10K</h2>
+        </div>
+        <span id="podium-label" class="soft-pill">10K · General</span>
+      </div>
+      <div id="podium" class="podium"></div>
+    </section>
+
+    
+
+    <section class="table-card reveal delay-3">
+      <div class="mobile-results" id="mobile-resultados"></div>
+
+      <table aria-label="Tabla de resultados">
+        <thead>
+          <tr>
+            <th>Posición</th>
+            <th>Dorsal</th>
+            <th>Nombre y apellido</th>
+            <th>Distancia</th>
+            <th>Género</th>
+            <th>Tiempo</th>
+            <th>Compartir</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-resultados"></tbody>
+      </table>
+
+      <p id="sin-resultados" class="empty-message">No hay resultados para esta selección.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer" data-site-footer></footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
