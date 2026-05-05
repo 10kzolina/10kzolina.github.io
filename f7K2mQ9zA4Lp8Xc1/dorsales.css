@@ -507,3 +507,71 @@
   font-weight: 950;
   white-space: nowrap;
 }
+
+
+/* ===== FIX ESCRITORIO ===== */
+@media (min-width: 761px) {
+
+  /* 1. Contenedor scrolleable */
+  .dorsales-card {
+    overflow-x: auto;
+  }
+
+  .dorsales-table {
+    min-width: 1100px; /* fuerza ancho mínimo */
+    width: 100%;
+    border-collapse: separate;
+  }
+
+  /* 2. Columnas controladas */
+  .dorsales-table th:nth-child(1),
+  .dorsales-table td:nth-child(1) { width: 80px; }   /* dorsal */
+
+  .dorsales-table th:nth-child(2),
+  .dorsales-table td:nth-child(2) { width: 180px; }  /* nombre */
+
+  .dorsales-table th:nth-child(3),
+  .dorsales-table td:nth-child(3) { width: 260px; }  /* correo */
+
+  .dorsales-table th:nth-child(4),
+  .dorsales-table td:nth-child(4) { width: 150px; }  /* carrera */
+
+  .dorsales-table th:nth-child(5),
+  .dorsales-table td:nth-child(5) { width: 120px; }  /* comida */
+
+  .dorsales-table th:nth-child(6),
+  .dorsales-table td:nth-child(6) { width: 120px; }  /* estado */
+
+  .dorsales-table th:nth-child(7),
+  .dorsales-table td:nth-child(7) { width: 260px; }  /* notas */
+
+  .dorsales-table th:nth-child(8),
+  .dorsales-table td:nth-child(8) { width: 180px; }  /* acciones */
+
+  /* 3. Correo limpio (1 línea) */
+  .runner-subtle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    max-width: 100%;
+  }
+
+  /* 4. Acciones compactas */
+  .runner-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .action-button {
+    width: 100%;
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  /* 5. Evitar alturas absurdas */
+  .dorsales-table td {
+    vertical-align: middle;
+  }
+}
