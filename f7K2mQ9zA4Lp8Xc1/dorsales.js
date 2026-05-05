@@ -43,10 +43,10 @@ const elements = {
   empty: document.getElementById("sin-corredores"),
   loading: document.getElementById("loading-state"),
   visibleCount: document.getElementById("visible-count"),
-  statTotal: document.getElementById("stat-total"),
-  statPending: document.getElementById("stat-pendientes"),
-  statDelivered: document.getElementById("stat-entregados"),
-  statFood: document.getElementById("stat-comida"),
+  statTotalRunners: document.getElementById("stat-total-corredores"),
+  statPendingRunners: document.getElementById("stat-corredores-pendientes"),
+  statTotalDiners: document.getElementById("stat-total-comensales"),
+  statPendingDiners: document.getElementById("stat-comensales-pendientes"),
   toast: document.getElementById("toast")
 };
 
@@ -179,15 +179,18 @@ function getNoteDirtyMarkup(isDirty) {
 }
 
 function renderStats(filteredCount) {
-  const total = state.runners.length;
-  const delivered = state.runners.filter((runner) => runner.bolsa_entregada).length;
-  const pending = total - delivered;
-  const foodTickets = state.runners.reduce((sum, runner) => sum + toSafeInt(runner.comida), 0);
+  const totalRunners = state.runners.length;
+  const pendingRunners = state.runners.filter((runner) => !runner.bolsa_entregada).length;
+  const totalDiners = state.runners.reduce((sum, runner) => sum + toSafeInt(runner.comida), 0);
+  const pendingDiners = state.runners.reduce((sum, runner) => {
+    if (runner.bolsa_entregada) return sum;
+    return sum + toSafeInt(runner.comida);
+  }, 0);
 
-  elements.statTotal.textContent = total;
-  elements.statPending.textContent = pending;
-  elements.statDelivered.textContent = delivered;
-  elements.statFood.textContent = foodTickets;
+  elements.statTotalRunners.textContent = totalRunners;
+  elements.statPendingRunners.textContent = pendingRunners;
+  elements.statTotalDiners.textContent = totalDiners;
+  elements.statPendingDiners.textContent = pendingDiners;
   elements.visibleCount.textContent = state.loading ? "Cargando..." : `${filteredCount} visibles`;
 }
 
