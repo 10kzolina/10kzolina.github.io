@@ -37,7 +37,7 @@
       <div>
         <p class="eyebrow">Gestión interna</p>
         <h1>Dorsales</h1>
-        <p>Busca por nombre, correo o dorsal. Marca cada pack como entregado y añade notas si hace falta.</p>
+        <p>Busca por nombre, correo, dorsal o carrera. Marca cada pack como entregado y añade notas visibles para el equipo.</p>
       </div>
 
       <div class="summary-grid dorsales-summary" aria-label="Resumen de entrega de dorsales">
@@ -63,7 +63,7 @@
     <section class="filters-panel dorsales-filters reveal delay-2" aria-label="Filtros de corredores">
       <div class="filter-group search-group">
         <label for="busqueda-dorsales">Buscar corredor</label>
-        <input id="busqueda-dorsales" type="search" placeholder="Nombre, correo o dorsal..." autocomplete="off" inputmode="search" />
+        <input id="busqueda-dorsales" type="search" placeholder="Nombre, correo, dorsal o carrera..." autocomplete="off" inputmode="search" />
       </div>
 
       <div class="filter-group">
@@ -80,6 +80,7 @@
         <select id="orden-dorsales">
           <option value="dorsal">Dorsal</option>
           <option value="nombre">Nombre</option>
+          <option value="carrera">Carrera</option>
           <option value="estado">Pendientes primero</option>
         </select>
       </div>
@@ -104,6 +105,7 @@
             <th>Dorsal</th>
             <th>Corredor</th>
             <th>Correo</th>
+            <th>Carrera</th>
             <th>Comida</th>
             <th>Estado</th>
             <th>Notas</th>

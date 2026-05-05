@@ -77,6 +77,7 @@ function normalizeRunner(documentId, data = {}) {
     correo: data.correo || "",
     nombre: data.nombre || "",
     dorsal: data.dorsal || "",
+    carrera: data.carrera || "",
     comida: Number.isFinite(Number(data.comida)) ? Number(data.comida) : 0,
     bolsa_entregada: Boolean(data.bolsa_entregada),
     notas: data.notas || ""
@@ -89,16 +90,25 @@ function mergeRunnerFromFirestore(runnerId, data = {}) {
 
   if (index === -1) {
     state.runners.push(normalized);
-  } else {
-    state.runners[index] = {
-      ...state.runners[index],
-      ...normalized
-    };
+    return;
   }
+
+  state.runners[index] = {
+    ...state.runners[index],
+    ...normalized
+  };
 }
 
 function getRunnerSearchText(runner) {
-  return normalizeText(`${runner.nombre} ${runner.correo} ${runner.dorsal} ${runner.notas}`);
+  return normalizeText(`${runner.nombre} ${runner.correo} ${runner.dorsal} ${runner.carrera} ${runner.notas}`);
+}
+
+function compareByDorsal(a, b) {
+  const dorsalA = toSafeInt(a.dorsal);
+  const dorsalB = toSafeInt(b.dorsal);
+
+  if (dorsalA !== dorsalB) return dorsalA - dorsalB;
+  return normalizeText(a.nombre).localeCompare(normalizeText(b.nombre), "es");
 }
 
 function getFilteredRunners() {
@@ -119,15 +129,18 @@ function getFilteredRunners() {
       return normalizeText(a.nombre).localeCompare(normalizeText(b.nombre), "es");
     }
 
-    if (state.order === "estado") {
-      if (a.bolsa_entregada !== b.bolsa_entregada) return a.bolsa_entregada ? 1 : -1;
+    if (state.order === "carrera") {
+      const byRace = normalizeText(a.carrera).localeCompare(normalizeText(b.carrera), "es");
+      if (byRace !== 0) return byRace;
+      return compareByDorsal(a, b);
     }
 
-    const dorsalA = toSafeInt(a.dorsal);
-    const dorsalB = toSafeInt(b.dorsal);
-    if (dorsalA !== dorsalB) return dorsalA - dorsalB;
+    if (state.order === "estado") {
+      if (a.bolsa_entregada !== b.bolsa_entregada) return a.bolsa_entregada ? 1 : -1;
+      return compareByDorsal(a, b);
+    }
 
-    return normalizeText(a.nombre).localeCompare(normalizeText(b.nombre), "es");
+    return compareByDorsal(a, b);
   });
 }
 
@@ -136,6 +149,11 @@ function getFoodLabel(comida) {
   if (tickets <= 0) return "Sin comida";
   if (tickets === 1) return "1 ticket";
   return `${tickets} tickets`;
+}
+
+function getRaceLabel(carrera) {
+  const cleanRace = String(carrera || "").trim();
+  return cleanRace || "Sin carrera";
 }
 
 function getStatusLabel(delivered) {
@@ -179,12 +197,13 @@ function renderTableRow(runner) {
         </div>
       </td>
       <td><span class="runner-subtle">${escapeHtml(runner.correo || "Sin correo")}</span></td>
+      <td><span class="race-chip">${escapeHtml(getRaceLabel(runner.carrera))}</span></td>
       <td><span class="food-chip ${toSafeInt(runner.comida) <= 0 ? "no-food" : ""}">${escapeHtml(getFoodLabel(runner.comida))}</span></td>
       <td><span class="status-chip ${delivered ? "delivered" : "pending"}">${getStatusLabel(delivered)}</span></td>
       <td>
         <div class="note-cell">
           ${getNoteDisplayMarkup(note)}
-          <input class="note-input" type="text" value="${escapeHtml(note)}" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}" />
+          <textarea class="note-input" rows="2" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}">${escapeHtml(note)}</textarea>
         </div>
       </td>
       <td>
@@ -215,13 +234,14 @@ function renderMobileCard(runner) {
       </div>
 
       <div class="runner-card-meta">
+        <span class="race-chip">${escapeHtml(getRaceLabel(runner.carrera))}</span>
         <span class="food-chip ${toSafeInt(runner.comida) <= 0 ? "no-food" : ""}">${escapeHtml(getFoodLabel(runner.comida))}</span>
         <span class="status-chip ${delivered ? "delivered" : "pending"}">${getStatusLabel(delivered)}</span>
       </div>
 
       <div class="note-cell">
         ${getNoteDisplayMarkup(note)}
-        <input class="note-input" type="text" value="${escapeHtml(note)}" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}" />
+        <textarea class="note-input" rows="2" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}">${escapeHtml(note)}</textarea>
       </div>
 
       <div class="runner-actions">

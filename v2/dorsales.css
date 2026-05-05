@@ -97,8 +97,8 @@
   vertical-align: middle;
 }
 
-.dorsales-table td:nth-child(6) {
-  min-width: 230px;
+.dorsales-table td:nth-child(7) {
+  min-width: 260px;
 }
 
 .runner-main {
@@ -134,6 +134,7 @@
 }
 
 .food-chip,
+.race-chip,
 .status-chip {
   display: inline-flex;
   align-items: center;
@@ -144,6 +145,12 @@
   font-size: 12px;
   font-weight: 950;
   white-space: nowrap;
+}
+
+.race-chip {
+  border: 1px solid rgba(15, 111, 71, 0.16);
+  background: rgba(232, 247, 239, 0.92);
+  color: var(--green-deep);
 }
 
 .food-chip {
@@ -168,16 +175,43 @@
   color: #854d0e;
 }
 
+.note-cell {
+  display: grid;
+  gap: 8px;
+}
+
+.note-display {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid rgba(251, 146, 60, 0.28);
+  border-radius: 14px;
+  background: #fff7ed;
+  color: #7c2d12;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.note-display--empty {
+  border-color: rgba(15, 111, 71, 0.1);
+  background: rgba(255, 255, 255, 0.62);
+  color: var(--muted);
+  font-weight: 800;
+}
+
 .note-input {
   width: 100%;
-  min-height: 42px;
+  min-height: 46px;
   padding: 10px 12px;
   border: 1px solid var(--border);
   border-radius: 14px;
+  resize: vertical;
   background: white;
   color: var(--text);
   font: inherit;
   font-size: 14px;
+  line-height: 1.35;
 }
 
 .note-input:focus {
@@ -223,11 +257,17 @@
   color: white;
 }
 
-.undo-button,
 .save-note-button {
   border: 1px solid var(--border);
   background: white;
   color: var(--green-deep);
+}
+
+.undo-button {
+  border: 1px solid rgba(251, 146, 60, 0.5);
+  background: linear-gradient(135deg, #ffedd5, #fdba74);
+  box-shadow: 0 12px 26px rgba(251, 146, 60, 0.16);
+  color: #7c2d12;
 }
 
 .runner-delivered {
@@ -291,7 +331,7 @@
 }
 
 .runner-card .note-input {
-  min-height: 48px;
+  min-height: 58px;
   font-size: 16px;
 }
 
@@ -430,43 +470,4 @@
   .runner-card .undo-button {
     grid-column: auto;
   }
-}
-
-/* Mejoras para notas visibles y entregas reabiertas */
-.note-cell {
-  display: grid;
-  gap: 8px;
-}
-
-.note-display {
-  width: 100%;
-  padding: 9px 11px;
-  border: 1px solid rgba(251, 146, 60, 0.28);
-  border-radius: 14px;
-  background: #fff7ed;
-  color: #7c2d12;
-  font-size: 13px;
-  font-weight: 900;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-}
-
-.note-display--empty {
-  border-color: rgba(15, 111, 71, 0.1);
-  background: rgba(255, 255, 255, 0.62);
-  color: var(--muted);
-  font-weight: 800;
-}
-
-.undo-button {
-  border-color: rgba(251, 146, 60, 0.42);
-  background: linear-gradient(135deg, #fff7ed, #fed7aa);
-  color: #9a3412;
-  box-shadow: 0 12px 26px rgba(251, 146, 60, 0.16);
-}
-
-.runner-delivered .undo-button {
-  border-color: rgba(251, 146, 60, 0.5);
-  background: linear-gradient(135deg, #ffedd5, #fdba74);
-  color: #7c2d12;
 }
