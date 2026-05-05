@@ -180,25 +180,6 @@
   gap: 8px;
 }
 
-.note-display {
-  width: 100%;
-  padding: 9px 11px;
-  border: 1px solid rgba(251, 146, 60, 0.28);
-  border-radius: 14px;
-  background: #fff7ed;
-  color: #7c2d12;
-  font-size: 13px;
-  font-weight: 900;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-}
-
-.note-display--empty {
-  border-color: rgba(15, 111, 71, 0.1);
-  background: rgba(255, 255, 255, 0.62);
-  color: var(--muted);
-  font-weight: 800;
-}
 
 .note-input {
   width: 100%;
@@ -473,9 +454,11 @@
 }
 
 .note-dirty-label {
+  width: fit-content;
   display: inline-flex;
-  margin-right: 7px;
-  padding: 3px 7px;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
   border-radius: 999px;
   background: rgba(250, 204, 21, 0.26);
   color: #854d0e;

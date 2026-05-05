@@ -174,15 +174,8 @@ function getCurrentNote(runner) {
   return runner.notas || "";
 }
 
-function getNoteDisplayMarkup(note, isDirty) {
-  const cleanNote = String(note || "").trim();
-
-  if (!cleanNote) {
-    return `<div class="note-display note-display--empty">Sin notas</div>`;
-  }
-
-  const dirtyLabel = isDirty ? `<span class="note-dirty-label">Sin guardar</span>` : "";
-  return `<div class="note-display">${dirtyLabel}${escapeHtml(cleanNote)}</div>`;
+function getNoteDirtyMarkup(isDirty) {
+  return isDirty ? `<span class="note-dirty-label">Sin guardar</span>` : "";
 }
 
 function renderStats(filteredCount) {
@@ -218,8 +211,8 @@ function renderTableRow(runner) {
       <td><span class="status-chip ${delivered ? "delivered" : "pending"}">${getStatusLabel(delivered)}</span></td>
       <td>
         <div class="note-cell">
-          ${getNoteDisplayMarkup(note, isDirty)}
           <textarea class="note-input" rows="2" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}">${escapeHtml(note)}</textarea>
+          ${getNoteDirtyMarkup(isDirty)}
         </div>
       </td>
       <td>
@@ -257,8 +250,8 @@ function renderMobileCard(runner) {
       </div>
 
       <div class="note-cell">
-        ${getNoteDisplayMarkup(note, isDirty)}
         <textarea class="note-input" rows="2" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}">${escapeHtml(note)}</textarea>
+        ${getNoteDirtyMarkup(isDirty)}
       </div>
 
       <div class="runner-actions">
