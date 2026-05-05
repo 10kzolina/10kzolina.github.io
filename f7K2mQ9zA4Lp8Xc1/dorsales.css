@@ -509,70 +509,53 @@
 }
 
 
-/* ===== FULL WIDTH ESCRITORIO (SIN SCROLL) ===== */
+/* ===== ESCRITORIO AJUSTADO ===== */
 @media (min-width: 1100px) {
 
-  /* 1. Romper el container */
+  /* 1. Contenedor centrado y limitado */
   .dorsales-container {
-    max-width: 100%;
-    width: 100%;
-    padding-left: 24px;
-    padding-right: 24px;
+    max-width: 1400px; /* ajusta entre 1200–1500 */
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
-  /* 2. La card ocupa todo */
-  .dorsales-card {
-    width: 100%;
-  }
-
-  /* 3. Tabla ocupa todo el viewport */
+  /* 2. Tabla natural (NO fixed) */
   .dorsales-table {
     width: 100%;
-    table-layout: fixed; /* clave para controlar columnas */
+    table-layout: auto; /* clave */
   }
 
-  /* 4. Reparto de columnas (ajusta proporciones) */
-  .dorsales-table th:nth-child(1),
-  .dorsales-table td:nth-child(1) { width: 6%; }   /* dorsal */
+  /* 3. Reducir padding horizontal */
+  .dorsales-table th,
+  .dorsales-table td {
+    padding: 10px 12px;
+  }
 
-  .dorsales-table th:nth-child(2),
-  .dorsales-table td:nth-child(2) { width: 16%; }  /* nombre */
-
-  .dorsales-table th:nth-child(3),
-  .dorsales-table td:nth-child(3) { width: 22%; }  /* correo */
-
-  .dorsales-table th:nth-child(4),
-  .dorsales-table td:nth-child(4) { width: 12%; }  /* carrera */
-
-  .dorsales-table th:nth-child(5),
-  .dorsales-table td:nth-child(5) { width: 10%; }  /* comida */
-
-  .dorsales-table th:nth-child(6),
-  .dorsales-table td:nth-child(6) { width: 10%; }  /* estado */
-
-  .dorsales-table th:nth-child(7),
-  .dorsales-table td:nth-child(7) { width: 14%; }  /* notas */
-
-  .dorsales-table th:nth-child(8),
-  .dorsales-table td:nth-child(8) { width: 10%; }  /* acciones */
-
-  /* 5. Correo en una sola línea */
+  /* 4. Correo compacto */
   .runner-subtle {
+    max-width: 240px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  /* 6. Botones compactos */
+  /* 5. Notas no se disparan */
+  .dorsales-table td:nth-child(7) {
+    max-width: 260px;
+  }
+
+  /* 6. Acciones más compactas */
   .runner-actions {
     display: flex;
     flex-direction: column;
     gap: 6px;
+    min-width: 140px;
   }
 
   .action-button {
     width: 100%;
     font-size: 12px;
-    padding: 8px 10px;
+    padding: 7px 10px;
   }
 }
