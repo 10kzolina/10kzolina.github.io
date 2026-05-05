@@ -178,13 +178,26 @@ function getNoteDirtyMarkup(isDirty) {
   return isDirty ? `<span class="note-dirty-label">Sin guardar</span>` : "";
 }
 
+function isRealRunner(runner) {
+  // Los registros con carrera "No corredor" son solo comensales, no corredores.
+  return normalizeText(runner.carrera) !== "no corredor";
+}
+
+function getFoodTickets(runner) {
+  // Comensales = suma de tickets del campo comida. Los 0 no suman.
+  return Math.max(0, toSafeInt(runner.comida));
+}
+
 function renderStats(filteredCount) {
-  const totalRunners = state.runners.length;
-  const pendingRunners = state.runners.filter((runner) => !runner.bolsa_entregada).length;
-  const totalDiners = state.runners.reduce((sum, runner) => sum + toSafeInt(runner.comida), 0);
+  const realRunners = state.runners.filter(isRealRunner);
+
+  const totalRunners = realRunners.length;
+  const pendingRunners = realRunners.filter((runner) => !runner.bolsa_entregada).length;
+
+  const totalDiners = state.runners.reduce((sum, runner) => sum + getFoodTickets(runner), 0);
   const pendingDiners = state.runners.reduce((sum, runner) => {
     if (runner.bolsa_entregada) return sum;
-    return sum + toSafeInt(runner.comida);
+    return sum + getFoodTickets(runner);
   }, 0);
 
   elements.statTotalRunners.textContent = totalRunners;

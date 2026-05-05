@@ -354,47 +354,6 @@
   background: #991b1b;
 }
 
-
-/* Ajuste específico para escritorio: la tabla tiene muchas columnas y los botones
-   quedaban comprimidos. En móvil no afecta porque la tabla se oculta. */
-@media (min-width: 761px) {
-  .dorsales-card {
-    overflow-x: auto;
-  }
-
-  .dorsales-table {
-    width: 100%;
-    min-width: 1120px;
-    table-layout: auto;
-  }
-
-  .dorsales-table th:last-child,
-  .dorsales-table td:last-child {
-    width: 240px;
-    min-width: 240px;
-  }
-
-  .dorsales-table .runner-actions {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
-    align-items: stretch;
-  }
-
-  .dorsales-table .action-button {
-    width: 100%;
-    min-height: 42px;
-    padding: 10px 14px;
-    white-space: nowrap;
-  }
-
-  .dorsales-table .undo-button {
-    white-space: normal;
-    line-height: 1.15;
-  }
-}
-
 @media (max-width: 900px) {
   .dorsales-summary {
     grid-template-columns: repeat(2, minmax(0, 1fr));
