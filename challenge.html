@@ -4,11 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0f6f47" />
-  <title>Reto Strava | 10K Zolina</title>
-  <meta name="description" content="Reto Strava de la 10K Zolina: completa el segmento oficial, sube tu actividad y compite por el mejor tiempo antes del 22 de mayo.">
+  <title>Recorridos | 10K Zolina</title>
+  <meta name="description" content="Información de los recorridos de la 10K Zolina: Txiki 600 m, 5K carrera y marcha, 10K carrera, horarios, precios, edades y GPX.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="styles.css" />
 
   <link rel="icon" href="favicon.ico" sizes="any">
@@ -16,18 +18,18 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <meta property="og:title" content="Reto Strava | 10K Zolina">
-  <meta property="og:description" content="Completa el segmento oficial de la 10K Zolina, sube la actividad a Strava y participa en el KOM Challenge.">
+  <meta property="og:title" content="Recorridos | 10K Zolina">
+  <meta property="og:description" content="Elige entre Txiki, 5K y 10K. Consulta horarios, precios, edades y recorrido.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://10kzolina.github.io/challenge.html">
-  <meta property="og:image" content="https://10kzolina.github.io/img/cartel-kom-challenge.jpg">
+  <meta property="og:url" content="https://10kzolina.github.io/carreras.html">
+  <meta property="og:image" content="https://10kzolina.github.io/img/logo-zolina.png">
   <meta property="og:site_name" content="10K Zolina">
   <meta property="og:locale" content="es_ES">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Reto Strava | 10K Zolina">
-  <meta name="twitter:description" content="Segmento oficial, premios y condiciones del KOM Challenge de la 10K Zolina.">
-  <meta name="twitter:image" content="https://10kzolina.github.io/img/cartel-kom-challenge.jpg">
-  <link rel="canonical" href="https://10kzolina.github.io/challenge.html">
+  <meta name="twitter:title" content="Recorridos | 10K Zolina">
+  <meta name="twitter:description" content="Txiki 600 m, 5K carrera, 5K marcha y 10K carrera: horarios, precios, edades, mapa y GPX.">
+  <meta name="twitter:image" content="https://10kzolina.github.io/img/logo-zolina.png">
+  <link rel="canonical" href="https://10kzolina.github.io/carreras.html">
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BD2PFX9LL"></script>
@@ -39,7 +41,7 @@
     gtag('config', 'G-9BD2PFX9LL');
   </script>
 </head>
-<body class="challenge-page">
+<body class="carreras-page">
   <div class="noise"></div>
 
   <header class="site-header compact-header">
@@ -59,82 +61,156 @@
 
     <nav class="nav-actions" id="main-navigation" aria-label="Navegación principal">
       <a href="index.html">Inicio</a>
-      <a href="carreras.html">Recorridos</a>
+      <a href="carreras.html" class="nav-pill">Recorridos</a>
       <a href="kiloreto.html">Kiloreto</a>
-      <a href="challenge.html" class="nav-pill">KOM Challenge</a>
+      <a href="challenge.html">KOM Challenge</a>
       <a href="resultados.html">Resultados</a>
       <a href="colaboradores.html">Colaboradores</a>
       <a href="contacto.html">Contacto</a>
     </nav>
   </header>
 
-  <main class="container">
-    <section class="challenge-hero reveal">
+  <main class="container" data-race-page>
+    <section class="race-hero reveal">
       <div>
-        <p class="eyebrow">Segmento Zolina</p>
-        <h1>KOM Challenge</h1>
+        <p class="eyebrow">Domingo 24 de mayo de 2026 · Badostáin</p>
+        <h1>Recorridos</h1>
         <p>
-          ¡Premio asegurado! Completa el recorrido oficial de la 10K Zolina, sube la actividad a Strava
-          y demuestra quién marca el mejor tiempo en el segmento.
+          La 10K Zolina es un día de deporte, solidaridad y comunidad con distancias para todas las edades:
+          Txiki, 5K carrera, 5K marcha y 10K carrera.
         </p>
+
         <div class="hero-actions compact-actions">
-          <a href="https://strava.app.link/L0Bdf7REB2b" class="primary-button" target="_blank" rel="noopener">Abrir Strava</a>
-          <a href="img/cartel-kom-challenge.jpg" class="secondary-button" target="_blank" rel="noopener">Ver cartel oficial</a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfP2-c1h1SoEjlJCK-kpITiLVKQqqQtFjLKk40hK8ChqXCGGg/viewform?usp=dialog" class="primary-button" target="_blank" rel="noopener">Inscribirme a la carrera</a>
+          <a href="https://forms.gle/9uEHps9BrEYXebt8A" class="secondary-button" target="_blank" rel="noopener">Comida o voluntariado</a>
         </div>
       </div>
 
-      <div class="challenge-hero-card">
-        <span>🏆</span>
-        <strong>Premio sorpresa</strong>
-        <small>para todos los participantes + premio especial para el mejor tiempo</small>
-      </div>
+      <aside class="race-hero-card" aria-label="Resumen del evento">
+        <span>24</span>
+        <strong>mayo</strong>
+        <small>Txiki · 5K · 10K · marcha</small>
+      </aside>
     </section>
 
-    <section class="challenge-detail-grid reveal delay-1">
-      <article class="challenge-info-card">
-        <span class="contact-icon">🎁</span>
-        <h2>Premio</h2>
-        <p>Todos los participantes reciben un pequeño premio. La persona que consiga el mejor tiempo validado en el segmento oficial se llevará un premio especial.</p>
-        
-      </article>
-
-      <article class="challenge-info-card">
-        <span class="contact-icon">📍</span>
-        <h2>Recorrido</h2>
-        <p>Segmento oficial de la 10K Zolina con salida y zona de referencia en Badostáin.</p>
-        <ul class="challenge-list">
-          <li><strong>Distancia:</strong> 10,22 km</li>
-          <li><strong>Desnivel positivo:</strong> 267 m</li>
-          <li><strong>Plazo:</strong> del 25 de abril al 22 de mayo a las 23:59 h</li>
-        </ul>
-      </article>
-
-      <article class="challenge-info-card">
-        <span class="contact-icon">✅</span>
-        <h2>Condiciones</h2>
-        <p>Para entrar en la clasificación del reto debes cumplir las condiciones indicadas por la organización.</p>
-        <ul class="challenge-list">
-          <li>Subir la actividad a Strava.</li>
-          <li>Estar inscrito en la 10K Zolina.</li>
-          <li>Seguir a la carrera en Instagram: <a href="https://www.instagram.com/10kzolina" target="_blank" rel="noopener">@10kzolina</a>.</li>
-        </ul>
-        <a href="contacto.html" class="secondary-button challenge-inline-button">Tengo dudas</a>
-      </article>
+    <section class="race-switcher reveal delay-1" aria-label="Selector de carrera">
+      <button class="race-tab is-active" type="button" data-race-tab="10k" aria-pressed="true">
+        <strong><span class="race-tab-full">10K Carrera</span><span class="race-tab-short">10K</span></strong>
+        <span>11:00 h · 12€</span>
+      </button>
+      <button class="race-tab" type="button" data-race-tab="5k" aria-pressed="false">
+        <strong><span class="race-tab-full">5K Carrera / Marcha</span><span class="race-tab-short">5K</span></strong>
+        <span>11:00 h / 11:15 h</span>
+      </button>
+      <button class="race-tab" type="button" data-race-tab="txiki" aria-pressed="false">
+        <strong><span class="race-tab-full">Txiki</span><span class="race-tab-short">Txiki</span></strong>
+        <span>10:00 h · 5€</span>
+      </button>
     </section>
 
-    <section class="poster-section reveal delay-2">
-      <div class="section-title-row">
-        <div>
-          <p class="eyebrow">Cartel oficial</p>
-          <h2>Segmento Zolina KOM Challenge</h2>
+    <section class="race-detail-layout reveal delay-2">
+      <article class="race-info-card">
+        <p class="eyebrow" id="race-eyebrow">Carrera principal</p>
+        <h2 id="race-title">10K Carrera</h2>
+        <p id="race-description">
+          La distancia reina de la jornada, con salida a las 11:00 h y recorrido por el entorno de Badostáin y Zolina.
+        </p>
+
+        <dl class="race-facts" aria-label="Datos de la carrera seleccionada">
+          <div>
+            <dt>Distancia</dt>
+            <dd id="race-distance">10 km</dd>
+          </div>
+          <div>
+            <dt>Salida</dt>
+            <dd id="race-time">11:00 h</dd>
+          </div>
+          <div>
+            <dt>Precio</dt>
+            <dd id="race-price">12€</dd>
+          </div>
+          <div>
+            <dt>Participación</dt>
+            <dd id="race-age">Solo mayores de edad</dd>
+          </div>
+        </dl>
+
+        <ul class="race-bullets" id="race-bullets">
+          <li>Recorrido oficial de 10 km.</li>
+          <li>Prueba reservada para mayores de edad.</li>
+          <li>Aportación solidaria mínima: 1 kg de comida no perecedera.</li>
+        </ul>
+
+        <div class="race-actions">
+          <a id="race-route-link" href="https://loc.wiki/t/258942454?h=jpyxxj7xzx&amp;wa=so&amp;la=es" class="secondary-button" target="_blank" rel="noopener">Wikiloc</a>
+          <a id="race-gpx-link" href="7257" class="secondary-button" download>Descargar GPX</a>
         </div>
-        <span class="soft-pill">Strava · 10K Zolina</span>
-      </div>
-      <img class="challenge-poster" src="img/cartel-kom-challenge.jpg" alt="Cartel oficial Segmento Zolina KOM Challenge" />
+      </article>
+
+      <article class="route-map-card">
+        <div class="section-title-row">
+          <div>
+            <p class="eyebrow">Recorrido GPX</p>
+            <h2 id="route-title">Mapa satélite 10K Carrera</h2>
+          </div>
+          <span class="soft-pill" id="route-pill">10K</span>
+        </div>
+
+        <div class="route-map-shell">
+          <div id="route-map" class="route-map" role="img" aria-label="Mapa satélite del recorrido seleccionado"></div>
+          <div class="route-loading is-visible" id="route-loading">Cargando recorrido GPX...</div>
+        </div>
+
+        <div class="route-meta-row" aria-label="Datos calculados del GPX">
+          <span id="route-distance-meta">GPX aprox.: calculando...</span>
+          <span id="route-elevation-meta">Desnivel: calculando...</span>
+        </div>
+
+        <div class="route-profile">
+          <div class="route-profile-head">
+            <strong>Perfil</strong>
+            <span id="route-profile-meta">Altitud</span>
+          </div>
+          <svg id="route-profile-chart" viewBox="0 0 720 150" aria-hidden="true">
+            <path id="route-profile-area" class="route-profile-area" d=""></path>
+            <path id="route-profile-line" class="route-profile-line" d=""></path>
+          </svg>
+        </div>
+      </article>
+    </section>
+
+    <section class="race-common-grid reveal delay-3" aria-label="Información común del evento">
+      <article class="race-common-card">
+        <span class="contact-icon">⏰</span>
+        <h2>Horarios</h2>
+        <ul class="race-bullets">
+          <li>Txiki: salida a las 10:00 h.</li>
+          <li>5K Carrera y 10K Carrera: salida a las 11:00 h.</li>
+          <li>5K Marcha: salida a las 11:15 h.</li>
+        </ul>
+      </article>
+
+      <article class="race-common-card">
+        <span class="contact-icon">🥫</span>
+        <h2>Aportación solidaria</h2>
+        <p>
+          Para participar se aportará como mínimo 1 kg de comida no perecedera. También habrá un stand de recogida de alimentos para quien quiera colaborar aunque no se inscriba.
+        </p>
+      </article>
+
+      <article class="race-common-card">
+        <span class="contact-icon">🎺</span>
+        <h2>Ambiente</h2>
+        <p>
+          Además de la carrera habrá almuerzo para asistentes, txaranga, comida popular, sorpresas, sorteos y muchas ganas de compartir el día.
+        </p>
+      </article>
     </section>
   </main>
 
   <footer class="site-footer" data-site-footer></footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

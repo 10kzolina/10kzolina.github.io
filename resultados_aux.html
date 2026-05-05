@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0f6f47" />
   <title>Resultados | 10K Zolina</title>
-  <meta name="description" content="Resultados oficiales de la 10K Zolina: podio, clasificación por distancia, tiempos, dorsal y opción para compartir cada resultado.">
+  <meta name="description" content="Consulta los resultados oficiales de la 10K Zolina cuando finalice la carrera: podio, clasificación, distancias y tiempos.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
@@ -16,7 +16,7 @@
   <link rel="manifest" href="site.webmanifest">
 
   <meta property="og:title" content="Resultados | 10K Zolina">
-  <meta property="og:description" content="Consulta la clasificación oficial, podios y tiempos de la 10K Zolina.">
+  <meta property="og:description" content="Resultados oficiales, podio y clasificación de la 10K Zolina.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://10kzolina.github.io/resultados.html">
   <meta property="og:image" content="https://10kzolina.github.io/img/logo-zolina.png">
@@ -24,7 +24,7 @@
   <meta property="og:locale" content="es_ES">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Resultados | 10K Zolina">
-  <meta name="twitter:description" content="Clasificación oficial, filtros por distancia y podio de la 10K Zolina.">
+  <meta name="twitter:description" content="Clasificación oficial de la 10K Zolina disponible el día de la carrera.">
   <meta name="twitter:image" content="https://10kzolina.github.io/img/logo-zolina.png">
   <link rel="canonical" href="https://10kzolina.github.io/resultados.html">
 
@@ -38,6 +38,7 @@
     gtag('config', 'G-9BD2PFX9LL');
   </script>
 </head>
+
 <body class="results-page">
   <div class="noise"></div>
 
@@ -67,87 +68,54 @@
     </nav>
   </header>
 
-
   <main class="container" id="resultados">
     <section class="results-hero reveal">
       <div>
         <p class="eyebrow">Clasificación oficial</p>
         <h1>Resultados</h1>
-        <p>Busca participantes, filtra por distancia/categoría y comparte el resultado en un toque.</p>
+        <p>
+          El podio y la tabla de participantes estarán disponibles el día de la carrera.
+        </p>
       </div>
 
       <div class="summary-grid" aria-label="Resumen de resultados">
         <div class="summary-card">
           <span>Total</span>
-          <strong id="stat-total">0</strong>
+          <strong>Próximamente</strong>
         </div>
+
         <div class="summary-card">
           <span>Mejor tiempo</span>
-          <strong id="stat-best">--:--</strong>
+          <strong>--:--</strong>
         </div>
+
         <div class="summary-card">
-          <span>Distancia</span>
-          <strong id="stat-distance">10K</strong>
+          <span>Fecha</span>
+          <strong>24 mayo</strong>
         </div>
       </div>
     </section>
 
-    <section class="filters-panel reveal delay-2">
-      <div class="filter-group search-group">
-        <label for="busqueda">Buscar</label>
-        <input id="busqueda" type="search" placeholder="Nombre, dorsal..." autocomplete="off" />
-      </div>
-
-      <div class="filter-group">
-        <label for="distancia">Distancia</label>
-        <select id="distancia">
-          <option value="10k">10K</option>
-          <option value="5k">5K</option>
-        </select>
-      </div>
-
-      <div class="filter-group">
-        <label for="genero">Categoría</label>
-        <select id="genero">
-          <option value="General">General</option>
-          <option value="Masculino">Masculino</option>
-          <option value="Femenino">Femenino</option>
-        </select>
-      </div>
-    </section>
-
-    <section class="podium-card reveal delay-1" aria-label="Podio de la selección actual">
+    <section class="podium-card reveal delay-1" aria-label="Resultados próximamente">
       <div class="section-title-row">
         <div>
-          <p class="eyebrow">Top 3</p>
-          <h2 id="podium-title">Podio 10K</h2>
+          <p class="eyebrow">Próximamente</p>
+          <h2>Resultados disponibles el día de la carrera</h2>
         </div>
-        <span id="podium-label" class="soft-pill">10K · General</span>
+
+        <span class="soft-pill">24 de mayo</span>
       </div>
-      <div id="podium" class="podium"></div>
-    </section>
 
-    
+      <div class="empty-state-results">
+        <div class="empty-state-icon">🏁</div>
 
-    <section class="table-card reveal delay-3">
-      <div class="mobile-results" id="mobile-resultados"></div>
+        <h3>La clasificación aún no está disponible</h3>
 
-      <table aria-label="Tabla de resultados">
-        <thead>
-          <tr>
-            <th>Posición</th>
-            <th>Dorsal</th>
-            <th>Nombre y apellido</th>
-            <th>Distancia</th>
-            <th>Género</th>
-            <th>Tiempo</th>
-            <th>Compartir</th>
-          </tr>
-        </thead>
-        <tbody id="tabla-resultados"></tbody>
-      </table>
-
-      <p id="sin-resultados" class="empty-message">No hay resultados para esta selección.</p>
+        <p>
+          Cuando finalice la carrera, aquí podrás consultar el podio, buscar participantes,
+          filtrar por distancia y compartir los tiempos oficiales.
+        </p>
+      </div>
     </section>
   </main>
 
