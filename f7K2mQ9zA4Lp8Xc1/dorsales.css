@@ -467,12 +467,12 @@
   white-space: nowrap;
 }
 
-/* ===== TABLA MÁS ANCHA EN ESCRITORIO, SIN SCROLL ===== */
+/* ===== TABLA ESCRITORIO EQUILIBRADA, SIN SCROLL ===== */
 @media (min-width: 1000px) {
-  /* Usa casi todo el ancho disponible del navegador, pero con límite para que no quede desparramada. */
+  /* Más ancho que el container base, pero sin estirar la tabla en exceso. */
   .dorsales-container {
-    width: min(1640px, calc(100vw - 32px));
-    max-width: 1640px;
+    width: min(1480px, calc(100vw - 40px));
+    max-width: 1480px;
     margin-left: auto;
     margin-right: auto;
     padding-left: 0;
@@ -491,10 +491,10 @@
 
   .dorsales-table th,
   .dorsales-table td {
-    padding: 10px 10px;
+    padding: 10px 9px;
   }
 
-  /* Reparto pensado para que correo y acciones tengan espacio real. */
+  /* Reparto más compacto: el correo ya no se queda con media tabla. */
   .dorsales-table th:nth-child(1),
   .dorsales-table td:nth-child(1) {
     width: 6%;
@@ -502,17 +502,17 @@
 
   .dorsales-table th:nth-child(2),
   .dorsales-table td:nth-child(2) {
-    width: 15%;
+    width: 16%;
   }
 
   .dorsales-table th:nth-child(3),
   .dorsales-table td:nth-child(3) {
-    width: 25%;
+    width: 19%;
   }
 
   .dorsales-table th:nth-child(4),
   .dorsales-table td:nth-child(4) {
-    width: 11%;
+    width: 12%;
   }
 
   .dorsales-table th:nth-child(5),
@@ -527,14 +527,14 @@
 
   .dorsales-table th:nth-child(7),
   .dorsales-table td:nth-child(7) {
-    width: 12%;
+    width: 15%;
     min-width: 0;
   }
 
   .dorsales-table th:nth-child(8),
   .dorsales-table td:nth-child(8) {
-    width: 13%;
-    min-width: 180px;
+    width: 14%;
+    min-width: 170px;
   }
 
   .runner-subtle {
@@ -544,6 +544,10 @@
     overflow: hidden;
     overflow-wrap: normal;
     text-overflow: ellipsis;
+  }
+
+  .dorsales-table .note-input {
+    min-height: 42px;
   }
 
   .dorsales-table .runner-actions {
@@ -570,12 +574,12 @@
 
 @media (min-width: 1400px) {
   .dorsales-container {
-    width: min(1680px, calc(100vw - 48px));
-    max-width: 1680px;
+    width: min(1520px, calc(100vw - 56px));
+    max-width: 1520px;
   }
 
   .dorsales-table th,
   .dorsales-table td {
-    padding: 12px 12px;
+    padding: 11px 10px;
   }
 }
