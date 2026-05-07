@@ -67,20 +67,24 @@
         <p class="eyebrow">Inscripciones en directo</p>
         <h1 id="inscripciones-title">Corredores inscritos</h1>
         <p>
-          Recuento automático a partir de la hoja pública de respuestas. Cada fila puede contener varios corredores,
-          por eso se contabiliza cada columna de recorrido completada.
+          Recuento automático de participación. Solo se muestran datos agregados por recorrido,
+          sin publicar la fuente ni datos personales de las inscripciones.
         </p>
 
         <div class="inscripciones-status-row" aria-live="polite">
-          <span class="inscripciones-status-dot" data-status-dot></span>
-          <span id="inscripciones-status">Cargando datos de la hoja...</span>
+          <span class="inscripciones-status-main">
+            <span class="inscripciones-status-dot" data-status-dot></span>
+            <span id="inscripciones-status">Cargando recuento...</span>
+          </span>
+          <button class="inscripciones-refresh-button" type="button" data-refresh-inscripciones>Actualizar</button>
         </div>
+        <span class="source-updated" data-last-updated>Datos pendientes de cargar</span>
       </div>
 
       <aside class="inscripciones-total-panel" aria-label="Total de corredores">
         <span>Total corredores</span>
-        <strong data-total-count>...</strong>
-        <small data-total-caption>Calculando inscripciones</small>
+        <strong data-total-count>232</strong>
+        <small data-total-caption>Corredores inscritos</small>
       </aside>
     </section>
 
@@ -166,27 +170,11 @@
         <p class="inscripciones-warning" data-warning hidden></p>
       </article>
 
-      <aside class="inscripciones-panel inscripciones-source-panel">
-        <img src="/img/logo-zolina-vertical.jpeg" alt="Logo vertical 10K Zolina" />
-        <div>
-          <p class="eyebrow">Fuente</p>
-          <h2>Google Sheets</h2>
-          <p>
-            La página lee la hoja de respuestas sin publicar datos personales. Solo suma los recorridos indicados
-            en cada inscripción.
-          </p>
-          <div class="source-actions">
-            <a class="secondary-button" href="https://docs.google.com/spreadsheets/d/1sb-6U1vdkLhYuXA5oIiC8RiZHUQu2xwaJMZJo65mOj4/edit?usp=sharing" target="_blank" rel="noopener">Ver hoja</a>
-            <button class="primary-button" type="button" data-refresh-inscripciones>Actualizar</button>
-          </div>
-          <span class="source-updated" data-last-updated>Datos pendientes de cargar</span>
-        </div>
-      </aside>
     </section>
 
     <noscript>
       <p class="inscripciones-noscript">
-        Activa JavaScript para cargar el recuento actualizado desde Google Sheets.
+        Activa JavaScript para cargar el recuento actualizado de inscripciones.
       </p>
     </noscript>
   </main>

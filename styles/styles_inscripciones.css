@@ -1,23 +1,18 @@
-.inscripciones-page h1 {
-  max-width: 760px;
-  margin: 12px 0 18px;
-  color: var(--green-deep);
-  font-size: 4.5rem;
-  line-height: 0.96;
-  letter-spacing: 0;
-}
+/* Página de inscripciones 10K Zolina
+   Sustituye /styles/styles_inscripciones.css por este archivo. */
 
-.inscripciones-page h2 {
-  color: var(--green-deep);
+.inscripciones-page {
+  min-height: 100vh;
 }
 
 .inscripciones-container {
-  padding-bottom: 72px;
+  max-width: 1180px;
+  padding-top: clamp(18px, 4vw, 34px);
 }
 
 .inscripciones-hero,
-.inscripciones-kpi-card,
-.inscripciones-panel {
+.inscripciones-panel,
+.inscripciones-kpi-card {
   position: relative;
   border: 1px solid var(--glass-border);
   background: var(--glass);
@@ -27,217 +22,224 @@
 
 .inscripciones-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
-  gap: 28px;
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 0.34fr);
+  align-items: stretch;
+  gap: clamp(16px, 3vw, 24px);
+  margin-bottom: clamp(16px, 3vw, 24px);
+  padding: clamp(22px, 5vw, 48px);
   overflow: hidden;
-  padding: 42px;
-  border-radius: 32px;
+  border-radius: clamp(26px, 4vw, 38px);
 }
 
 .inscripciones-hero::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: auto -90px -120px auto;
+  width: 300px;
+  height: 300px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(183, 243, 74, 0.36), transparent 68%);
   pointer-events: none;
-  background:
-    linear-gradient(120deg, rgba(183, 243, 74, 0.24), transparent 34%),
-    linear-gradient(315deg, rgba(22, 161, 99, 0.16), transparent 42%);
 }
 
-.inscripciones-hero::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 42%;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(15, 111, 71, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 111, 71, 0.08) 1px, transparent 1px);
-  background-size: 24px 24px;
-  mask-image: linear-gradient(90deg, transparent, black);
-}
-
-.inscripciones-hero-copy,
-.inscripciones-total-panel {
+.inscripciones-hero-copy {
   position: relative;
   z-index: 1;
+  min-width: 0;
 }
 
-.inscripciones-hero-copy p:not(.eyebrow) {
-  max-width: 690px;
-  margin-bottom: 0;
+.inscripciones-hero h1 {
+  max-width: 760px;
+  margin: 0 0 14px;
+  color: var(--green-deep);
+  font-size: clamp(42px, 8vw, 94px);
+  line-height: 0.88;
+  letter-spacing: -0.08em;
+}
+
+.inscripciones-hero p:not(.eyebrow) {
+  max-width: 720px;
+  margin: 0;
   color: var(--muted);
-  font-size: 1.08rem;
-  font-weight: 800;
-  line-height: 1.6;
+  font-size: clamp(15px, 2vw, 20px);
+  font-weight: 750;
+  line-height: 1.5;
 }
 
 .inscripciones-status-row {
-  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  max-width: 100%;
-  margin-top: 24px;
-  padding: 10px 14px;
-  border: 1px solid rgba(15, 111, 71, 0.12);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
-  color: var(--green-deep);
-  font-size: 0.9rem;
-  font-weight: 900;
+  margin-top: 18px;
 }
 
-.inscripciones-status-row span:last-child {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.inscripciones-status-main,
+.inscripciones-refresh-button,
+.source-updated {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.inscripciones-status-main {
+  gap: 8px;
+  min-height: 38px;
+  padding: 9px 13px;
+  border: 1px solid rgba(15, 111, 71, 0.14);
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--green-deep);
 }
 
 .inscripciones-status-dot {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   flex: 0 0 auto;
   border-radius: 50%;
   background: var(--yellow);
-  box-shadow: 0 0 0 6px rgba(250, 204, 21, 0.16);
+  box-shadow: 0 0 0 5px rgba(250, 204, 21, 0.18);
 }
 
-.inscripciones-status-dot.is-ready {
+.inscripciones-status-dot.is-loaded,
+.inscripciones-status-dot[data-state="loaded"],
+.inscripciones-status-dot[data-status="loaded"],
+.inscripciones-status-dot[data-status="success"] {
   background: var(--green);
-  box-shadow: 0 0 0 6px rgba(22, 161, 99, 0.15);
+  box-shadow: 0 0 0 5px rgba(22, 161, 99, 0.14);
 }
 
-.inscripciones-status-dot.is-error {
-  background: var(--red);
-  box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.14);
+.inscripciones-refresh-button {
+  min-height: 38px;
+  padding: 9px 13px;
+  border: 1px solid rgba(15, 111, 71, 0.14);
+  cursor: pointer;
+  background: white;
+  color: var(--green-deep);
+  font-family: inherit;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.inscripciones-refresh-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(22, 161, 99, 0.35);
+  box-shadow: 0 12px 28px rgba(15, 111, 71, 0.12);
+}
+
+.source-updated {
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 10px;
+  padding: 7px 10px;
+  background: rgba(232, 247, 239, 0.72);
+  color: var(--muted);
+  font-size: 12px;
 }
 
 .inscripciones-total-panel {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
   display: grid;
+  place-items: center;
   align-content: center;
-  min-height: 260px;
-  padding: 30px;
+  gap: 6px;
+  min-height: 220px;
+  padding: clamp(20px, 4vw, 34px);
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 28px;
+  border: 1px solid rgba(15, 111, 71, 0.16);
+  border-radius: clamp(24px, 4vw, 32px);
   background:
-    linear-gradient(145deg, rgba(7, 63, 42, 0.96), rgba(15, 111, 71, 0.92)),
-    var(--green-deep);
+    radial-gradient(circle at 22% 18%, rgba(183, 243, 74, 0.34), transparent 34%),
+    linear-gradient(145deg, var(--green-deep), var(--green));
+  box-shadow: 0 28px 70px rgba(7, 63, 42, 0.22);
   color: white;
-  box-shadow: 0 24px 60px rgba(7, 63, 42, 0.24);
-}
-
-.inscripciones-total-panel::after {
-  content: "";
-  position: absolute;
-  inset: auto -24px -40px 24px;
-  height: 112px;
-  background: linear-gradient(90deg, rgba(183, 243, 74, 0.34), rgba(250, 204, 21, 0.28));
-  transform: skewY(-8deg);
+  text-align: center;
 }
 
 .inscripciones-total-panel span,
 .inscripciones-total-panel small {
-  position: relative;
-  z-index: 1;
-  font-weight: 900;
+  max-width: 100%;
+  opacity: 0.88;
+  font-weight: 950;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .inscripciones-total-panel span {
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 0.82rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 12px;
 }
 
 .inscripciones-total-panel strong {
-  position: relative;
-  z-index: 1;
-  margin: 16px 0 10px;
-  font-size: 5.4rem;
-  line-height: 0.9;
-  letter-spacing: 0;
+  display: block;
+  max-width: 100%;
+  font-size: clamp(72px, 10vw, 116px);
+  line-height: 0.82;
+  letter-spacing: -0.09em;
+  overflow-wrap: normal;
 }
 
 .inscripciones-total-panel small {
-  color: rgba(255, 255, 255, 0.82);
-  line-height: 1.45;
+  font-size: 12px;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .inscripciones-kpi-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-  margin-top: 18px;
+  gap: 14px;
+  margin-bottom: clamp(16px, 3vw, 24px);
 }
 
 .inscripciones-kpi-card {
-  min-height: 232px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 22px;
-  border-radius: 24px;
+  min-width: 0;
+  display: grid;
+  gap: 14px;
+  padding: 20px;
   overflow: hidden;
-}
-
-.inscripciones-kpi-card::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 6px;
-  background: var(--route-color, var(--green));
-}
-
-.txiki-card {
-  --route-color: var(--yellow);
-}
-
-.marcha-card {
-  --route-color: var(--lime);
-}
-
-.carrera5-card {
-  --route-color: var(--green);
-}
-
-.carrera10-card {
-  --route-color: var(--orange);
+  border-radius: 28px;
 }
 
 .route-badge {
   width: fit-content;
-  padding: 7px 10px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(232, 247, 239, 0.86);
+  background: rgba(232, 247, 239, 0.9);
   color: var(--green-dark);
-  font-size: 0.76rem;
-  font-weight: 900;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 950;
+  white-space: nowrap;
 }
 
 .kpi-card-head {
-  display: grid;
-  gap: 8px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .kpi-card-head h2 {
   margin: 0;
-  font-size: 1.3rem;
-  line-height: 1.1;
+  color: var(--green-deep);
+  font-size: clamp(20px, 2.6vw, 27px);
+  line-height: 1;
+  letter-spacing: -0.05em;
 }
 
 .kpi-card-head strong {
   color: var(--green-deep);
-  font-size: 3.25rem;
-  line-height: 0.95;
-  letter-spacing: 0;
+  font-size: clamp(34px, 5vw, 52px);
+  line-height: 0.86;
+  letter-spacing: -0.07em;
 }
 
 .route-progress {
@@ -249,36 +251,42 @@
 
 .route-progress span {
   display: block;
-  width: 0%;
+  width: 0;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--route-color, var(--green)), rgba(255, 255, 255, 0.45));
-  transition: width 0.7s cubic-bezier(.22, 1, .36, 1);
+  background: linear-gradient(90deg, var(--green-deep), var(--green), var(--lime));
+  transition: width 0.6s ease;
 }
 
 .inscripciones-kpi-card p {
   margin: 0;
   color: var(--muted);
-  font-size: 0.92rem;
-  font-weight: 900;
+  font-size: 13px;
+  font-weight: 850;
+  line-height: 1.35;
 }
 
 .inscripciones-detail-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.78fr);
+  grid-template-columns: 1fr;
   gap: 18px;
-  margin-top: 18px;
 }
 
 .inscripciones-panel {
-  padding: 26px;
-  border-radius: 26px;
+  padding: clamp(18px, 4vw, 28px);
+  border-radius: 30px;
+}
+
+.inscripciones-panel .section-title-row {
+  margin-bottom: 18px;
 }
 
 .inscripciones-panel h2 {
-  margin-bottom: 0;
-  font-size: 1.55rem;
-  line-height: 1.15;
+  margin: 0;
+  color: var(--green-deep);
+  font-size: clamp(25px, 4vw, 38px);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
 }
 
 .route-summary-list {
@@ -290,153 +298,216 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 14px;
-  min-height: 54px;
-  padding: 12px 14px;
+  gap: 12px;
+  padding: 14px 16px;
   border: 1px solid rgba(15, 111, 71, 0.1);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.62);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.72);
 }
 
-.route-summary-row span,
-.route-summary-row strong {
+.route-summary-row span {
+  min-width: 0;
   color: var(--green-deep);
   font-weight: 900;
 }
 
 .route-summary-row strong {
-  font-size: 1.4rem;
+  color: var(--green-deep);
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
 
-.inscripciones-warning {
+.inscripciones-warning,
+.inscripciones-noscript {
   margin: 16px 0 0;
-  padding: 12px 14px;
-  border: 1px solid rgba(239, 68, 68, 0.16);
-  border-radius: 14px;
-  background: rgba(254, 226, 226, 0.74);
-  color: #991b1b;
-  font-size: 0.9rem;
-  font-weight: 900;
+  padding: 14px 16px;
+  border: 1px solid rgba(250, 204, 21, 0.34);
+  border-radius: 18px;
+  background: rgba(254, 252, 232, 0.9);
+  color: #854d0e;
+  font-weight: 850;
+  line-height: 1.45;
 }
 
 .inscripciones-source-panel {
-  display: grid;
-  grid-template-columns: 116px minmax(0, 1fr);
-  gap: 20px;
-  align-items: center;
+  display: none !important;
 }
 
-.inscripciones-source-panel img {
-  width: 116px;
-  height: 116px;
-  object-fit: contain;
-  border-radius: 20px;
-  background: white;
-  box-shadow: var(--soft-shadow);
-}
-
-.inscripciones-source-panel p:not(.eyebrow) {
-  margin-bottom: 18px;
-  color: var(--muted);
-  font-weight: 800;
-  line-height: 1.55;
-}
-
-.source-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.source-actions .primary-button,
-.source-actions .secondary-button {
-  min-height: 44px;
-  padding: 12px 18px;
-}
-
-.source-updated {
-  display: block;
-  margin-top: 14px;
-  color: var(--muted);
-  font-size: 0.84rem;
-  font-weight: 900;
-}
-
-.source-actions button:disabled {
-  cursor: wait;
-  opacity: 0.72;
-}
-
-.inscripciones-noscript {
-  margin-top: 18px;
-  padding: 16px 18px;
-  border-radius: 18px;
-  background: white;
-  color: var(--green-deep);
-  font-weight: 900;
-  box-shadow: var(--soft-shadow);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .route-progress span {
-    transition: none;
-  }
-}
-
-@media (max-width: 1080px) {
-  .inscripciones-kpi-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .inscripciones-detail-grid,
+@media (max-width: 980px) {
   .inscripciones-hero {
     grid-template-columns: 1fr;
   }
 
   .inscripciones-total-panel {
-    min-height: 220px;
-  }
-}
-
-@media (max-width: 720px) {
-  .inscripciones-page h1 {
-    font-size: 3rem;
-  }
-
-  .inscripciones-hero,
-  .inscripciones-panel {
-    padding: 22px;
-    border-radius: 24px;
+    min-height: 176px;
   }
 
   .inscripciones-kpi-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .inscripciones-container {
+    padding: 14px 12px 42px;
+  }
+
+  .inscripciones-hero {
+    gap: 14px;
+    padding: 18px;
+    border-radius: 26px;
+  }
+
+  .inscripciones-hero h1 {
+    margin-bottom: 10px;
+    font-size: clamp(39px, 13.2vw, 58px);
+    line-height: 0.92;
+    letter-spacing: -0.072em;
+  }
+
+  .inscripciones-hero p:not(.eyebrow) {
+    font-size: 15px;
+    line-height: 1.43;
   }
 
   .inscripciones-status-row {
     width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .inscripciones-status-main,
+  .inscripciones-refresh-button {
+    min-height: 40px;
+    padding: 9px 11px;
+    font-size: 12px;
+  }
+
+  .inscripciones-status-main {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .inscripciones-status-main span:last-child {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .source-updated {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    font-size: 11px;
   }
 
   .inscripciones-total-panel {
-    min-height: 190px;
-    padding: 24px;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "label number"
+      "caption number";
+    place-items: center start;
+    align-content: center;
+    min-height: 116px;
+    padding: 18px 20px;
+    text-align: left;
+  }
+
+  .inscripciones-total-panel span {
+    grid-area: label;
+    font-size: 11px;
   }
 
   .inscripciones-total-panel strong {
-    font-size: 4rem;
+    grid-area: number;
+    justify-self: end;
+    font-size: clamp(70px, 22vw, 92px);
+    line-height: 0.82;
+    letter-spacing: -0.085em;
   }
 
-  .inscripciones-source-panel {
+  .inscripciones-total-panel small {
+    grid-area: caption;
+    font-size: 12px;
+  }
+
+  .inscripciones-kpi-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
 
-  .inscripciones-source-panel img {
-    width: 92px;
-    height: 92px;
+  .inscripciones-kpi-card {
+    gap: 10px;
+    padding: 16px;
+    border-radius: 22px;
   }
 
-  .source-actions {
+  .kpi-card-head h2 {
+    font-size: 22px;
+  }
+
+  .kpi-card-head strong {
+    font-size: 42px;
+  }
+
+  .inscripciones-panel {
+    padding: 17px;
+    border-radius: 24px;
+  }
+
+  .inscripciones-panel .section-title-row {
     display: grid;
     grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .inscripciones-panel .soft-pill {
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .route-summary-row {
+    padding: 13px 14px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 390px) {
+  .inscripciones-hero {
+    padding: 16px;
+  }
+
+  .inscripciones-hero h1 {
+    font-size: clamp(36px, 12.8vw, 50px);
+  }
+
+  .inscripciones-status-row {
+    grid-template-columns: 1fr;
+  }
+
+  .inscripciones-refresh-button {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .inscripciones-total-panel {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "label"
+      "number"
+      "caption";
+    justify-items: center;
+    min-height: 148px;
+    text-align: center;
+  }
+
+  .inscripciones-total-panel strong {
+    justify-self: center;
+    font-size: clamp(76px, 25vw, 96px);
   }
 }
