@@ -17,7 +17,7 @@
     locationUrl: "https://www.google.com/maps/search/?api=1&query=Badostain%2C%20Navarra",
     calendarUrl: "10k-zolina.ics",
     registrationUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfP2-c1h1SoEjlJCK-kpITiLVKQqqQtFjLKk40hK8ChqXCGGg/viewform?usp=dialog",
-    routesUrl: "/carreras",
+    routesUrl: "/recorridos",
     resultsUrl: "/resultados"
   };
 
