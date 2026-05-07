@@ -400,13 +400,32 @@
 
 @media (max-width: 720px) {
   .inscripciones-page h1 {
-    font-size: 3rem;
+    margin: 10px 0 12px;
+    font-size: clamp(2.35rem, 12vw, 3rem);
+    line-height: 1.02;
   }
 
-  .inscripciones-hero,
+  .inscripciones-hero {
+    gap: 18px;
+    padding: 20px;
+    border-radius: 24px;
+  }
+
   .inscripciones-panel {
     padding: 22px;
     border-radius: 24px;
+  }
+
+  .inscripciones-hero::after {
+    width: 100%;
+    opacity: 0.34;
+    mask-image: linear-gradient(180deg, transparent, black);
+  }
+
+  .inscripciones-hero-copy p:not(.eyebrow) {
+    font-size: 0.96rem;
+    font-weight: 700;
+    line-height: 1.5;
   }
 
   .inscripciones-kpi-grid {
@@ -415,28 +434,40 @@
 
   .inscripciones-status-row {
     width: 100%;
+    align-items: flex-start;
+    margin-top: 18px;
+    padding: 12px 13px;
+    border-radius: 18px;
+    line-height: 1.35;
+  }
+
+  .inscripciones-status-dot {
+    margin-top: 3px;
+  }
+
+  .inscripciones-status-row span:last-child {
+    white-space: normal;
   }
 
   .inscripciones-total-panel {
-    min-height: 190px;
-    padding: 24px;
+    min-height: 0;
+    padding: 20px;
+    border-radius: 22px;
+  }
+
+  .inscripciones-total-panel span {
+    font-size: 0.76rem;
+    letter-spacing: 0.1em;
   }
 
   .inscripciones-total-panel strong {
-    font-size: 4rem;
+    margin: 10px 0 8px;
+    font-size: clamp(3.35rem, 22vw, 4.6rem);
+    line-height: 0.9;
   }
 
-  .inscripciones-source-panel {
-    grid-template-columns: 1fr;
-  }
-
-  .inscripciones-source-panel img {
-    width: 92px;
-    height: 92px;
-  }
-
-  .source-actions {
-    display: grid;
-    grid-template-columns: 1fr;
+  .inscripciones-total-panel small {
+    font-size: 0.92rem;
+    line-height: 1.35;
   }
 }
