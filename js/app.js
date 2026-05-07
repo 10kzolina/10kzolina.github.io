@@ -22,7 +22,7 @@
   };
 
   const NAV_LINKS = [
-    { href: "/resultados", label: "Recorridos" },
+    { href: "/recorridos", label: "Recorridos" },
     { href: "/kiloreto", label: "Kiloreto" },
     { href: "/challenge", label: "KOM Challenge" },
     { href: "/resultados", label: "Resultados" },
