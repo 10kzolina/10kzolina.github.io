@@ -17,17 +17,17 @@
     locationUrl: "https://www.google.com/maps/search/?api=1&query=Badostain%2C%20Navarra",
     calendarUrl: "10k-zolina.ics",
     registrationUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfP2-c1h1SoEjlJCK-kpITiLVKQqqQtFjLKk40hK8ChqXCGGg/viewform?usp=dialog",
-    routesUrl: "carreras.html",
-    resultsUrl: "resultados.html"
+    routesUrl: "/carreras",
+    resultsUrl: "/resultados"
   };
 
   const NAV_LINKS = [
-    { href: "carreras.html", label: "Recorridos" },
-    { href: "kiloreto.html", label: "Kiloreto" },
-    { href: "challenge.html", label: "KOM Challenge" },
-    { href: "resultados.html", label: "Resultados" },
-    { href: "colaboradores.html", label: "Colaboradores" },
-    { href: "contacto.html", label: "Contacto" }
+    { href: "/resultados", label: "Recorridos" },
+    { href: "/kiloreto", label: "Kiloreto" },
+    { href: "/challenge", label: "KOM Challenge" },
+    { href: "/resultados", label: "Resultados" },
+    { href: "/colaboradores", label: "Colaboradores" },
+    { href: "/contacto", label: "Contacto" }
   ];
 
   const SPONSOR_LOGOS = [
@@ -348,7 +348,7 @@
   }
 
   function getCurrentPage() {
-    return window.location.pathname.split("/").pop() || "index.html";
+    return window.location.pathname.split("/").pop() || "/";
   }
 
   function getDateStampFromIso(value) {
