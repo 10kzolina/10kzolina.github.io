@@ -805,3 +805,78 @@
     font-size: 12px;
   }
 }
+
+
+/* ===== HISTORIAL DE NOTAS ===== */
+.note-cell {
+  align-content: start;
+}
+
+.note-history {
+  display: grid;
+  gap: 8px;
+  max-height: 170px;
+  overflow-y: auto;
+  padding: 9px;
+  border: 1px solid rgba(15, 111, 71, 0.13);
+  border-radius: 16px;
+  background: rgba(232, 247, 239, 0.52);
+}
+
+.note-history-empty {
+  min-height: 42px;
+  place-items: center start;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.note-history-entry {
+  display: grid;
+  gap: 5px;
+  padding: 9px 10px;
+  border: 1px solid rgba(15, 111, 71, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.note-history-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 8px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 950;
+}
+
+.note-history-meta span:first-child {
+  color: var(--green-deep);
+}
+
+.note-history-entry p {
+  margin: 0;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.note-input {
+  min-height: 56px;
+}
+
+@media (min-width: 1000px) {
+  .dorsales-table .note-history {
+    max-height: 130px;
+    padding: 7px;
+  }
+
+  .dorsales-table .note-history-entry {
+    padding: 7px 8px;
+  }
+
+  .dorsales-table .note-history-entry p {
+    font-size: 12px;
+  }
+}
