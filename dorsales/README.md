@@ -3,9 +3,9 @@
 Archivos incluidos:
 
 - `index.html`: página principal para publicar dentro de `/dorsales/`.
-- `dorsales.css`: estilos de la página y pantalla de login.
+- `dorsales.css`: estilos de la página, login, tarjetas, historial de notas y formulario de alta.
 - `dorsales.js`: app con Firebase Auth + Firestore.
-- `firestore.rules`: ejemplo de reglas de seguridad para Firestore.
+- `firestore.rules`: reglas de seguridad para Firestore.
 
 ## Cómo publicarlo en GitHub Pages
 
@@ -29,7 +29,31 @@ https://10kzolina.github.io/dorsales/
 
 1. En Firebase Console, activa Authentication > Sign-in method > Email/Password.
 2. Crea usuarios para las mesas/voluntarios.
-3. Actualiza `firestore.rules` con los emails reales autorizados.
-4. Publica las reglas en Firestore.
+3. Publica las reglas de `firestore.rules` en Firestore Database > Rules.
 
-Sin reglas restrictivas, el login visual no basta para proteger los datos.
+## Alta manual de registros
+
+El botón `Añadir` permite crear documentos nuevos en la colección `corredores`.
+
+Campos obligatorios:
+
+- `nombre`
+- `carrera`: `10k carrera`, `5k carrera`, `5k marcha`, `txiki` o `no corredor`
+- `comida`: número entero mayor que 0
+
+Campos opcionales:
+
+- `dorsal`
+- `correo`
+- `telefono`
+- `dni`
+- `edad`
+
+Los registros se crean como pendientes (`bolsa_entregada: false`) y con trazabilidad:
+
+- `creado_en`
+- `creado_por`
+- `actualizado_en`
+- `actualizado_por`
+
+Sin reglas restrictivas, el login visual no basta para proteger los datos. Las reglas incluidas permiten leer, crear y actualizar solo a usuarios autenticados con Firebase Auth.

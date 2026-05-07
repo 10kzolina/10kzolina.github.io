@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/fireba
 import {
   getFirestore,
   collection,
+  addDoc,
   doc,
   onSnapshot,
   updateDoc,
@@ -37,9 +38,11 @@ let currentUser = null;
 const state = {
   runners: [],
   search: "",
+  race: "todas",
   status: "todos",
   order: "dorsal",
   loading: true,
+  connection: "reconnecting",
   pendingIds: new Set(),
   dirtyNotes: new Map()
 };
@@ -54,9 +57,18 @@ const elements = {
   authUserPill: document.getElementById("auth-user-pill"),
   authUserEmail: document.getElementById("auth-user-email"),
   logoutButton: document.getElementById("logout-button"),
+  dbConnectionStatus: document.getElementById("db-connection-status"),
+  dbConnectionIcon: document.getElementById("db-connection-icon"),
+  dbConnectionLabel: document.getElementById("db-connection-label"),
   search: document.getElementById("busqueda-dorsales"),
+  race: document.getElementById("carrera-dorsales"),
   status: document.getElementById("estado-dorsales"),
   order: document.getElementById("orden-dorsales"),
+  addRecordButton: document.getElementById("add-record-button"),
+  addRecordPanel: document.getElementById("add-record-panel"),
+  addRecordForm: document.getElementById("add-record-form"),
+  cancelAddRecordButton: document.getElementById("cancel-add-record-button"),
+  addRecordError: document.getElementById("add-record-error"),
   tableBody: document.getElementById("tabla-corredores"),
   mobileList: document.getElementById("mobile-corredores"),
   empty: document.getElementById("sin-corredores"),
@@ -91,16 +103,141 @@ function toSafeInt(value) {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
+function getFirstTextField(data, keys) {
+  for (const key of keys) {
+    const value = data?.[key];
+    if (value === undefined || value === null) continue;
+
+    const text = String(value).trim();
+    if (text) return text;
+  }
+
+  return "";
+}
+
+function getUnavailableLabel(value, fallback = "Sin datos") {
+  const text = String(value || "").trim();
+  return text || fallback;
+}
+
+function normalizeStoredNoteEntry(entry, index = 0) {
+  if (typeof entry === "string") {
+    return {
+      id: `legacy-array-${index}`,
+      texto: entry.trim(),
+      autor: "Sistema anterior",
+      creado_en: ""
+    };
+  }
+
+  if (!entry || typeof entry !== "object") return null;
+
+  const texto = getFirstTextField(entry, ["texto", "nota", "text", "message", "contenido"]);
+  if (!texto) return null;
+
+  return {
+    id: getFirstTextField(entry, ["id"]) || `note-${index}`,
+    texto,
+    autor: getFirstTextField(entry, ["autor", "correo", "email", "usuario", "created_by", "creado_por"]) || "Sin usuario",
+    creado_en: entry.creado_en || entry.created_at || entry.fecha || entry.hora || ""
+  };
+}
+
+function normalizeNoteHistory(value) {
+  if (!Array.isArray(value)) return [];
+
+  return value
+    .map((entry, index) => normalizeStoredNoteEntry(entry, index))
+    .filter(Boolean);
+}
+
+function getRawNoteHistoryFromData(data = {}) {
+  if (Array.isArray(data.notas_historial)) return data.notas_historial;
+  if (Array.isArray(data.historial_notas)) return data.historial_notas;
+  if (Array.isArray(data.notas)) return data.notas;
+  return [];
+}
+
+function getLegacyNoteText(data = {}) {
+  if (typeof data.notas === "string") return data.notas.trim();
+  if (data.notas === undefined || data.notas === null || Array.isArray(data.notas)) return "";
+  return String(data.notas).trim();
+}
+
+function getTimestampAsDate(value) {
+  if (!value) return null;
+
+  if (value instanceof Date) return value;
+
+  if (typeof value === "string") {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  if (typeof value?.toDate === "function") {
+    const date = value.toDate();
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  if (typeof value?.seconds === "number") {
+    const date = new Date(value.seconds * 1000);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  return null;
+}
+
+function formatNoteDate(value) {
+  const date = getTimestampAsDate(value);
+  if (!date) return "Sin fecha";
+
+  return date.toLocaleString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+function createNoteId() {
+  if (window.crypto && typeof window.crypto.randomUUID === "function") {
+    return window.crypto.randomUUID();
+  }
+
+  return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function createNoteEntry(text) {
+  return {
+    id: createNoteId(),
+    creado_en: new Date().toISOString(),
+    autor: currentUser?.email || "desconocido",
+    texto: text.trim()
+  };
+}
+
+function escapeHtmlWithLineBreaks(value) {
+  return escapeHtml(value)
+    .replaceAll("\r\n", "<br>")
+    .replaceAll("\n", "<br>")
+    .replaceAll("\r", "<br>");
+}
+
 function normalizeRunner(documentId, data = {}) {
   return {
     id: documentId,
-    correo: data.correo || "",
-    nombre: data.nombre || "",
-    dorsal: data.dorsal || "",
-    carrera: data.carrera || "",
+    correo: getFirstTextField(data, ["correo", "email", "mail"]),
+    telefono: getFirstTextField(data, ["telefono", "teléfono", "movil", "móvil", "phone", "tel"]),
+    dni: getFirstTextField(data, ["dni", "DNI", "nif", "NIF", "documento", "documento_identidad"]),
+    edad: getFirstTextField(data, ["edad", "age"]),
+    nombre: getFirstTextField(data, ["nombre", "name"]),
+    dorsal: getFirstTextField(data, ["dorsal"]),
+    carrera: getFirstTextField(data, ["carrera"]),
     comida: Number.isFinite(Number(data.comida)) ? Number(data.comida) : 0,
     bolsa_entregada: Boolean(data.bolsa_entregada),
-    notas: typeof data.notas === "string" ? data.notas : String(data.notas || "")
+    notas: getLegacyNoteText(data),
+    notas_historial: normalizeNoteHistory(getRawNoteHistoryFromData(data))
   };
 }
 
@@ -123,9 +260,27 @@ function getRunner(runnerId) {
   return state.runners.find((runner) => runner.id === runnerId) || null;
 }
 
+function getNoteHistoryText(runner) {
+  return getDisplayNoteHistory(runner)
+    .map((note) => `${note.texto} ${note.autor} ${formatNoteDate(note.creado_en)}`)
+    .join(" ");
+}
+
 function getRunnerSearchText(runner) {
-  const visibleNote = state.dirtyNotes.has(runner.id) ? state.dirtyNotes.get(runner.id) : runner.notas;
-  return normalizeText(`${runner.nombre} ${runner.correo} ${runner.dorsal} ${runner.carrera} ${visibleNote}`);
+  const draftNote = state.dirtyNotes.get(runner.id) || "";
+
+  // Aunque correo, teléfono y DNI no se muestren por defecto, siguen entrando en la búsqueda.
+  return normalizeText(`
+    ${runner.nombre}
+    ${runner.correo}
+    ${runner.telefono}
+    ${runner.dni}
+    ${runner.edad}
+    ${runner.dorsal}
+    ${runner.carrera}
+    ${getNoteHistoryText(runner)}
+    ${draftNote}
+  `);
 }
 
 function compareByDorsal(a, b) {
@@ -138,15 +293,17 @@ function compareByDorsal(a, b) {
 
 function getFilteredRunners() {
   const query = normalizeText(state.search);
+  const selectedRace = normalizeText(state.race);
 
   const filtered = state.runners.filter((runner) => {
     const matchesSearch = !query || getRunnerSearchText(runner).includes(query);
+    const matchesRace = selectedRace === "todas" || normalizeText(runner.carrera) === selectedRace;
     const matchesStatus =
       state.status === "todos" ||
       (state.status === "pendientes" && !runner.bolsa_entregada) ||
       (state.status === "entregados" && runner.bolsa_entregada);
 
-    return matchesSearch && matchesStatus;
+    return matchesSearch && matchesRace && matchesStatus;
   });
 
   return filtered.sort((a, b) => {
@@ -185,17 +342,83 @@ function getStatusLabel(delivered) {
   return delivered ? "Entregado" : "Pendiente";
 }
 
-function getCurrentNote(runner) {
-  if (state.dirtyNotes.has(runner.id)) {
-    return state.dirtyNotes.get(runner.id);
-  }
+function getCurrentNoteDraft(runner) {
+  return state.dirtyNotes.get(runner.id) || "";
+}
 
-  return runner.notas || "";
+function getDisplayNoteHistory(runner) {
+  const history = Array.isArray(runner.notas_historial) ? runner.notas_historial : [];
+  const legacyNotes = runner.notas
+    ? [{
+        id: `legacy-${runner.id}`,
+        texto: runner.notas,
+        autor: "Sistema anterior",
+        creado_en: ""
+      }]
+    : [];
+
+  return [...legacyNotes, ...history];
 }
 
 function getNoteDirtyMarkup(isDirty) {
   return isDirty ? `<span class="note-dirty-label">Sin guardar</span>` : "";
 }
+
+function getSavedNotesMarkup(runner) {
+  const notes = getDisplayNoteHistory(runner).slice().reverse();
+
+  if (notes.length === 0) {
+    return `
+      <div class="note-history note-history-empty">
+        <span>Sin notas guardadas</span>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="note-history" aria-label="Historial de notas guardadas">
+      ${notes.map((note) => `
+        <article class="note-history-entry">
+          <div class="note-history-meta">
+            <span>${escapeHtml(formatNoteDate(note.creado_en))}</span>
+            <span>${escapeHtml(note.autor || "Sin usuario")}</span>
+          </div>
+          <p>${escapeHtmlWithLineBreaks(note.texto || "")}</p>
+        </article>
+      `).join("")}
+    </div>
+  `;
+}
+
+
+function getRunnerDetailsMarkup(runner) {
+  return `
+    <details class="runner-details">
+      <summary>
+        <span>Mostrar detalles</span>
+      </summary>
+      <div class="runner-details-grid">
+        <div class="runner-detail-item">
+          <span class="runner-detail-label">Correo</span>
+          <span class="runner-detail-value">${escapeHtml(getUnavailableLabel(runner.correo, "Sin correo"))}</span>
+        </div>
+        <div class="runner-detail-item">
+          <span class="runner-detail-label">Teléfono</span>
+          <span class="runner-detail-value">${escapeHtml(getUnavailableLabel(runner.telefono, "Sin teléfono"))}</span>
+        </div>
+        <div class="runner-detail-item">
+          <span class="runner-detail-label">DNI</span>
+          <span class="runner-detail-value">${escapeHtml(getUnavailableLabel(runner.dni, "Sin DNI"))}</span>
+        </div>
+        <div class="runner-detail-item">
+          <span class="runner-detail-label">Edad</span>
+          <span class="runner-detail-value">${escapeHtml(getUnavailableLabel(runner.edad, "Sin edad"))}</span>
+        </div>
+      </div>
+    </details>
+  `;
+}
+
 
 function isRealRunner(runner) {
   // Los registros con carrera "No corredor" son solo comensales, no corredores.
@@ -230,7 +453,7 @@ function renderTableRow(runner) {
   const delivered = Boolean(runner.bolsa_entregada);
   const pending = state.pendingIds.has(runner.id);
   const isDirty = state.dirtyNotes.has(runner.id);
-  const note = getCurrentNote(runner);
+  const noteDraft = getCurrentNoteDraft(runner);
 
   return `
     <tr class="${delivered ? "runner-delivered" : ""}" data-runner-id="${escapeHtml(runner.id)}">
@@ -240,13 +463,14 @@ function renderTableRow(runner) {
           <span class="runner-name">${escapeHtml(runner.nombre || "Sin nombre")}</span>
         </div>
       </td>
-      <td><span class="runner-subtle">${escapeHtml(runner.correo || "Sin correo")}</span></td>
+      <td>${getRunnerDetailsMarkup(runner)}</td>
       <td><span class="race-chip">${escapeHtml(getRaceLabel(runner.carrera))}</span></td>
       <td><span class="food-chip ${toSafeInt(runner.comida) <= 0 ? "no-food" : ""}">${escapeHtml(getFoodLabel(runner.comida))}</span></td>
       <td><span class="status-chip ${delivered ? "delivered" : "pending"}">${getStatusLabel(delivered)}</span></td>
       <td>
         <div class="note-cell">
-          <textarea class="note-input" rows="2" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}">${escapeHtml(note)}</textarea>
+          ${getSavedNotesMarkup(runner)}
+          <textarea class="note-input" rows="2" placeholder="Escribir nueva nota..." data-note-input="${escapeHtml(runner.id)}">${escapeHtml(noteDraft)}</textarea>
           ${getNoteDirtyMarkup(isDirty)}
         </div>
       </td>
@@ -266,14 +490,13 @@ function renderMobileCard(runner) {
   const delivered = Boolean(runner.bolsa_entregada);
   const pending = state.pendingIds.has(runner.id);
   const isDirty = state.dirtyNotes.has(runner.id);
-  const note = getCurrentNote(runner);
+  const noteDraft = getCurrentNoteDraft(runner);
 
   return `
     <article class="runner-card ${delivered ? "runner-delivered" : ""}" data-runner-id="${escapeHtml(runner.id)}">
       <div class="runner-card-top">
         <div class="runner-card-info">
           <span class="runner-card-name">${escapeHtml(runner.nombre || "Sin nombre")}</span>
-          <span class="runner-card-email">${escapeHtml(runner.correo || "Sin correo")}</span>
         </div>
         <span class="dorsal-chip">${escapeHtml(runner.dorsal || "--")}</span>
       </div>
@@ -284,8 +507,11 @@ function renderMobileCard(runner) {
         <span class="status-chip ${delivered ? "delivered" : "pending"}">${getStatusLabel(delivered)}</span>
       </div>
 
+      ${getRunnerDetailsMarkup(runner)}
+
       <div class="note-cell">
-        <textarea class="note-input" rows="2" placeholder="Añadir nota..." data-note-input="${escapeHtml(runner.id)}">${escapeHtml(note)}</textarea>
+        ${getSavedNotesMarkup(runner)}
+        <textarea class="note-input" rows="2" placeholder="Escribir nueva nota..." data-note-input="${escapeHtml(runner.id)}">${escapeHtml(noteDraft)}</textarea>
         ${getNoteDirtyMarkup(isDirty)}
       </div>
 
@@ -310,15 +536,70 @@ function render() {
   elements.mobileList.innerHTML = runners.map(renderMobileCard).join("");
 }
 
-function showToast(message, isError = false) {
+function showToast(message, isError = false, options = {}) {
+  const { large = false, duration = large ? 3000 : 3200 } = options;
+
   elements.toast.textContent = message;
   elements.toast.classList.toggle("is-error", isError);
+  elements.toast.classList.toggle("is-large", large);
   elements.toast.classList.add("is-visible");
 
   window.clearTimeout(showToast.timeoutId);
   showToast.timeoutId = window.setTimeout(() => {
-    elements.toast.classList.remove("is-visible", "is-error");
-  }, 3200);
+    elements.toast.classList.remove("is-visible", "is-error", "is-large");
+  }, duration);
+}
+
+function getDeliveryToastMessage(runner) {
+  const dorsal = String(runner?.dorsal || "--").trim() || "--";
+  const nombre = String(runner?.nombre || "Sin nombre").trim() || "Sin nombre";
+  return `Dorsal ${dorsal} · ${nombre} entregado.`;
+}
+
+function setConnectionStatus(status) {
+  const allowedStatuses = new Set(["connected", "reconnecting", "offline"]);
+  const safeStatus = allowedStatuses.has(status) ? status : "reconnecting";
+
+  state.connection = safeStatus;
+
+  const config = {
+    connected: {
+      icon: "🟢",
+      label: "Conectado",
+      title: "Conectado a Firestore"
+    },
+    reconnecting: {
+      icon: "🟡",
+      label: "Reconectando",
+      title: "Reconectando con Firestore"
+    },
+    offline: {
+      icon: "🔴",
+      label: "Sin conexión",
+      title: "Sin conexión con Firestore"
+    }
+  }[safeStatus];
+
+  if (!elements.dbConnectionStatus) return;
+
+  elements.dbConnectionStatus.dataset.status = safeStatus;
+  elements.dbConnectionStatus.title = config.title;
+  elements.dbConnectionStatus.setAttribute("aria-label", `Estado de conexión con la base de datos: ${config.label}`);
+
+  if (elements.dbConnectionIcon) elements.dbConnectionIcon.textContent = config.icon;
+  if (elements.dbConnectionLabel) elements.dbConnectionLabel.textContent = config.label;
+}
+
+function restartFirestoreSubscription() {
+  if (!currentUser) return;
+
+  if (unsubscribeFirestore) {
+    unsubscribeFirestore();
+    unsubscribeFirestore = null;
+  }
+
+  setConnectionStatus(navigator.onLine ? "reconnecting" : "offline");
+  subscribeToFirestore();
 }
 
 function getNoteValue(runnerId, sourceElement) {
@@ -328,8 +609,7 @@ function getNoteValue(runnerId, sourceElement) {
   if (input) return input.value.trim();
   if (state.dirtyNotes.has(runnerId)) return state.dirtyNotes.get(runnerId).trim();
 
-  const runner = getRunner(runnerId);
-  return runner ? String(runner.notas || "").trim() : "";
+  return "";
 }
 
 function updateLocalRunner(runnerId, updates) {
@@ -342,28 +622,53 @@ function updateLocalRunner(runnerId, updates) {
   };
 }
 
-async function saveNote(runnerId, note, options = {}) {
-  const { showSuccess = true } = options;
+async function saveNote(runnerId, note) {
+  const cleanNote = String(note || "").trim();
+
+  if (!cleanNote) {
+    showToast("Escribe una nota antes de guardar.", true);
+    return false;
+  }
 
   state.pendingIds.add(runnerId);
   render();
 
   try {
-    await updateDoc(doc(db, COLLECTION_NAME, runnerId), {
-      notas: note,
-      actualizado_en: serverTimestamp(),
-      actualizado_por: currentUser?.email || "desconocido"
+    const runnerRef = doc(db, COLLECTION_NAME, runnerId);
+    const newEntry = createNoteEntry(cleanNote);
+
+    const updatedHistory = await runTransaction(db, async (transaction) => {
+      const runnerSnapshot = await transaction.get(runnerRef);
+
+      if (!runnerSnapshot.exists()) {
+        throw new Error("runner-not-found");
+      }
+
+      const data = runnerSnapshot.data();
+      const currentHistory = normalizeNoteHistory(getRawNoteHistoryFromData(data));
+      const nextHistory = [...currentHistory, newEntry];
+
+      transaction.update(runnerRef, {
+        notas_historial: nextHistory,
+        actualizado_en: serverTimestamp(),
+        actualizado_por: currentUser?.email || "desconocido"
+      });
+
+      return nextHistory;
     });
 
     state.dirtyNotes.delete(runnerId);
-    updateLocalRunner(runnerId, { notas: note });
+    updateLocalRunner(runnerId, { notas_historial: updatedHistory });
     render();
 
-    if (showSuccess) showToast("Nota guardada");
+    showToast("Nota añadida al historial");
     return true;
   } catch (error) {
     console.error("Error guardando nota", error);
-    showToast("No se ha podido guardar la nota. Revisa que las reglas permitan actualizar el campo 'notas'.", true);
+    const message = error.message === "runner-not-found"
+      ? "No se ha encontrado este corredor en Firestore."
+      : "No se ha podido guardar la nota. Revisa permisos de Firestore.";
+    showToast(message, true);
     return false;
   } finally {
     state.pendingIds.delete(runnerId);
@@ -398,7 +703,10 @@ async function updateRunner(runnerId, updates, successMessage) {
   }
 }
 
-async function deliverRunnerSafely(runnerId, note) {
+async function deliverRunnerSafely(runnerId, note = "") {
+  const cleanNote = String(note || "").trim();
+  const newNoteEntry = cleanNote ? createNoteEntry(cleanNote) : null;
+
   state.pendingIds.add(runnerId);
   render();
 
@@ -413,29 +721,49 @@ async function deliverRunnerSafely(runnerId, note) {
       }
 
       const data = runnerSnapshot.data();
+      const currentHistory = normalizeNoteHistory(getRawNoteHistoryFromData(data));
+      const nextHistory = newNoteEntry ? [...currentHistory, newNoteEntry] : currentHistory;
 
       if (data.bolsa_entregada === true) {
+        if (newNoteEntry) {
+          transaction.update(runnerRef, {
+            notas_historial: nextHistory,
+            actualizado_en: serverTimestamp(),
+            actualizado_por: currentUser?.email || "desconocido"
+          });
+        }
+
         return {
           alreadyDelivered: true,
-          data
+          noteSaved: Boolean(newNoteEntry),
+          data: {
+            ...data,
+            notas_historial: nextHistory
+          }
         };
       }
 
-      transaction.update(runnerRef, {
-        notas: note,
+      const updates = {
         bolsa_entregada: true,
         entregado_en: serverTimestamp(),
         entregado_por: currentUser?.email || "desconocido",
         actualizado_en: serverTimestamp(),
         actualizado_por: currentUser?.email || "desconocido"
-      });
+      };
+
+      if (newNoteEntry) {
+        updates.notas_historial = nextHistory;
+      }
+
+      transaction.update(runnerRef, updates);
 
       return {
         alreadyDelivered: false,
+        noteSaved: Boolean(newNoteEntry),
         data: {
           ...data,
-          notas: note,
-          bolsa_entregada: true
+          bolsa_entregada: true,
+          notas_historial: nextHistory
         }
       };
     });
@@ -444,12 +772,19 @@ async function deliverRunnerSafely(runnerId, note) {
     mergeRunnerFromFirestore(runnerId, result.data);
     render();
 
+    const deliveredRunner = normalizeRunner(runnerId, result.data);
+
     if (result.alreadyDelivered) {
-      showToast("Este dorsal ya estaba entregado. Tabla actualizada.", true);
+      showToast(
+        result.noteSaved
+          ? "Este dorsal ya estaba entregado. Nota guardada."
+          : "Este dorsal ya estaba entregado. Tabla actualizada.",
+        true
+      );
       return;
     }
 
-    showToast("Pack marcado como entregado");
+    showToast("Entrega realizada");
   } catch (error) {
     console.error("Error entregando pack", error);
     const message = error.message === "runner-not-found"
@@ -468,15 +803,14 @@ function handleActionClick(event) {
 
   const runnerId = button.dataset.runnerId;
   const action = button.dataset.action;
-  const note = getNoteValue(runnerId, button);
 
   if (action === "save-note") {
-    saveNote(runnerId, note);
+    saveNote(runnerId, getNoteValue(runnerId, button));
     return;
   }
 
   if (action === "deliver") {
-    deliverRunnerSafely(runnerId, note);
+    deliverRunnerSafely(runnerId, getNoteValue(runnerId, button));
     return;
   }
 
@@ -487,7 +821,6 @@ function handleActionClick(event) {
     updateRunner(
       runnerId,
       {
-        notas: note,
         bolsa_entregada: false,
         reabierto_en: serverTimestamp(),
         reabierto_por: currentUser?.email || "desconocido"
@@ -503,12 +836,11 @@ function handleNoteInput(event) {
 
   const runnerId = input.dataset.noteInput;
   const value = input.value;
-  const runner = getRunner(runnerId);
 
-  if (runner && value === String(runner.notas || "")) {
-    state.dirtyNotes.delete(runnerId);
-  } else {
+  if (value.trim()) {
     state.dirtyNotes.set(runnerId, value);
+  } else {
+    state.dirtyNotes.delete(runnerId);
   }
 
   // Sincroniza el textarea duplicado de la tabla/card para que móvil y escritorio no se pisen.
@@ -517,14 +849,134 @@ function handleNoteInput(event) {
   });
 }
 
-function handleNoteBlur(event) {
-  const input = event.target.closest("[data-note-input]");
-  if (!input) return;
 
-  const runnerId = input.dataset.noteInput;
-  if (!state.dirtyNotes.has(runnerId)) return;
+function getTrimmedFormValue(formData, fieldName) {
+  return String(formData.get(fieldName) || "").trim();
+}
 
-  saveNote(runnerId, input.value.trim(), { showSuccess: false });
+function parsePositiveInteger(value) {
+  const text = String(value || "").trim();
+  if (!/^\d+$/.test(text)) return null;
+
+  const number = Number.parseInt(text, 10);
+  return Number.isInteger(number) && number > 0 ? number : null;
+}
+
+function parseOptionalNonNegativeInteger(value) {
+  const text = String(value || "").trim();
+  if (!text) return null;
+  if (!/^\d+$/.test(text)) return null;
+
+  const number = Number.parseInt(text, 10);
+  return Number.isInteger(number) && number >= 0 ? number : null;
+}
+
+function isAllowedRace(value) {
+  return ["10k carrera", "5k carrera", "5k marcha", "txiki", "no corredor"].includes(normalizeText(value));
+}
+
+function showAddRecordError(message) {
+  if (!elements.addRecordError) return;
+  elements.addRecordError.textContent = message;
+  elements.addRecordError.hidden = false;
+}
+
+function clearAddRecordError() {
+  if (!elements.addRecordError) return;
+  elements.addRecordError.textContent = "";
+  elements.addRecordError.hidden = true;
+}
+
+function setAddRecordPanelVisible(isVisible) {
+  if (!elements.addRecordPanel) return;
+  elements.addRecordPanel.hidden = !isVisible;
+
+  if (isVisible) {
+    clearAddRecordError();
+    window.requestAnimationFrame(() => {
+      elements.addRecordPanel.querySelector("#add-nombre")?.focus();
+    });
+  }
+}
+
+function buildNewRunnerPayload(form) {
+  const formData = new FormData(form);
+
+  const nombre = getTrimmedFormValue(formData, "nombre");
+  const dorsal = getTrimmedFormValue(formData, "dorsal");
+  const carrera = getTrimmedFormValue(formData, "carrera");
+  const comida = parsePositiveInteger(getTrimmedFormValue(formData, "comida"));
+  const correo = getTrimmedFormValue(formData, "correo");
+  const telefono = getTrimmedFormValue(formData, "telefono");
+  const dni = getTrimmedFormValue(formData, "dni");
+  const edad = parseOptionalNonNegativeInteger(getTrimmedFormValue(formData, "edad"));
+
+  if (!nombre) {
+    throw new Error("missing-name");
+  }
+
+  if (!carrera || !isAllowedRace(carrera)) {
+    throw new Error("invalid-race");
+  }
+
+  if (comida === null) {
+    throw new Error("invalid-food");
+  }
+
+  if (getTrimmedFormValue(formData, "edad") && edad === null) {
+    throw new Error("invalid-age");
+  }
+
+  const payload = {
+    nombre,
+    carrera,
+    comida,
+    bolsa_entregada: false,
+    notas_historial: [],
+    creado_en: serverTimestamp(),
+    creado_por: currentUser?.email || "desconocido",
+    actualizado_en: serverTimestamp(),
+    actualizado_por: currentUser?.email || "desconocido"
+  };
+
+  if (dorsal) payload.dorsal = dorsal;
+  if (correo) payload.correo = correo;
+  if (telefono) payload.telefono = telefono;
+  if (dni) payload.dni = dni;
+  if (edad !== null) payload.edad = edad;
+
+  return payload;
+}
+
+function getCreateRunnerErrorMessage(error) {
+  if (error?.message === "missing-name") return "El nombre es obligatorio.";
+  if (error?.message === "invalid-race") return "Selecciona una carrera válida.";
+  if (error?.message === "invalid-food") return "Los tickets de comida deben ser un número entero mayor que 0.";
+  if (error?.message === "invalid-age") return "La edad debe ser un número entero mayor o igual que 0.";
+  if (error?.code === "permission-denied") return "No se ha podido crear el registro. Revisa que las reglas de Firestore permitan create.";
+  return "No se ha podido crear el registro.";
+}
+
+async function createRunnerFromForm(event) {
+  event.preventDefault();
+  clearAddRecordError();
+
+  const submitButton = elements.addRecordForm?.querySelector('[type="submit"]');
+  if (submitButton) submitButton.disabled = true;
+
+  try {
+    const payload = buildNewRunnerPayload(elements.addRecordForm);
+    await addDoc(collection(db, COLLECTION_NAME), payload);
+
+    elements.addRecordForm.reset();
+    setAddRecordPanelVisible(false);
+    showToast("Registro añadido");
+  } catch (error) {
+    console.error("Error creando registro", error);
+    showAddRecordError(getCreateRunnerErrorMessage(error));
+  } finally {
+    if (submitButton) submitButton.disabled = false;
+  }
 }
 
 
@@ -547,6 +999,7 @@ function setAppVisible(isVisible) {
 function resetLocalState() {
   state.runners = [];
   state.search = "";
+  state.race = "todas";
   state.status = "todos";
   state.order = "dorsal";
   state.loading = true;
@@ -554,8 +1007,12 @@ function resetLocalState() {
   state.dirtyNotes.clear();
 
   elements.search.value = "";
+  if (elements.race) elements.race.value = "todas";
   elements.status.value = "todos";
   elements.order.value = "dorsal";
+  elements.addRecordForm?.reset();
+  clearAddRecordError();
+  setAddRecordPanelVisible(false);
 
   render();
 }
@@ -613,6 +1070,7 @@ function watchAuthState() {
         unsubscribeFirestore = null;
       }
 
+      setConnectionStatus(navigator.onLine ? "reconnecting" : "offline");
       resetLocalState();
       setAppVisible(false);
       return;
@@ -620,6 +1078,7 @@ function watchAuthState() {
 
     elements.authUserEmail.textContent = user.email || "Usuario";
     setAppVisible(true);
+    setConnectionStatus(navigator.onLine ? "reconnecting" : "offline");
 
     if (!unsubscribeFirestore) {
       subscribeToFirestore();
@@ -633,6 +1092,11 @@ function bindEvents() {
     render();
   });
 
+  elements.race?.addEventListener("change", (event) => {
+    state.race = event.target.value;
+    render();
+  });
+
   elements.status.addEventListener("change", (event) => {
     state.status = event.target.value;
     render();
@@ -643,22 +1107,42 @@ function bindEvents() {
     render();
   });
 
+  elements.addRecordButton?.addEventListener("click", () => {
+    setAddRecordPanelVisible(true);
+  });
+
+  elements.cancelAddRecordButton?.addEventListener("click", () => {
+    elements.addRecordForm?.reset();
+    clearAddRecordError();
+    setAddRecordPanelVisible(false);
+  });
+
+  elements.addRecordForm?.addEventListener("submit", createRunnerFromForm);
+
+  window.addEventListener("online", () => {
+    setConnectionStatus("reconnecting");
+    restartFirestoreSubscription();
+  });
+
+  window.addEventListener("offline", () => {
+    setConnectionStatus("offline");
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible" && navigator.onLine && currentUser && state.connection !== "connected") {
+      restartFirestoreSubscription();
+    }
+  });
+
   document.addEventListener("click", handleActionClick);
   document.addEventListener("input", handleNoteInput);
-  document.addEventListener("blur", handleNoteBlur, true);
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key !== "Enter") return;
-    const input = event.target.closest(".note-input");
-    if (!input) return;
-
-    event.preventDefault();
-    input.blur();
-  });
 }
 
 function subscribeToFirestore() {
   const corredoresRef = collection(db, COLLECTION_NAME);
+
+  setConnectionStatus(navigator.onLine ? "reconnecting" : "offline");
 
   unsubscribeFirestore = onSnapshot(
     corredoresRef,
@@ -668,17 +1152,20 @@ function subscribeToFirestore() {
       });
 
       state.loading = false;
+      setConnectionStatus(navigator.onLine ? "connected" : "offline");
       render();
     },
     (error) => {
       console.error("Error cargando corredores", error);
       state.loading = false;
+      setConnectionStatus("offline");
       render();
-      showToast("No se han podido cargar los corredores. Revisa reglas de Firestore.", true);
+      showToast("No se han podido cargar los corredores. Revisa reglas de Firestore o conexión.", true);
     }
   );
 }
 
+setConnectionStatus(navigator.onLine ? "reconnecting" : "offline");
 bindEvents();
 bindAuthEvents();
 render();
