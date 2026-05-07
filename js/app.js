@@ -31,90 +31,90 @@
   ];
 
   const SPONSOR_LOGOS = [
-    { name: "Masxmenos", logo: "img_resized/masxmenos.webp" },
-    { name: "Caja Rural de Navarra", logo: "img_resized/cajarural.webp" },
-    { name: "E.Leclerc", logo: "img_resized/leclerc.webp" },
-    { name: "Sporty", logo: "img_resized/sporty.webp" },
-    { name: "100K Mendi Taldea", logo: "img_resized/100k.webp" },
-    { name: "Rocopolis", logo: "img_resized/rocopolis.webp" },
-    { name: "Bordaberri", logo: "img_resized/bordaberri.webp" },
-    { name: "Solonuts", logo: "img_resized/solonuts.webp" },
-    { name: "Ipar Kirolak", logo: "img_resized/iparkirolak.webp" },
-    { name: "Origen Real Food", logo: "img_resized/origen.webp" },
-    { name: "Saltoka Jump", logo: "img_resized/saltoka.webp" },
-    { name: "Repostería Juan Miguel", logo: "img_resized/reposteriajuanmiguel.webp" },
-    { name: "Farmacia Arteche", logo: "img_resized/farmaciaAtreche.webp" },
-    { name: "Carnicería Deierri", logo: "img_resized/carniceriadeierri.webp" },
-    { name: "Beep Run Club", logo: "img_resized/beeprun.webp" },
-    { name: "Aske Clothes", logo: "img_resized/askeclothes.webp" },
-    { name: "Lekuona", logo: "img_resized/lekuona.webp" },
-    { name: "Irish Pub Eskiroz", logo: "img_resized/irishpub.webp" },
-    { name: "Hiruda 3D", logo: "img_resized/hiruda3d.webp" },
-    { name: "Aaron Vilchez DJ", logo: "img_resized/aaron.webp" },
-    { name: "Sidrería Auzmendi", logo: "img_resized/auzmendi.webp" },
-    { name: "N2 Fisioterapia", logo: "img_resized/n2fisio.webp" },
-    { name: "Kaiku", logo: "img_resized/kaiku.webp" },
-    { name: "La Perla", logo: "img_resized/laperla.webp" },
-    { name: "Reyno Gourmet", logo: "img_resized/reyno.webp" },
-    { name: "Malie Estética Avanzada", logo: "img_resized/malie.webp" },
-    { name: "Heladería Los Jijonencos", logo: "img_resized/losjijonecos.webp" },
-    { name: "Txaranga Turrutxiki", logo: "img_resized/txaranga.webp" }
+    { name: "Masxmenos", logo: "/img_resized/masxmenos.webp" },
+    { name: "Caja Rural de Navarra", logo: "/img_resized/cajarural.webp" },
+    { name: "E.Leclerc", logo: "/img_resized/leclerc.webp" },
+    { name: "Sporty", logo: "/img_resized/sporty.webp" },
+    { name: "100K Mendi Taldea", logo: "/img_resized/100k.webp" },
+    { name: "Rocopolis", logo: "/img_resized/rocopolis.webp" },
+    { name: "Bordaberri", logo: "/img_resized/bordaberri.webp" },
+    { name: "Solonuts", logo: "/img_resized/solonuts.webp" },
+    { name: "Ipar Kirolak", logo: "/img_resized/iparkirolak.webp" },
+    { name: "Origen Real Food", logo: "/img_resized/origen.webp" },
+    { name: "Saltoka Jump", logo: "/img_resized/saltoka.webp" },
+    { name: "Repostería Juan Miguel", logo: "/img_resized/reposteriajuanmiguel.webp" },
+    { name: "Farmacia Arteche", logo: "/img_resized/farmaciaAtreche.webp" },
+    { name: "Carnicería Deierri", logo: "/img_resized/carniceriadeierri.webp" },
+    { name: "Beep Run Club", logo: "/img_resized/beeprun.webp" },
+    { name: "Aske Clothes", logo: "/img_resized/askeclothes.webp" },
+    { name: "Lekuona", logo: "/img_resized/lekuona.webp" },
+    { name: "Irish Pub Eskiroz", logo: "/img_resized/irishpub.webp" },
+    { name: "Hiruda 3D", logo: "/img_resized/hiruda3d.webp" },
+    { name: "Aaron Vilchez DJ", logo: "/img_resized/aaron.webp" },
+    { name: "Sidrería Auzmendi", logo: "/img_resized/auzmendi.webp" },
+    { name: "N2 Fisioterapia", logo: "/img_resized/n2fisio.webp" },
+    { name: "Kaiku", logo: "/img_resized/kaiku.webp" },
+    { name: "La Perla", logo: "/img_resized/laperla.webp" },
+    { name: "Reyno Gourmet", logo: "/img_resized/reyno.webp" },
+    { name: "Malie Estética Avanzada", logo: "/img_resized/malie.webp" },
+    { name: "Heladería Los Jijonencos", logo: "/img_resized/losjijonecos.webp" },
+    { name: "Txaranga Turrutxiki", logo: "/img_resized/txaranga.webp" }
   ];
 
   const COLLABORATORS = [
     {
       name: "Masxmenos",
       type: "Ropa · Material",
-      logo: "img/masxmenos.PNG",
+      logo: "/img/masxmenos.PNG",
       description: "Tienda especializada en material deportivo y de montaña, con una amplia oferta para actividades al aire libre.",
       contribution: "Arco de meta, banderolas, carpa Masxmenos y productos para sortear entre participantes."
     },
     {
       name: "Caja Rural de Navarra",
       type: "Servicios",
-      logo: "img/cajarural.PNG",
+      logo: "/img/cajarural.PNG",
       description: "Entidad que impulsa proyectos sociales, educativos y medioambientales en Navarra.",
       contribution: "Arco de meta, bolsas del corredor, dorsales y vallas para el recorrido."
     },
     {
       name: "E.Leclerc",
       type: "Alimentos",
-      logo: "img/leclerc.PNG",
+      logo: "/img/leclerc.PNG",
       description: "Cadena de supermercados con una amplia variedad de productos y apoyo a iniciativas locales.",
       contribution: "100 kg de naranjas y frutos secos."
     },
     {
       name: "Sporty",
       type: "Ropa · Material",
-      logo: "img/sporty.png",
+      logo: "/img/sporty.png",
       description: "Tienda especializada en material deportivo y equipamiento técnico para distintas disciplinas.",
       contribution: "10 pares de crampones y 10 pares de calcetines para sortear."
     },
     {
       name: "100K Mendi Taldea",
       type: "Club",
-      logo: "img/100k.jpeg",
+      logo: "/img/100k.jpeg",
       description: "Club de montaña implicado en actividades en entorno natural y en la organización del evento.",
       contribution: "Merchandising para sortear, financiación y organización."
     },
     {
       name: "Rocopolis",
       type: "Deporte · Ocio",
-      logo: "img/rocopolis.png",
+      logo: "/img/rocopolis.png",
       description: "Rocódromo y centro deportivo especializado en escalada.",
       contribution: "Entradas para el rocódromo para sortear entre participantes."
     },
     {
       name: "Bordaberri",
       type: "Hostelería",
-      logo: "img/bordaberri.JPG",
+      logo: "/img/bordaberri.JPG",
       description: "Bar-restaurante de ambiente cercano, con oferta gastronómica y vínculo con la vida local.",
       contribution: "Apoyo para traer a la Txaranga Turrutxiki."
     },
     {
       name: "Solonuts",
       type: "Alimentos",
-      logo: "img/solonuts.jpg",
+      logo: "/img/solonuts.jpg",
       description: "Marca especializada en frutos secos de calidad y opciones saludables para el día a día.",
       contribution: "Pack de productos para sortear por Instagram."
     },
@@ -128,140 +128,140 @@
     {
       name: "Ipar Kirolak",
       type: "Ropa · Material",
-      logo: "img/iparkirolak.png",
+      logo: "/img/iparkirolak.png",
       description: "Tienda especializada en equipamiento para montaña, running y outdoor.",
       contribution: "Material deportivo para sortear y vales para utilizar en tienda."
     },
     {
       name: "Origen Real Food",
       type: "Hostelería",
-      logo: "img/origen.png",
+      logo: "/img/origen.png",
       description: "Restaurante centrado en ingredientes naturales y cocina saludable en Pamplona.",
       contribution: "Sorpresa en bolsa del corredor y vales de 30 euros para sortear."
     },
     {
       name: "Saltoka Jump",
       type: "Deporte · Ocio",
-      logo: "img/saltoka.png",
+      logo: "/img/saltoka.png",
       description: "Centro de ocio activo con camas elásticas y actividades para disfrutar en grupo.",
       contribution: "Tres entradas, tres mochilas y tres pares de calcetines para sortear."
     },
     {
       name: "Repostería Juan Miguel",
       type: "Alimentos",
-      logo: "img/reposteriajuanmiguel.png",
+      logo: "/img/reposteriajuanmiguel.png",
       description: "Obrador artesanal especializado en dulces y pastas tradicionales.",
       contribution: "Cajas de pastas para sortear."
     },
     {
       name: "Farmacia Arteche",
       type: "Bienestar · Salud",
-      logo: "img/farmaciaAtreche.png",
+      logo: "/img/farmaciaAtreche.png",
       description: "Farmacia de proximidad con atención personalizada y asesoramiento en cuidado diario.",
       contribution: "Pack de productos para sortear."
     },
     {
       name: "Carnicería Deierri",
       type: "Alimentos",
-      logo: "img/carniceriadeierri.png",
+      logo: "/img/carniceriadeierri.png",
       description: "Carnicería tradicional con productos frescos, elaboración propia y atención cercana.",
       contribution: "Cesta de productos para sortear."
     },
     {
       name: "Beep Run Club",
       type: "Club",
-      logo: "img/beeprun.jpg",
+      logo: "/img/beeprun.jpg",
       description: "Comunidad de corredores que fomenta el deporte, la motivación y el entrenamiento en grupo.",
       contribution: ""
     },
     {
       name: "Aske Clothes",
       type: "Ropa · Material",
-      logo: "img/askeclothes.jpg",
+      logo: "/img/askeclothes.jpg",
       description: "Marca emergente de streetwear ligada a la expresión personal y el diseño artesanal.",
       contribution: "Dos sudaderas, dos camisetas y vales de descuento para su tienda online."
     },
     {
       name: "Lekuona",
       type: "Hostelería",
-      logo: "img/lekuona.jpg",
+      logo: "/img/lekuona.jpg",
       description: "Restaurante familiar que apuesta por la cocina tradicional con toques innovadores.",
       contribution: "Comida para dos en su restaurante para sortear."
     },
     {
       name: "Irish Pub Eskiroz",
       type: "Hostelería",
-      logo: "img/irishpub.PNG",
+      logo: "/img/irishpub.PNG",
       description: "Pub de ambiente acogedor con oferta variada de comida y bebida.",
       contribution: "Un vale para dos cenas para sortear."
     },
     {
       name: "Hiruda 3D",
       type: "Servicios",
-      logo: "img/hiruda3d.jpg",
+      logo: "/img/hiruda3d.jpg",
       description: "Estudio especializado en diseño e impresión 3D de piezas personalizadas.",
       contribution: "Trofeos de las pruebas."
     },
     {
       name: "Heladería Los Jijonencos",
       type: "Alimentos",
-      logo: "img/losjijonecos.PNG",
+      logo: "/img/losjijonecos.PNG",
       description: "Heladería familiar con larga historia en Pamplona y elaboración artesanal.",
       contribution: "Tres bonos de cinco helados para sortear."
     },
     {
       name: "Aaron Vilchez DJ",
       type: "Música",
-      logo: "img/aaron.jpg",
+      logo: "/img/aaron.jpg",
       description: "DJ de Pamplona especializado en animación musical para eventos y celebraciones.",
       contribution: "Ambientación musical durante la carrera."
     },
     {
       name: "Auzmendi",
       type: "Hostelería",
-      logo: "img/auzmendi.png",
+      logo: "/img/auzmendi.png",
       description: "Sidrería de cocina tradicional vasca en Pamplona.",
       contribution: "Vale para una comida para dos para sortear."
     },
     {
       name: "N2 Fisioterapia",
       type: "Bienestar · Salud",
-      logo: "img/n2fisio.png",
+      logo: "/img/n2fisio.png",
       description: "Centro especializado en recuperación y tratamiento físico con atención personalizada.",
       contribution: "Dos sesiones de fisioterapia para sortear."
     },
     {
       name: "Kaiku",
       type: "Alimentos",
-      logo: "img/kaiku.png",
+      logo: "/img/kaiku.png",
       description: "Marca láctea con productos orientados a una alimentación equilibrada.",
       contribution: "Productos para la bolsa del corredor."
     },
     {
       name: "La Perla",
       type: "Bienestar · Salud",
-      logo: "img/laperla.png",
+      logo: "/img/laperla.png",
       description: "Centro de bienestar y restaurante situado en la playa de La Concha, en San Sebastián.",
       contribution: "Dos entradas para circuito de talasoterapia para sortear."
     },
     {
       name: "Reyno Gourmet",
       type: "Alimentos",
-      logo: "img/reyno.png",
+      logo: "/img/reyno.png",
       description: "Marca de calidad que promociona productos agroalimentarios de Navarra.",
       contribution: "Packs para los ganadores."
     },
     {
       name: "Malie Estética Avanzada",
       type: "Bienestar · Salud",
-      logo: "img/malie.PNG",
+      logo: "/img/malie.PNG",
       description: "Centro especializado en tratamientos de belleza y cuidado personal.",
       contribution: "Sesiones para sortear."
     },
     {
       name: "Txaranga Turrutxiki",
       type: "Música",
-      logo: "img/txaranga.PNG",
+      logo: "/img/txaranga.PNG",
       description: "Txaranga encargada de poner ritmo y ambiente a la jornada.",
       contribution: "Animación musical durante el evento."
     }
