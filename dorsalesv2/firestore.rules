@@ -5,7 +5,7 @@ service cloud.firestore {
     function isVolunteer() {
       return request.auth != null
         && request.auth.token.email in [
-          "10kzolina@gmail.com"
+          "10kzolina@gmail.com",
         ];
     }
 

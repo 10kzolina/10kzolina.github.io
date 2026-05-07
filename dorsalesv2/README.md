@@ -1,9 +1,9 @@
-# Recogida de dorsales - versión mejorada
+# Recogida de dorsales - versión con login
 
 Archivos incluidos:
 
 - `index.html`: página principal para publicar dentro de `/dorsales/`.
-- `dorsales.css`: estilos de la página, login, interfaz móvil, filtros, detalles y notas.
+- `dorsales.css`: estilos de la página y pantalla de login.
 - `dorsales.js`: app con Firebase Auth + Firestore.
 - `firestore.rules`: ejemplo de reglas de seguridad para Firestore.
 
@@ -24,20 +24,6 @@ Así la URL será:
 ```txt
 https://10kzolina.github.io/dorsales/
 ```
-
-## Cambios incluidos
-
-- Auditoría de entrega: guarda `entregado_en`, `entregado_por`, `entregado_dispositivo`, `entregado_dispositivo_id`, `entregado_user_agent` y `entregado_pantalla`.
-- Auditoría de reapertura: guarda `reabierto_en`, `reabierto_por`, `reabierto_dispositivo`, `reabierto_dispositivo_id`, `reabierto_user_agent` y `reabierto_pantalla`.
-- Confirmación antes de reabrir una entrega.
-- Filtro por carrera y filtro por comida.
-- Toast grande al entregar: `Dorsal 143 · Nombre Apellido entregado`.
-- Estado visible de conexión: 🟢 Conectado, 🟡 Reconectando, 🔴 Sin conexión.
-- Notas sin autoguardado: solo se guardan al pulsar `Guardar nota`.
-- Historial de notas en `notas_historial` con texto, fecha ISO, correo y dispositivo.
-- Botón de detalles para mostrar DNI, teléfono, correo y auditoría.
-- La búsqueda también incluye DNI, teléfono y correo aunque no estén visibles por defecto.
-- Resumen superior por carrera con dorsales pendientes y comidas pendientes.
 
 ## Pasos obligatorios en Firebase
 

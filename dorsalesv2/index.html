@@ -31,11 +31,6 @@
       <span>Recogida de dorsales</span>
     </div>
 
-    <div class="private-header-status connection-pill connection-pill--reconnecting" id="connection-status" aria-label="Estado de conexión" hidden>
-      <span id="connection-icon">🟡</span>
-      <span id="connection-label">Reconectando</span>
-    </div>
-
     <div class="private-header-status auth-user-pill" id="auth-user-pill" hidden>
       <span id="auth-user-email">Sin sesión</span>
       <button id="logout-button" class="logout-button" type="button">Salir</button>
@@ -78,7 +73,7 @@
       <div>
         <p class="eyebrow">Gestión interna</p>
         <h1>Dorsales</h1>
-        <p>Busca por nombre, dorsal, carrera, DNI, teléfono o correo. Marca cada pack como entregado y añade notas visibles para el equipo.</p>
+        <p>Busca por nombre, dorsal, carrera, correo, teléfono o DNI. Marca cada pack como entregado y añade notas visibles para el equipo.</p>
       </div>
 
       <div class="summary-grid dorsales-summary" aria-label="Resumen de entrega de dorsales y comida">
@@ -99,14 +94,12 @@
           <strong id="stat-comensales-pendientes">0</strong>
         </div>
       </div>
-
-      <div class="race-summary-panel" id="race-summary-panel" aria-label="Pendientes por carrera"></div>
     </section>
 
     <section class="filters-panel dorsales-filters reveal delay-2" aria-label="Filtros de corredores">
       <div class="filter-group search-group">
         <label for="busqueda-dorsales">Buscar corredor</label>
-        <input id="busqueda-dorsales" type="search" placeholder="Nombre, dorsal, DNI, teléfono, correo..." autocomplete="off" inputmode="search" />
+        <input id="busqueda-dorsales" type="search" placeholder="Nombre, dorsal, carrera, correo, teléfono o DNI..." autocomplete="off" inputmode="search" />
       </div>
 
       <div class="filter-group">
@@ -115,23 +108,6 @@
           <option value="todos">Todos</option>
           <option value="pendientes">Pendientes</option>
           <option value="entregados">Entregados</option>
-        </select>
-      </div>
-
-      <div class="filter-group">
-        <label for="carrera-dorsales">Carrera</label>
-        <select id="carrera-dorsales">
-          <option value="todas">Todas</option>
-        </select>
-      </div>
-
-      <div class="filter-group">
-        <label for="comida-dorsales">Comida</label>
-        <select id="comida-dorsales">
-          <option value="todos">Todos</option>
-          <option value="con-comida">Con comida</option>
-          <option value="sin-comida">Sin comida</option>
-          <option value="comida-pendiente">Comida pendiente</option>
         </select>
       </div>
 
@@ -164,6 +140,7 @@
           <tr>
             <th>Dorsal</th>
             <th>Corredor</th>
+            <th>Detalles</th>
             <th>Carrera</th>
             <th>Comida</th>
             <th>Estado</th>
