@@ -39,7 +39,7 @@ Campos obligatorios:
 
 - `nombre`
 - `carrera`: `10k carrera`, `5k carrera`, `5k marcha`, `txiki` o `no corredor`
-- `comida`: número entero mayor que 0
+- `comida`: número entero mayor o igual que 0
 
 Campos opcionales:
 

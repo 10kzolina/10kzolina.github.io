@@ -854,12 +854,13 @@ function getTrimmedFormValue(formData, fieldName) {
   return String(formData.get(fieldName) || "").trim();
 }
 
-function parsePositiveInteger(value) {
+function parseRequiredNonNegativeInteger(value) {
   const text = String(value || "").trim();
+  if (!text) return null;
   if (!/^\d+$/.test(text)) return null;
 
   const number = Number.parseInt(text, 10);
-  return Number.isInteger(number) && number > 0 ? number : null;
+  return Number.isInteger(number) && number >= 0 ? number : null;
 }
 
 function parseOptionalNonNegativeInteger(value) {
@@ -905,7 +906,7 @@ function buildNewRunnerPayload(form) {
   const nombre = getTrimmedFormValue(formData, "nombre");
   const dorsal = getTrimmedFormValue(formData, "dorsal");
   const carrera = getTrimmedFormValue(formData, "carrera");
-  const comida = parsePositiveInteger(getTrimmedFormValue(formData, "comida"));
+  const comida = parseRequiredNonNegativeInteger(getTrimmedFormValue(formData, "comida"));
   const correo = getTrimmedFormValue(formData, "correo");
   const telefono = getTrimmedFormValue(formData, "telefono");
   const dni = getTrimmedFormValue(formData, "dni");
@@ -951,7 +952,7 @@ function buildNewRunnerPayload(form) {
 function getCreateRunnerErrorMessage(error) {
   if (error?.message === "missing-name") return "El nombre es obligatorio.";
   if (error?.message === "invalid-race") return "Selecciona una carrera válida.";
-  if (error?.message === "invalid-food") return "Los tickets de comida deben ser un número entero mayor que 0.";
+  if (error?.message === "invalid-food") return "Los tickets de comida deben ser un número entero mayor o igual que 0.";
   if (error?.message === "invalid-age") return "La edad debe ser un número entero mayor o igual que 0.";
   if (error?.code === "permission-denied") return "No se ha podido crear el registro. Revisa que las reglas de Firestore permitan create.";
   return "No se ha podido crear el registro.";
