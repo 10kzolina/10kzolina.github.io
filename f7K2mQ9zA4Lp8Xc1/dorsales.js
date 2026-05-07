@@ -235,7 +235,7 @@ function renderTableRow(runner) {
         <div class="runner-actions">
           <button class="action-button save-note-button" type="button" data-action="save-note" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>Guardar nota</button>
           <button class="action-button ${delivered ? "undo-button" : "deliver-button"}" type="button" data-action="${delivered ? "undo" : "deliver"}" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>
-            ${delivered ? "Entregado · reabrir" : "Entregar"}
+            ${delivered ? "Reabrir" : "Entregar"}
           </button>
         </div>
       </td>
@@ -273,7 +273,7 @@ function renderMobileCard(runner) {
       <div class="runner-actions">
         <button class="action-button save-note-button" type="button" data-action="save-note" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>Guardar nota</button>
         <button class="action-button ${delivered ? "undo-button" : "deliver-button"}" type="button" data-action="${delivered ? "undo" : "deliver"}" data-runner-id="${escapeHtml(runner.id)}" ${pending ? "disabled" : ""}>
-          ${delivered ? "Entregado · reabrir" : "Entregar pack"}
+          ${delivered ? "Reabrir" : "Entregar"}
         </button>
       </div>
     </article>
