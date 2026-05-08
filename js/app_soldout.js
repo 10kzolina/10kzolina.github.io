@@ -381,24 +381,7 @@
   }
 
   function getEventTopbarState() {
-    const daysUntilDeadline = getDaysUntil(EVENT_TOPBAR.registrationDeadline);
     const daysUntilRace = getDaysUntil(EVENT_TOPBAR.raceDate);
-
-    if (daysUntilDeadline >= 0) {
-      const status = daysUntilDeadline === 0
-        ? "Último día"
-        : daysUntilDeadline === 1
-          ? "Cierra mañana"
-          : `Inscríbete: ${daysUntilDeadline} días`;
-
-      return {
-        phase: "open",
-        status,
-        ctaLabel: "Inscríbete",
-        ctaUrl: EVENT_TOPBAR.registrationUrl,
-        ctaExternal: true
-      };
-    }
 
     if (daysUntilRace >= 0) {
       const status = daysUntilRace === 0
