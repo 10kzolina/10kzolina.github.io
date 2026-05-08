@@ -3550,3 +3550,33 @@ tbody tr:hover {
     transform: translate3d(-25%, 0, 0);
   }
 }
+
+.hero-participa{
+  margin-top: 1.5rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+  max-width: 640px;
+}
+
+.hero-participa h3{
+  margin: 0 0 .8rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.hero-participa ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+}
+
+.hero-participa li{
+  font-size: .98rem;
+  line-height: 1.45;
+}
