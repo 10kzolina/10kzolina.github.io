@@ -756,67 +756,6 @@ tbody tr:hover {
   line-height: 1.35;
 }
 
-.hero-lead-soldout {
-  max-width: 680px;
-  margin-bottom: 18px;
-  font-size: clamp(20px, 2.7vw, 30px);
-  line-height: 1.16;
-  letter-spacing: -0.035em;
-}
-
-.hero-participation {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  margin: 0 0 24px;
-}
-
-.hero-participation span {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  min-height: 38px;
-  padding: 8px 13px;
-  border: 1px solid rgba(15, 111, 71, 0.12);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.74);
-  box-shadow: 0 10px 24px rgba(15, 111, 71, 0.06);
-  color: var(--green-deep);
-  font-size: 14px;
-  font-weight: 900;
-  white-space: nowrap;
-}
-
-.hero-participation strong {
-  font-size: 16px;
-}
-
-.hero-quick-info {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 18px;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 900;
-}
-
-.hero-quick-info a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  padding: 8px 11px;
-  border: 1px solid rgba(15, 111, 71, 0.10);
-  border-radius: 999px;
-  background: rgba(232, 247, 239, 0.72);
-  color: var(--green-deep);
-  text-decoration: none;
-}
-
-.hero-quick-info a:hover {
-  background: rgba(232, 247, 239, 0.96);
-}
-
 .main-cta-row {
   display: grid;
   grid-template-columns: minmax(160px, auto) minmax(160px, auto);
@@ -3312,9 +3251,8 @@ tbody tr:hover {
 
 /* Estado sold out en la home */
 .soldout-cta-row {
-  grid-template-columns: minmax(124px, 150px) minmax(220px, 360px);
+  grid-template-columns: minmax(220px, 420px);
   align-items: stretch;
-  margin-bottom: 0;
 }
 
 .soldout-status-button {
@@ -3356,55 +3294,15 @@ tbody tr:hover {
 }
 
 @media (max-width: 760px) {
-  .hero-lead-soldout {
-    max-width: 100%;
-    margin-bottom: 14px;
-    font-size: clamp(20px, 7vw, 28px);
-    line-height: 1.08;
-    text-align: left;
-  }
-
-  .hero-participation {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 7px;
-    margin-bottom: 16px;
-  }
-
-  .hero-participation span {
-    min-height: 34px;
-    justify-content: flex-start;
-    padding: 8px 10px;
-    font-size: 13px;
-  }
-
   .soldout-cta-row {
-    grid-template-columns: 0.72fr 1.28fr;
+    grid-template-columns: 1fr;
   }
 
   .soldout-status-button,
   .comida-popular-button {
     min-height: 44px;
     padding: 12px 10px;
-    font-size: 13px;
-  }
-
-  .soldout-status-button {
-    letter-spacing: 0.06em;
-  }
-
-  .hero-quick-info {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 6px;
-    margin-top: 14px;
-    font-size: 12px;
-  }
-
-  .hero-quick-info a {
-    justify-content: center;
-    min-height: 32px;
-    padding: 7px 10px;
+    font-size: 14px;
   }
 }
 
