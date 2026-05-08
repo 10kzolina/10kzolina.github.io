@@ -17,6 +17,9 @@
     locationUrl: "https://www.google.com/maps/search/?api=1&query=Badostain%2C%20Navarra",
     calendarUrl: "10k-zolina.ics",
     registrationUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfP2-c1h1SoEjlJCK-kpITiLVKQqqQtFjLKk40hK8ChqXCGGg/viewform?usp=dialog",
+    foodUrl: "https://forms.gle/9uEHps9BrEYXebt8A",
+    isSoldOut: true,
+    volunteersClosed: true,
     routesUrl: "/recorridos",
     resultsUrl: "/resultados"
   };
@@ -381,8 +384,19 @@
   }
 
   function getEventTopbarState() {
-    const daysUntilDeadline = getDaysUntil(EVENT_TOPBAR.registrationDeadline);
     const daysUntilRace = getDaysUntil(EVENT_TOPBAR.raceDate);
+
+    if (EVENT_TOPBAR.isSoldOut && daysUntilRace >= 0) {
+      return {
+        phase: "soldout",
+        status: "Dorsales agotados",
+        ctaLabel: "Comida popular",
+        ctaUrl: EVENT_TOPBAR.foodUrl,
+        ctaExternal: true
+      };
+    }
+
+    const daysUntilDeadline = getDaysUntil(EVENT_TOPBAR.registrationDeadline);
 
     if (daysUntilDeadline >= 0) {
       const status = daysUntilDeadline === 0
