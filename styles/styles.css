@@ -482,22 +482,6 @@ tbody tr:hover {
   box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12), 0 0 16px rgba(255, 255, 255, 0.28);
 }
 
-.event-topbar--soldout .event-topbar-dot {
-  background: var(--red);
-  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15), 0 0 18px rgba(239, 68, 68, 0.42);
-}
-
-.event-topbar--soldout .event-topbar-status {
-  border-color: rgba(254, 202, 202, 0.36);
-  background: rgba(239, 68, 68, 0.14);
-  color: #ffe4e6;
-}
-
-.event-topbar--soldout .event-topbar-cta {
-  background: linear-gradient(135deg, #fef3c7, #fbbf24);
-  color: #78350f;
-}
-
 .event-topbar-status,
 .event-topbar-cta {
   position: relative;
@@ -731,46 +715,6 @@ tbody tr:hover {
 
 .event-badge .inline-location {
   white-space: nowrap;
-}
-
-.event-badge--soldout {
-  border: 1px solid rgba(239, 68, 68, 0.18);
-  background: linear-gradient(135deg, rgba(254, 226, 226, 0.94), rgba(255, 247, 237, 0.96));
-  color: #7f1d1d;
-}
-
-.pulse-dot.pulse-dot--soldout {
-  background: var(--red);
-  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.42);
-}
-
-.soldout-cta-row {
-  align-items: stretch;
-}
-
-.disabled-button {
-  cursor: default;
-  user-select: none;
-  pointer-events: none;
-}
-
-.disabled-button:hover {
-  transform: none;
-}
-
-.soldout-button {
-  background: linear-gradient(135deg, #7f1d1d, var(--red));
-  box-shadow: 0 18px 44px rgba(239, 68, 68, 0.22);
-}
-
-.volunteers-closed-button {
-  border-color: rgba(120, 113, 108, 0.22);
-  background: linear-gradient(135deg, #f5f5f4, #ffffff);
-  color: #57534e;
-}
-
-.soldout-mini-stat strong {
-  font-size: 22px;
 }
 
 .pulse-dot {
@@ -2610,10 +2554,6 @@ tbody tr:hover {
     margin-bottom: 18px;
   }
 
-  .soldout-cta-row {
-    grid-template-columns: 1fr;
-  }
-
   .single-action {
     width: 100%;
     grid-template-columns: 1fr;
@@ -3209,10 +3149,6 @@ tbody tr:hover {
     font-size: 11px;
   }
 
-  .event-badge--soldout .inline-location {
-    white-space: normal;
-  }
-
   .hero-logo {
     max-height: 160px;
   }
@@ -3302,10 +3238,9 @@ tbody tr:hover {
 
 /* Botón comida popular (variante visual) */
 .comida-button {
-  background: linear-gradient(135deg, #fef3c7, #fbbf24);
-  border: 1px dashed rgba(251, 146, 60, 0.7);
-  color: #78350f;
-  box-shadow: 0 16px 38px rgba(251, 146, 60, 0.18);
+  background: linear-gradient(135deg, #fef3c7, #fde68a); /* amarillo suave */
+  border: 1px dashed rgba(251, 146, 60, 0.6);
+  color: #92400e;
 }
 
 .comida-button:hover {
