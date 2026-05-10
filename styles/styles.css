@@ -3249,64 +3249,6 @@ tbody tr:hover {
 }
 
 
-/* Estado sold out en la home */
-.soldout-cta-row {
-  grid-template-columns: minmax(220px, 420px);
-  align-items: stretch;
-}
-
-.soldout-status-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  width: 100%;
-  padding: 14px 22px;
-  border: 1px solid rgba(127, 29, 29, 0.18);
-  border-radius: 999px;
-  background: linear-gradient(135deg, #7f1d1d, var(--red));
-  box-shadow: 0 18px 44px rgba(239, 68, 68, 0.28);
-  color: white;
-  font-size: 15px;
-  font-weight: 900;
-  letter-spacing: 0.10em;
-  line-height: 1;
-  text-align: center;
-  text-transform: uppercase;
-  user-select: none;
-}
-
-.comida-popular-button {
-  width: 100%;
-  border: 1px solid rgba(217, 119, 6, 0.30);
-  background:
-    radial-gradient(circle at 12% 20%, rgba(255, 255, 255, 0.38), transparent 26%),
-    linear-gradient(135deg, #f59e0b, #facc15);
-  box-shadow: 0 18px 44px rgba(245, 158, 11, 0.28);
-  color: #3f2404;
-  text-align: center;
-}
-
-.comida-popular-button:hover {
-  background:
-    radial-gradient(circle at 12% 20%, rgba(255, 255, 255, 0.44), transparent 26%),
-    linear-gradient(135deg, #d97706, #facc15);
-}
-
-@media (max-width: 760px) {
-  .soldout-cta-row {
-    grid-template-columns: 1fr;
-  }
-
-  .soldout-status-button,
-  .comida-popular-button {
-    min-height: 44px;
-    padding: 12px 10px;
-    font-size: 14px;
-  }
-}
-
-
 /* Menú desplegable responsive */
 .nav-toggle,
 .nav-toggle-button {
