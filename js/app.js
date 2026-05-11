@@ -10,7 +10,7 @@
 
   const EVENT_TOPBAR = {
     timezone: "Europe/Madrid",
-    registrationDeadline: "2026-05-10",
+    registrationDeadline: "2026-05-17",
     raceDate: "2026-05-24",
     dateLabel: "24 may · 10:00 h",
     locationLabel: "Badostáin, Navarra",
