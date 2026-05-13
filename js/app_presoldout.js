@@ -4,13 +4,13 @@
   const SITE_NAME = "10K Zolina";
 
   const FOOD_CHALLENGE = {
-    currentKg: 387,
+    currentKg: 433,
     goalKg: 1000
   };
 
   const EVENT_TOPBAR = {
     timezone: "Europe/Madrid",
-    registrationDeadline: "2026-05-10",
+    registrationDeadline: "2026-05-17",
     raceDate: "2026-05-24",
     dateLabel: "24 may · 10:00 h",
     locationLabel: "Badostáin, Navarra",
@@ -381,7 +381,24 @@
   }
 
   function getEventTopbarState() {
+    const daysUntilDeadline = getDaysUntil(EVENT_TOPBAR.registrationDeadline);
     const daysUntilRace = getDaysUntil(EVENT_TOPBAR.raceDate);
+
+    if (daysUntilDeadline >= 0) {
+      const status = daysUntilDeadline === 0
+        ? "Último día"
+        : daysUntilDeadline === 1
+          ? "Cierra mañana"
+          : `Inscríbete: ${daysUntilDeadline} días`;
+
+      return {
+        phase: "open",
+        status,
+        ctaLabel: "Inscríbete",
+        ctaUrl: EVENT_TOPBAR.registrationUrl,
+        ctaExternal: true
+      };
+    }
 
     if (daysUntilRace >= 0) {
       const status = daysUntilRace === 0
