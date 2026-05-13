@@ -6,7 +6,7 @@ import {
   doc,
   onSnapshot,
   updateDoc,
-  arrayUnion,
+  runTransaction,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 import {
@@ -622,25 +622,7 @@ function updateLocalRunner(runnerId, updates) {
   };
 }
 
-function appendLocalNote(runnerId, noteEntry) {
-  if (!noteEntry) return;
-
-  const runner = getRunner(runnerId);
-  if (!runner) return;
-
-  const currentHistory = Array.isArray(runner.notas_historial) ? runner.notas_historial : [];
-  updateLocalRunner(runnerId, {
-    notas_historial: [...currentHistory, noteEntry]
-  });
-}
-
-function removeLocalRunner(runnerId) {
-  state.runners = state.runners.filter((runner) => runner.id !== runnerId);
-  state.pendingIds.delete(runnerId);
-  state.dirtyNotes.delete(runnerId);
-}
-
-async function saveNote(runnerId, note, options = {}) {
+async function saveNote(runnerId, note) {
   const cleanNote = String(note || "").trim();
 
   if (!cleanNote) {
@@ -652,26 +634,38 @@ async function saveNote(runnerId, note, options = {}) {
   render();
 
   try {
+    const runnerRef = doc(db, COLLECTION_NAME, runnerId);
     const newEntry = createNoteEntry(cleanNote);
 
-    await updateDoc(doc(db, COLLECTION_NAME, runnerId), {
-      notas_historial: arrayUnion(newEntry),
-      actualizado_en: serverTimestamp(),
-      actualizado_por: currentUser?.email || "desconocido"
+    const updatedHistory = await runTransaction(db, async (transaction) => {
+      const runnerSnapshot = await transaction.get(runnerRef);
+
+      if (!runnerSnapshot.exists()) {
+        throw new Error("runner-not-found");
+      }
+
+      const data = runnerSnapshot.data();
+      const currentHistory = normalizeNoteHistory(getRawNoteHistoryFromData(data));
+      const nextHistory = [...currentHistory, newEntry];
+
+      transaction.update(runnerRef, {
+        notas_historial: nextHistory,
+        actualizado_en: serverTimestamp(),
+        actualizado_por: currentUser?.email || "desconocido"
+      });
+
+      return nextHistory;
     });
 
     state.dirtyNotes.delete(runnerId);
-    appendLocalNote(runnerId, newEntry);
+    updateLocalRunner(runnerId, { notas_historial: updatedHistory });
     render();
 
-    if (options.showSuccessToast !== false) {
-      showToast("Nota añadida al historial");
-    }
-
+    showToast("Nota añadida al historial");
     return true;
   } catch (error) {
     console.error("Error guardando nota", error);
-    const message = error?.code === "not-found"
+    const message = error.message === "runner-not-found"
       ? "No se ha encontrado este corredor en Firestore."
       : "No se ha podido guardar la nota. Revisa permisos de Firestore.";
     showToast(message, true);
@@ -712,51 +706,88 @@ async function updateRunner(runnerId, updates, successMessage) {
 async function deliverRunnerSafely(runnerId, note = "") {
   const cleanNote = String(note || "").trim();
   const newNoteEntry = cleanNote ? createNoteEntry(cleanNote) : null;
-  const runner = getRunner(runnerId);
-
-  if (!runner) {
-    showToast("No se ha encontrado este corredor en la lista local. Recarga la página.", true);
-    return;
-  }
-
-  if (runner.bolsa_entregada) {
-    if (newNoteEntry) {
-      await saveNote(runnerId, cleanNote, { showSuccessToast: false });
-      showToast("Este dorsal ya estaba entregado. Nota guardada.", true);
-    } else {
-      showToast("Este dorsal ya estaba entregado.", true);
-    }
-
-    return;
-  }
 
   state.pendingIds.add(runnerId);
   render();
 
   try {
-    const updates = {
-      bolsa_entregada: true,
-      entregado_en: serverTimestamp(),
-      entregado_por: currentUser?.email || "desconocido",
-      actualizado_en: serverTimestamp(),
-      actualizado_por: currentUser?.email || "desconocido"
-    };
+    const runnerRef = doc(db, COLLECTION_NAME, runnerId);
 
-    if (newNoteEntry) {
-      updates.notas_historial = arrayUnion(newNoteEntry);
-    }
+    const result = await runTransaction(db, async (transaction) => {
+      const runnerSnapshot = await transaction.get(runnerRef);
 
-    await updateDoc(doc(db, COLLECTION_NAME, runnerId), updates);
+      if (!runnerSnapshot.exists()) {
+        throw new Error("runner-not-found");
+      }
+
+      const data = runnerSnapshot.data();
+      const currentHistory = normalizeNoteHistory(getRawNoteHistoryFromData(data));
+      const nextHistory = newNoteEntry ? [...currentHistory, newNoteEntry] : currentHistory;
+
+      if (data.bolsa_entregada === true) {
+        if (newNoteEntry) {
+          transaction.update(runnerRef, {
+            notas_historial: nextHistory,
+            actualizado_en: serverTimestamp(),
+            actualizado_por: currentUser?.email || "desconocido"
+          });
+        }
+
+        return {
+          alreadyDelivered: true,
+          noteSaved: Boolean(newNoteEntry),
+          data: {
+            ...data,
+            notas_historial: nextHistory
+          }
+        };
+      }
+
+      const updates = {
+        bolsa_entregada: true,
+        entregado_en: serverTimestamp(),
+        entregado_por: currentUser?.email || "desconocido",
+        actualizado_en: serverTimestamp(),
+        actualizado_por: currentUser?.email || "desconocido"
+      };
+
+      if (newNoteEntry) {
+        updates.notas_historial = nextHistory;
+      }
+
+      transaction.update(runnerRef, updates);
+
+      return {
+        alreadyDelivered: false,
+        noteSaved: Boolean(newNoteEntry),
+        data: {
+          ...data,
+          bolsa_entregada: true,
+          notas_historial: nextHistory
+        }
+      };
+    });
 
     state.dirtyNotes.delete(runnerId);
-    updateLocalRunner(runnerId, { bolsa_entregada: true });
-    appendLocalNote(runnerId, newNoteEntry);
+    mergeRunnerFromFirestore(runnerId, result.data);
     render();
 
-    showToast(getDeliveryToastMessage(runner));
+    const deliveredRunner = normalizeRunner(runnerId, result.data);
+
+    if (result.alreadyDelivered) {
+      showToast(
+        result.noteSaved
+          ? "Este dorsal ya estaba entregado. Nota guardada."
+          : "Este dorsal ya estaba entregado. Tabla actualizada.",
+        true
+      );
+      return;
+    }
+
+    showToast("Entrega realizada");
   } catch (error) {
     console.error("Error entregando pack", error);
-    const message = error?.code === "not-found"
+    const message = error.message === "runner-not-found"
       ? "No se ha encontrado este corredor en Firestore."
       : "No se ha podido entregar. Revisa permisos o conexión.";
     showToast(message, true);
@@ -1117,15 +1148,8 @@ function subscribeToFirestore() {
   unsubscribeFirestore = onSnapshot(
     corredoresRef,
     (snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        const runnerId = change.doc.id;
-
-        if (change.type === "removed") {
-          removeLocalRunner(runnerId);
-          return;
-        }
-
-        mergeRunnerFromFirestore(runnerId, change.doc.data());
+      state.runners = snapshot.docs.map((documentSnapshot) => {
+        return normalizeRunner(documentSnapshot.id, documentSnapshot.data());
       });
 
       state.loading = false;
@@ -1141,7 +1165,6 @@ function subscribeToFirestore() {
     }
   );
 }
-
 
 setConnectionStatus(navigator.onLine ? "reconnecting" : "offline");
 bindEvents();
