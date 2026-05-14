@@ -16,13 +16,13 @@
   <link rel="manifest" href="site.webmanifest">
 
   <title>10K Zolina 2026 | Carrera solidaria en Badostain</title>
-  <meta name="description" content="Web oficial de la 10K Zolina. Dorsales agotados: consulta horarios, mapas, aparcamiento, zona infantil, servicios, Kiloreto y detalles del evento solidario en Badostain (Navarra).">
+  <meta name="description" content="Web oficial de la 10K Zolina. Consulta inscripción, carreras Txiki, 5K y 10K, recorridos, resultados y detalles del evento solidario en Badostain (Navarra).">
   <meta name="robots" content="index,follow">
   <meta name="application-name" content="10K Zolina">
 
   <!-- Open Graph (cuando compartes enlace) -->
   <meta property="og:title" content="10K Zolina">
-  <meta property="og:description" content="Dorsales agotados: horarios, mapas, aparcamiento, zona infantil, Kiloreto y reto solidario en Badostain">
+  <meta property="og:description" content="Txiki, 5K, 10K, recorridos, inscripción y reto solidario en Badostain">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://10kzolina.github.io/">
   <meta property="og:image" content="https://10kzolina.github.io/img/logo-zolina.png">
@@ -32,7 +32,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="10K Zolina 2026">
-  <meta name="twitter:description" content="Carrera solidaria en Badostain con horarios, mapas, zona infantil, servicios y Kiloreto de alimentos.">
+  <meta name="twitter:description" content="Carrera solidaria en Badostain con Txiki, 5K, 10K, recorridos, inscripción, resultados y Kiloreto de alimentos.">
   <meta name="twitter:image" content="https://10kzolina.github.io/img/logo-zolina.png">
 
   <!-- Canonical -->
@@ -56,7 +56,7 @@
       "@context": "https://schema.org",
       "@type": "SportsEvent",
       "name": "10K Zolina 2026",
-      "description": "Carrera solidaria en Badostain con pruebas Txiki, 5K, 10K, zona infantil, mapas del evento y reto de recogida de alimentos.",
+      "description": "Carrera solidaria en Badostain con pruebas Txiki, 5K, 10K y reto de recogida de alimentos.",
       "url": "https://10kzolina.github.io/",
       "image": "https://10kzolina.github.io/img/logo-zolina.png",
       "startDate": "2026-05-24T10:00:00+02:00",
@@ -127,31 +127,24 @@
 
 
   <main>
-    <section class="hero hero-upgraded event-hero" aria-labelledby="home-title">
+    <section class="hero hero-upgraded">
       <div class="hero-bg-orb orb-one"></div>
       <div class="hero-bg-orb orb-two"></div>
 
-      <article class="hero-card glass-card reveal event-hero-card">
-        <a class="event-info-jump-button" href="#info-evento" aria-label="Ver horarios, mapas e información del evento">
-          <span class="event-info-jump-button__ping" aria-hidden="true"></span>
-          <span class="event-info-jump-button__text">Ver horarios y mapas del evento</span>
-          <span class="event-info-jump-button__arrow" aria-hidden="true">↓</span>
-        </a>
-
+      <article class="hero-card glass-card reveal">
         <div class="event-badge">
           <span class="pulse-dot"></span>
           <span class="event-badge-content">Carrera solidaria · <a class="inline-location" href="https://www.google.com/maps/search/?api=1&amp;query=Badostain%2C%20Navarra" target="_blank" rel="noopener">Badostain</a> · <a class="inline-location" href="10k-zolina.ics" type="text/calendar" aria-label="Añadir la 10K Zolina del 24 de mayo al calendario">24 de mayo</a></span>
         </div>
 
-        <h1 id="home-title">10K Zolina</h1>
+        <h1>10K Zolina</h1>
 
         <p class="hero-lead">
-          Dorsales agotados. Consulta aquí los horarios, mapas de acceso, zona infantil, recogida de dorsales, consigna y servicios del día de la carrera.
+          ¡Dorsales agotados! La carrera ya está completa, pero la fiesta solidaria sigue abierta: ven a animar, trae alimentos no perecederos para el Kiloreto y apúntate a la comida popular para disfrutar del día con nosotros.
         </p>
 
-        <div class="hero-actions main-cta-row soldout-cta-row event-hero-actions">
+        <div class="hero-actions main-cta-row soldout-cta-row">
           <span class="soldout-status-button" role="status" aria-label="Dorsales agotados">SOLD OUT</span>
-          <a class="primary-button event-hero-main-button" href="#info-evento">Información del evento</a>
         </div>
 
         <div class="mini-stats" aria-label="Datos principales de la carrera">
@@ -176,191 +169,41 @@
           </div>
         </div>
       </article>
-    </section>
+      
 
-    <section class="home-event-info-section" id="info-evento" aria-labelledby="event-info-title">
-      <div class="home-section-shell">
-        <div class="section-title-row event-info-heading reveal">
-          <div>
-            <p class="eyebrow">Día del evento</p>
-            <h2 id="event-info-title">Horarios, mapas y servicios</h2>
-          </div>
-          <p>Todo lo importante para llegar, aparcar, recoger el dorsal, ubicar los servicios y disfrutar de la jornada.</p>
+      <div class="hero-side-stack">
+      <aside class="impact-card kiloreto-card reveal delay-1" id="impacto">
+        <div class="impact-icon">🥫</div>
+        <p class="eyebrow">Kiloreto solidario</p>
+        <h2>1000 kg de alimentos</h2>
+
+        <p class="food-subtitle">Trae alimentos no perecederos y ayúdanos a llenar el marcador solidario de la 10K Zolina.</p>
+
+        <div class="food-progress-info">
+          <span><strong id="kg-actuales">0</strong> kg</span>
+          <span id="porcentaje-comida">0%</span>
         </div>
 
-        <div class="event-highlight-grid" aria-label="Información destacada del evento">
-          <article class="event-highlight-card reveal delay-1">
-            <span class="event-highlight-icon" aria-hidden="true">🅿️</span>
-            <h3>Aparcamiento</h3>
-            <p>Aparca en Sarriguren y llega andando a Badostain. El paseo hasta el pueblo es de unos 10-15 minutos.</p>
-          </article>
-
-          <article class="event-highlight-card reveal delay-2">
-            <span class="event-highlight-icon" aria-hidden="true">🎈</span>
-            <h3>Zona infantil</h3>
-            <p>De 11:00 a 13:00 habrá zona infantil con hinchables para los txikis mientras corren los padres y madres.</p>
-          </article>
-
-          <article class="event-highlight-card reveal delay-3">
-            <span class="event-highlight-icon" aria-hidden="true">🎒</span>
-            <h3>Dorsales y consigna</h3>
-            <p>Entrega de dorsales y consigna de 8:30 a 10:30 en la zona del frontón.</p>
-          </article>
-        </div>
-
-        <div class="event-info-layout">
-          <article class="event-schedule-card reveal" aria-labelledby="schedule-title">
-            <div class="event-card-title-row">
-              <div>
-                <p class="eyebrow">Horarios importantes</p>
-                <h3 id="schedule-title">Programa</h3>
-              </div>
-              <span class="soft-pill">24 mayo</span>
-            </div>
-
-            <ol class="event-timeline">
-              <li>
-                <time>8:30 - 10:30</time>
-                <div>
-                  <strong>Entrega de dorsales y consigna</strong>
-                  <span>Recoge tu dorsal con margen y deja tus cosas antes de las salidas.</span>
-                </div>
-              </li>
-              <li>
-                <time>10:00</time>
-                <div>
-                  <strong>Salida carrera Txiki</strong>
-                  <span>Prueba infantil.</span>
-                </div>
-              </li>
-              <li>
-                <time>11:00</time>
-                <div>
-                  <strong>Salida carrera 5K y 10K</strong>
-                  <span>Salida conjunta de las carreras principales.</span>
-                </div>
-              </li>
-              <li>
-                <time>11:15</time>
-                <div>
-                  <strong>Salida 5K marcha</strong>
-                  <span>Marcha popular de 5 km.</span>
-                </div>
-              </li>
-              <li>
-                <time>11:00 - 13:00</time>
-                <div>
-                  <strong>Zona infantil txikis</strong>
-                  <span>Hinchables y zona infantil mientras corren los padres y madres.</span>
-                </div>
-              </li>
-              <li>
-                <time>12:00</time>
-                <div>
-                  <strong>Lunch</strong>
-                  <span>Aperitivo posterior a las pruebas.</span>
-                </div>
-              </li>
-              <li>
-                <time>13:00</time>
-                <div>
-                  <strong>Entrega de premios + sorteos</strong>
-                  <span>Premios de carrera y sorteos para participantes.</span>
-                </div>
-              </li>
-              <li>
-                <time>13:30 - 15:00</time>
-                <div>
-                  <strong>Txaranga</strong>
-                  <span>Ambiente musical antes de la comida popular.</span>
-                </div>
-              </li>
-              <li>
-                <time>15:00</time>
-                <div>
-                  <strong>Comida popular</strong>
-                  <span>Comida en grupo para cerrar la jornada deportiva.</span>
-                </div>
-              </li>
-              <li>
-                <time>16:30 - fin</time>
-                <div>
-                  <strong>Sobremesa con bingo musical y más sorteos</strong>
-                  <span>La fiesta continúa después de comer.</span>
-                </div>
-              </li>
-            </ol>
-          </article>
-
-          <div class="event-map-grid" aria-label="Mapas de interés">
-            <article class="event-map-card reveal delay-1">
-              <a href="img/mapa_parking.png" target="_blank" rel="noopener" aria-label="Abrir mapa de aparcamiento en Sarriguren">
-                <img src="img/mapa_parking.png" alt="Mapa para llegar a Badostain desde el aparcamiento de Sarriguren" loading="lazy" decoding="async" />
-              </a>
-              <div>
-                <span class="event-map-kicker">Llegada</span>
-                <h3>¿Cómo llego? ¿Dónde aparco?</h3>
-                <p>Aparcamiento recomendado en Sarriguren y acceso andando hasta Badostain.</p>
-              </div>
-            </article>
-
-            <article class="event-map-card reveal delay-2">
-              <a href="img/mapa_zona_infantil.png" target="_blank" rel="noopener" aria-label="Abrir mapa de la zona infantil e hinchables">
-                <img src="img/mapa_zona_infantil.png" alt="Mapa de la zona infantil con hinchables y recorrido desde meta y salida" loading="lazy" decoding="async" />
-              </a>
-              <div>
-                <span class="event-map-kicker">Txikis</span>
-                <h3>Zona infantil e hinchables</h3>
-                <p>Ubicación de la zona infantil para que los más pequeños se queden mientras corren los padres.</p>
-              </div>
-            </article>
-
-            <article class="event-map-card reveal delay-3 event-map-card-wide">
-              <a href="img/mapa_fronton.png" target="_blank" rel="noopener" aria-label="Abrir mapa general del frontón y servicios">
-                <img src="img/mapa_fronton.png" alt="Mapa general del frontón con dorsales, recogida de alimentos, meta, salida, ambulancia, WC, fuente, bar, podio y salida de emergencia" loading="lazy" decoding="async" />
-              </a>
-              <div>
-                <span class="event-map-kicker">Frontón</span>
-                <h3>Mapa general de servicios</h3>
-                <p>Dorsales, recogida de alimentos, salida/meta, ambulancia, WC, fuente, bar, podio y salida de emergencia.</p>
-              </div>
-            </article>
+        <div class="food-progress" aria-label="Progreso de alimentos recaudados">
+          <div id="thermometer-fill" class="food-progress-fill">
+            <div class="food-progress-shine"></div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <section class="home-post-event-section" aria-label="Kiloreto solidario y reto Strava">
-      <div class="home-section-shell home-post-event-grid">
-        <aside class="impact-card kiloreto-card reveal" id="impacto">
-          <div class="impact-icon">🥫</div>
-          <p class="eyebrow">Kiloreto solidario</p>
-          <h2>1000 kg de alimentos</h2>
+        <div class="food-scale">
+          <span>0 kg</span>
+          <span>Objetivo: <strong id="kg-objetivo">1000</strong> kg</span>
+        </div>
 
-          <p class="food-subtitle">Trae alimentos no perecederos y ayúdanos a llenar el marcador solidario de la 10K Zolina.</p>
+        <div class="impact-message" id="impact-message"></div>
 
-          <div class="food-progress-info">
-            <span><strong id="kg-actuales">0</strong> kg</span>
-            <span id="porcentaje-comida">0%</span>
-          </div>
+        <a href="/kiloreto" class="primary-button kiloreto-button">Más información</a>
+        
+        
+      </aside>
 
-          <div class="food-progress" aria-label="Progreso de alimentos recaudados">
-            <div id="thermometer-fill" class="food-progress-fill">
-              <div class="food-progress-shine"></div>
-            </div>
-          </div>
 
-          <div class="food-scale">
-            <span>0 kg</span>
-            <span>Objetivo: <strong id="kg-objetivo">1000</strong> kg</span>
-          </div>
-
-          <div class="impact-message" id="impact-message"></div>
-
-          <a href="/kiloreto" class="primary-button kiloreto-button">Más información</a>
-        </aside>
-
-        <aside class="challenge-card reveal delay-1" id="reto-strava">
+        <aside class="challenge-card reveal delay-2" id="reto-strava">
           <div class="challenge-card-top">
             <div class="challenge-icon">⛰️</div>
             <span class="challenge-tag">Strava</span>
