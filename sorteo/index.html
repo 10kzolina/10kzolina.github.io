@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorteos Carrera</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles_socrteo.css" />
+  </head>
+  <body class="page-draw">
+    <main id="authView" class="auth-shell">
+      <section class="auth-card" aria-labelledby="authTitle">
+        <div class="brand-mark" aria-hidden="true">D</div>
+        <p class="section-kicker">Acceso organizador</p>
+        <h1 id="authTitle">Sorteos de dorsales</h1>
+        <p>Acceso privado para el equipo organizador.</p>
+
+        <form id="loginForm" class="form">
+          <div class="field">
+            <label for="emailInput">Email</label>
+            <input
+              id="emailInput"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="passwordInput">Contraseña</label>
+            <input
+              id="passwordInput"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+            />
+          </div>
+
+          <button id="loginButton" class="button" type="submit">
+            Iniciar sesión
+          </button>
+          <p id="loginMessage" class="message" role="alert"></p>
+        </form>
+      </section>
+    </main>
+
+    <main id="appView" class="app-shell is-hidden">
+      <header class="topbar">
+        <div class="topbar-title">
+          <div class="brand-mark" aria-hidden="true">D</div>
+          <h1>Dorsales</h1>
+        </div>
+        <div class="topbar-session">
+          <p id="userLabel" class="user-pill"></p>
+          <button id="logoutButton" class="button session-button" type="button">
+            Salir
+          </button>
+        </div>
+      </header>
+
+      <div class="layout">
+        <div class="draw-column">
+          <div class="section-actions">
+            <a class="button action-link" href="./corredores.html">
+              Ver corredores
+            </a>
+          </div>
+
+          <section class="panel draw-panel" aria-labelledby="drawTitle">
+            <p class="section-kicker">Sorteo activo</p>
+            <h2 id="drawTitle">Sorteos</h2>
+
+            <form id="drawForm" class="draw-form">
+              <div class="field">
+                <label for="prizeInput">Qué se sortea</label>
+                <input
+                  id="prizeInput"
+                  name="prize"
+                  type="text"
+                  placeholder="Sudadera Aske Clothes"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+              <button id="drawButton" class="button primary" type="submit">
+                Sortear
+              </button>
+            </form>
+
+            <div class="status-row" aria-live="polite">
+              <p class="stat">
+                Corredores cargados: <strong id="runnerCount">0</strong>
+              </p>
+              <p id="appMessage" class="stat">Preparando CSV...</p>
+            </div>
+
+            <article id="winnerCard" class="winner-card is-hidden">
+              <p class="winner-label">Ganador</p>
+              <h3 id="winnerName" class="winner-name"></h3>
+              <div class="winner-meta">
+                <span id="winnerBib"></span>
+                <span id="winnerPrize"></span>
+              </div>
+            </article>
+          </section>
+        </div>
+
+        <aside class="panel history-panel" aria-labelledby="historyTitle">
+          <div class="history-head">
+            <div>
+              <h2 id="historyTitle">Historial</h2>
+              <p id="historyCount" class="history-count">0 ganadores</p>
+            </div>
+            <button id="refreshHistoryButton" class="button ghost" type="button">
+              Recargar
+            </button>
+          </div>
+
+          <ol id="historyList" class="history-list"></ol>
+          <p id="emptyHistory" class="empty-state">
+            Todavía no hay ganadores.
+          </p>
+        </aside>
+      </div>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

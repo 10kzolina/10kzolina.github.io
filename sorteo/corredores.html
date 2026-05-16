@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Corredores cargados</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles_socrteo.css" />
+  </head>
+  <body class="page-runners">
+    <main id="content" class="app-shell is-hidden">
+      <header class="topbar">
+        <div class="topbar-title">
+          <div class="brand-mark" aria-hidden="true">D</div>
+          <h1>Dorsales</h1>
+        </div>
+        <div class="topbar-session">
+          <p id="userLabel" class="user-pill"></p>
+          <button id="logoutButton" class="button session-button" type="button">
+            Salir
+          </button>
+        </div>
+      </header>
+
+      <section class="layout runners-layout">
+        <div class="section-actions">
+          <a class="button action-link" href="./index.html">Volver al sorteo</a>
+        </div>
+
+        <div class="panel runners-panel">
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">Participantes</p>
+              <h2>Listado completo</h2>
+              <p id="statusText" class="status">Cargando corredores...</p>
+            </div>
+            <div class="runner-tools">
+              <label class="sr-only" for="searchInput">Buscar corredor</label>
+              <input
+                id="searchInput"
+                type="search"
+                placeholder="Buscar nombre o dorsal"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Dorsal</th>
+                  <th>Nombre</th>
+                </tr>
+              </thead>
+              <tbody id="runnersTable"></tbody>
+            </table>
+          </div>
+          <p id="emptyState" class="empty-state is-hidden"></p>
+        </div>
+      </section>
+    </main>
+
+    <p id="authStatus" class="empty-state auth-status">Comprobando sesión...</p>
+
+    <script type="module" src="./corredores.js"></script>
+  </body>
+</html>
