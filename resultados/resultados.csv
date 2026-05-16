@@ -1,21 +1,223 @@
-Nombre y apellido,distancia,genero,tiempo,dorsal
-Iker García,10k,M,00:34:12,101
-Ane Pérez,10k,F,00:38:45,102
-Jon Martínez,10k,M,00:36:58,103
-Maite López,10k,F,00:42:11,104
-Unai Etxeberria,10k,M,00:33:50,105
-Nerea Sanz,10k,F,00:39:27,106
-Asier Ruiz,10k,M,00:37:05,107
-Leire Aguirre,10k,F,00:41:33,108
-Gorka Navarro,10k,M,00:35:44,109
-Irati Mendizabal,10k,F,00:43:02,110
-Aitor Fernández,5k,M,00:17:45,201
-June Arrieta,5k,F,00:20:12,202
-Mikel Soto,5k,M,00:18:30,203
-Uxue Lasa,5k,F,00:21:05,204
-Ander Ibáñez,5k,M,00:16:58,205
-Ainhoa Gil,5k,F,00:19:47,206
-Oier Salinas,5k,M,00:18:12,207
-Miren Zubiri,5k,F,00:22:03,208
-Eneko Ortiz,5k,M,00:17:21,209
-Sara Pascual,5k,F,00:20:55,210
+"Nombre y apellido",distancia,genero,tiempo,dorsal
+"Aitana Esparza Idoate",10k,F,,431
+"Andrea López Méndez",10k,F,,402
+"Ane Nieva Moracho",10k,F,,346
+"Blanca de la Fuente",10k,F,,426
+"Cala Oyón Jauquicoa",10k,F,,410
+"Carla Castro Alejos",10k,F,,306
+"Clara Vidaurre Guembe",10k,F,,429
+"Cristina Ansorena",10k,F,,396
+"diana graciela fajardo zamora",10k,F,,384
+"Edurne Martinez Perez",10k,F,,350
+"Elisa Santos Gallego",10k,F,,341
+"Estefanía Amado Menéndez",10k,F,,428
+"Feryel Zekraoui",10k,F,,438
+"Gracia Fernandez",10k,F,,337
+"Gwenaelle Ceniceros",10k,F,,427
+"Helena Balaguer Gutierrez",10k,F,,389
+"Iluna Pernaut Zilbeti",10k,F,,316
+"Inés Aguado Blanco",10k,F,,393
+"Iosune Urra Beraza",10k,F,,381
+"Irantzu Equiza Garciriain",10k,F,,387
+"Iranzu Miralles Arrondo",10k,F,,333
+"Iranzu Zozaya",10k,F,,373
+"Irati Ferrandiz López",10k,F,,310
+"Irene Colomo Zufía",10k,F,,400
+"Irene Gonzalez Fernandez",10k,F,,367
+"Irene Moraleja Gascueña",10k,F,,447
+"Lorena Berrade Insausti",10k,F,,377
+"Lucia Vicente Illoro",10k,F,,314
+"Lydia Álvarez Vizan",10k,F,,308
+"MªCarmen Mera Delgado",10k,F,,407
+"Maitane Galar",10k,F,,324
+"Maite Cinca Zabalza",10k,F,,351
+"María Flethes",10k,F,,307
+"María Franchez Martincorena",10k,F,,328
+"MARIAN LUCERA",10k,F,,441
+"Marina Rodríguez Carrillo",10k,F,,408
+"Naia Díaz",10k,F,,344
+"Nekane Soria",10k,F,,336
+"Nuria Sanz Imaz",10k,F,,398
+"Nuria Villanueva Arguiñano",10k,F,,399
+"Paula Alonso Calavia",10k,F,,323
+"Rosa Ordoki",10k,F,,334
+"Sofia Quinn",10k,F,,439
+"Tania marcó Sánchez",10k,F,,370
+"Tania Martínez Portero",10k,F,,390
+"Vanesa Marturet Weiler",10k,F,,365
+"Adei Oses Lorca",10k,M,,343
+"Adrián castillo Santolaya",10k,M,,418
+"Aimar Marquez",10k,M,,362
+"Aimar Sarratea",10k,M,,423
+"Aitor Arano Sastre",10k,M,,326
+"Aitor Orduña lopez",10k,M,,437
+"Alex Rodríguez Tamayo",10k,M,,340
+"Alfonso serrano reinaldos",10k,M,,412
+"Andrés Osés Vega",10k,M,,382
+"Antonio López",10k,M,,363
+"Aritz Navajas",10k,M,,339
+"Asier Ferrandiz Lopez",10k,M,,394
+"Asier Pascal Larrainzar",10k,M,,332
+"Asier sanchez vidal",10k,M,,322
+"Carlos Alfaro Ciria",10k,M,,325
+"Carlos Donamaria Aldaz",10k,M,,318
+"Cristian Baztán",10k,M,,366
+"Dani Gallego Labrador",10k,M,,374
+"Daniel Cotelo",10k,M,,371
+"Daniel Muñoz González",10k,M,,376
+"Daniel Roldan Arteta",10k,M,,425
+"David Acebes Garcia",10k,M,,364
+"David Arroyo Lanz",10k,M,,404
+"David Casajús Oiza",10k,M,,432
+"Eduardo Sampedro Esteban",10k,M,,342
+"Eneko Lejarza Izpura",10k,M,,302
+"Fernando Torres De Miguel",10k,M,,345
+"Ferrán Ayesa Larumbe",10k,M,,357
+"Gaizka Legarra gorgoñon",10k,M,,403
+"Gonzalo Angulo García",10k,M,,391
+"Gonzalo Arrondo Ostiz",10k,M,,320
+"Guillermo Alvarez Gonzalez",10k,M,,311
+"Guillermo Arias Tascón",10k,M,,380
+"Héctor Latasa Gomez",10k,M,,356
+"Hugo Montavez Imizcoz",10k,M,,424
+"Ibon González Ibarrola",10k,M,,352
+"Iker Agüera Rodríguez",10k,M,,388
+"Iker Pascual Ferrer",10k,M,,338
+Ilmar,10k,M,,359
+"Imanol Rozas Mateos",10k,M,,312
+"Iñaki Larrasoaña Forcés",10k,M,,442
+"IÑAKI NAGORE",10k,M,,440
+"Iñaki rozas aranguren",10k,M,,313
+"Iñaki Sánchez Reparaz",10k,M,,331
+"Iñigo Aceituno Fauste",10k,M,,347
+"Iñigo Aguirre Castiella",10k,M,,445
+"Iñigo Dendarieta Elizaincin",10k,M,,349
+"Iosu leache Fernández",10k,M,,436
+"IVAN GIRONES INES",10k,M,,354
+"Iván López Del Rey",10k,M,,378
+"Ivan Sarasate Eguaras",10k,M,,416
+"Javi Sánchez Badostain",10k,M,,355
+"Javier Goya Ibero",10k,M,,329
+"Javier Nagore Iriarte",10k,M,,421
+"Javier Vidaurre Donamaría",10k,M,,430
+"Javier Zoco Sesma",10k,M,,317
+"Jesús Aparicio Sánchez",10k,M,,319
+Jhon,10k,M,,301
+"Jon Perez Pumariño",10k,M,,303
+"Jose Miguel Ramirez Irure",10k,M,,405
+"Joseba Imas marin",10k,M,,434
+"Joseba uriz Martin",10k,M,,372
+"Juan angel seguro rodriguez",10k,M,,368
+"JUAN MARIN MOLINA",10k,M,,415
+"Juanma Lechado Quintana",10k,M,,406
+"Julen Trigueros saludes",10k,M,,397
+"Lucas Arranz Buldain",10k,M,,443
+"Lucas Iriarte",10k,M,,375
+"Lucas Iribarren Juliani",10k,M,,395
+"Luis Moreno",10k,M,,417
+"Luka Hernández Fortes",10k,M,,435
+"Marcelo Francisco Vivas",10k,M,,327
+"Marcus James Moore",10k,M,,335
+"Mario Guerrero",10k,M,,379
+"Mario Langa García",10k,M,,414
+"Markel Bringas",10k,M,,392
+"Matías Domínguez Fuentes",10k,M,,358
+"Miguel Beaumont Vidart",10k,M,,321
+"Miguel Lezaun Capdevila",10k,M,,304
+"Miguel Martínez Andueza",10k,M,,315
+"Mikel Equiza Garciriain",10k,M,,386
+"Mikel Uriz Mata",10k,M,,433
+"Oier Balda",10k,M,,383
+"Pablo Garayoa",10k,M,,411
+"Ramon Pérez",10k,M,,420
+"roberto carlos trejo aleman",10k,M,,385
+"Saúl García Muñoz",10k,M,,309
+"Sergio Barberena Serrano",10k,M,,361
+"Sergio Bariain Martin",10k,M,,353
+"Sergio Espinal Márquez",10k,M,,409
+"Sergio Santesteban",10k,M,,360
+"Txipi Aincioa recalde",10k,M,,348
+"Unai CASTILLO Nagore",10k,M,,419
+"Unai Echavarri Zudaire",10k,M,,446
+"Unai trigo cizur",10k,M,,444
+"Xabier Calahorra Blanco",10k,M,,305
+"Xabier Elizalde",10k,M,,369
+"Xabier Elso",10k,M,,330
+"Xabier Gonzalez Sanjuan",10k,M,,422
+"Xabier Irurzun Aldaz",10k,M,,401
+"Xavi Mariño",10k,M,,413
+"Adriana Erice Morteruel",5k,F,,149
+"Ainara Armendariz Leoz",5k,F,,157
+"Ainhoa Azcona Del Burgo",5k,F,,150
+"Ainhoa Tejero Eusa",5k,F,,103
+"Aitana Aizpurua Rodriguez",5k,F,,152
+"Alexia Juaniz Chocarro",5k,F,,134
+"Amaya Cruz Pueyo",5k,F,,165
+"Ana Larumbe Aicua",5k,F,,132
+"Andrea Aizpurua Rodriguez",5k,F,,151
+"Andrea Juandeaburre Espiga",5k,F,,147
+"Andrea Viedma Alvarez",5k,F,,115
+"Ane Escalada Navascués",5k,F,,142
+"Anne Garcia Resano",5k,F,,124
+Carlota,5k,F,,117
+"Cristina Cano Gomes",5k,F,,171
+"Cristina Rueda",5k,F,,168
+"Elena Pascual Lapuerta",5k,F,,130
+"Eliana Resano Arnedo",5k,F,,123
+"Gyulten redzheb",5k,F,,156
+"Irache Jimenez Cruz",5k,F,,172
+"Irantzu López Clemente",5k,F,,122
+"Irene Herranz Asirón",5k,F,,144
+"Irene Remon Arana",5k,F,,163
+"Isabel Jauquicoa Martinena",5k,F,,113
+jhuliza,5k,F,,105
+"Joana Villadangos",5k,F,,106
+"Josune Iriarte Valero",5k,F,,146
+"Josune Valerio Campo",5k,F,,137
+"Judit Santamaría",5k,F,,107
+"Larraitz Aizpurua",5k,F,,101
+"Leyre Jiménez Aceituno",5k,F,,161
+"Lucy martin",5k,F,,162
+"Maite Arbeloa  Murillo",5k,F,,139
+"Maite Martín de Vidales",5k,F,,116
+"María Recalde Goñi",5k,F,,155
+"María Teresa Pueyo",5k,F,,169
+"Marta Rodríguez López",5k,F,,111
+"Oihana Andueza Equiza",5k,F,,126
+"Olga Villalba",5k,F,,154
+"Paula Pérez Barbarin",5k,F,,174
+"Saioa Nuin Uriz",5k,F,,120
+"Sandra Cinca Zabalza",5k,F,,127
+"Sara Fernandez Fernandez de las Heras",5k,F,,131
+"Sara Read Antón",5k,F,,143
+"Uxue Osakar Osinaga",5k,F,,114
+"Aitor García Sádaba",5k,M,,138
+"Alex Gorria Carpio",5k,M,,128
+"Amin Martínez Jaafari",5k,M,,136
+"Ander Sarasa Armendariz",5k,M,,159
+"aratz diez purroy",5k,M,,108
+"Asier Mayo",5k,M,,121
+"Bagheera de la selva",5k,M,,153
+"David Coronel Nuñez",5k,M,,148
+"DAVID ERICE VIDAURRE",5k,M,,160
+"Eduardo Losarcos",5k,M,,141
+"Gaizka Azanza Teruel",5k,M,,140
+"Haritz Sarasa Zabala",5k,M,,158
+"Iker Carasusan Abril",5k,M,,112
+"Javier Laseca Murguialday",5k,M,,166
+"Jose Antonio Fernández Carreño",5k,M,,167
+"Juan Arribas Sabalza",5k,M,,135
+"Juan Arrondo Ruiz",5k,M,,109
+"Juan Pablo López Matas",5k,M,,125
+"Kevin Galván Liberal",5k,M,,129
+"Lucas Virto Amezcus",5k,M,,164
+"Martin Arrondo Ruiz",5k,M,,110
+"Miguel Ventura Ojer",5k,M,,104
+"Oier Alfonso Tornos",5k,M,,173
+"Pablo Moral Vallés",5k,M,,145
+"Patrick Loayza",5k,M,,175
+"Roberto Vázquez",5k,M,,118
+"Roswell Jaen Martínez",5k,M,,119
+"Rubén Darío Jumbo Panjon",5k,M,,102
+"Tomás Medina",5k,M,,170
+"Xabier Domínguez Roncal",5k,M,,133
