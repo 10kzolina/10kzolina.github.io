@@ -44,6 +44,7 @@ Campos obligatorios:
 Campos opcionales:
 
 - `dorsal`
+- `genero`: `M` o `F`
 - `correo`
 - `telefono`
 - `dni`
@@ -55,5 +56,9 @@ Los registros se crean como pendientes (`bolsa_entregada: false`) y con trazabil
 - `creado_por`
 - `actualizado_en`
 - `actualizado_por`
+
+## Exportación CSV
+
+El botón `csv` descarga `corredores.csv` con los registros cuya `carrera` sea `10k carrera` o `5k carrera`, ordenados por dorsal.
 
 Sin reglas restrictivas, el login visual no basta para proteger los datos. Las reglas incluidas permiten leer, crear y actualizar solo a usuarios autenticados con Firebase Auth.

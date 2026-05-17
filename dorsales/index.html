@@ -142,6 +142,7 @@
         </div>
         <div class="dorsales-title-actions">
           <button id="add-record-button" class="action-button add-record-button" type="button">Añadir</button>
+          <button id="download-csv-button" class="action-button secondary-action-button" type="button">csv</button>
           <span id="visible-count" class="soft-pill">Cargando...</span>
         </div>
       </div>
@@ -183,6 +184,15 @@
           <div class="form-field">
             <label for="add-comida">Tickets comida *</label>
             <input id="add-comida" name="comida" type="number" min="0" step="1" inputmode="numeric" required />
+          </div>
+
+          <div class="form-field">
+            <label for="add-genero">Género</label>
+            <select id="add-genero" name="genero">
+              <option value="">Sin indicar</option>
+              <option value="M">M</option>
+              <option value="F">F</option>
+            </select>
           </div>
 
           <div class="form-field">

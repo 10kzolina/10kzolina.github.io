@@ -1168,7 +1168,7 @@
   .dorsales-title-actions {
     width: 100%;
     display: grid;
-    grid-template-columns: minmax(92px, 0.42fr) minmax(0, 0.58fr);
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 8px;
     align-items: stretch;
   }
@@ -1184,11 +1184,27 @@
   }
 
   .dorsales-title-actions .soft-pill {
+    grid-column: 1 / -1;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     padding: 10px 12px;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .dorsales-title-actions #download-csv-button {
+    width: auto;
+    min-width: 54px;
+    min-height: 36px;
+    align-self: center;
+    justify-self: end;
+    padding: 8px 12px;
+    border-radius: 999px;
+    box-shadow: none;
+    font-size: 12px;
+    line-height: 1;
+    text-transform: uppercase;
   }
 
   .toast.is-large {
@@ -1212,7 +1228,7 @@
 
 @media (max-width: 390px) {
   .dorsales-title-actions {
-    grid-template-columns: 0.9fr 1.1fr;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .dorsales-title-actions .action-button,
@@ -1221,6 +1237,14 @@
     padding-left: 9px;
     padding-right: 9px;
     font-size: 12px;
+  }
+
+  .dorsales-title-actions #download-csv-button {
+    min-width: 48px;
+    min-height: 34px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 11px;
   }
 
   .toast.is-large {
