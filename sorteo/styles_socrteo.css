@@ -380,7 +380,7 @@ input:focus {
 
 .draw-form {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) 160px auto;
   gap: 16px;
   align-items: end;
   background: var(--surface);
@@ -394,6 +394,10 @@ input:focus {
   font-size: 18px;
   border: none;
   background: var(--bg);
+}
+
+.quantity-field {
+  min-width: 140px;
 }
 
 .draw-form .button {
@@ -460,9 +464,45 @@ input:focus {
   font-size: clamp(40px, 5vw, 72px);
   font-weight: 800;
   line-height: 1;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   position: relative;
   text-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.winner-list {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.winner-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  border-radius: var(--radius);
+  background: rgba(255,255,255,0.16);
+  border: 1px solid rgba(255,255,255,0.22);
+}
+
+.winner-list strong,
+.winner-list span {
+  position: relative;
+}
+
+.winner-list strong {
+  font-family: var(--font-display);
+  font-size: 20px;
+}
+
+.winner-list span {
+  color: rgba(255,255,255,0.82);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .winner-meta {
@@ -707,6 +747,9 @@ tbody tr:hover td { background: var(--surface-hover); }
   
   .winner-card { padding: 24px; margin-top: 32px; }
   .winner-name { font-size: clamp(32px, 10vw, 72px); margin-bottom: 24px; }
+  .winner-list li { align-items: flex-start; flex-direction: column; gap: 4px; }
+  .winner-list strong { font-size: 18px; }
+  .winner-list span { white-space: normal; }
   .winner-meta { flex-direction: column; gap: 8px; }
   .winner-meta span { text-align: center; }
   

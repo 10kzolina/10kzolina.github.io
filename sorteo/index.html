@@ -86,6 +86,19 @@
                   required
                 />
               </div>
+              <div class="field quantity-field">
+                <label for="quantityInput">Cantidad</label>
+                <input
+                  id="quantityInput"
+                  name="quantity"
+                  type="number"
+                  min="1"
+                  step="1"
+                  value="1"
+                  inputmode="numeric"
+                  required
+                />
+              </div>
               <button id="drawButton" class="button primary" type="submit">
                 Sortear
               </button>
@@ -99,8 +112,9 @@
             </div>
 
             <article id="winnerCard" class="winner-card is-hidden">
-              <p class="winner-label">Ganador</p>
+              <p id="winnerLabel" class="winner-label">Ganador</p>
               <h3 id="winnerName" class="winner-name"></h3>
+              <ol id="winnerList" class="winner-list is-hidden"></ol>
               <div class="winner-meta">
                 <span id="winnerBib"></span>
                 <span id="winnerPrize"></span>

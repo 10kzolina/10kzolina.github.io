@@ -6,7 +6,6 @@ import {
   signOut,
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 import {
-  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -15,6 +14,7 @@ import {
   orderBy,
   query,
   serverTimestamp,
+  writeBatch,
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -53,10 +53,13 @@ const userLabel = document.querySelector("#userLabel");
 const drawForm = document.querySelector("#drawForm");
 const drawButton = document.querySelector("#drawButton");
 const prizeInput = document.querySelector("#prizeInput");
+const quantityInput = document.querySelector("#quantityInput");
 const runnerCount = document.querySelector("#runnerCount");
 const appMessage = document.querySelector("#appMessage");
 const winnerCard = document.querySelector("#winnerCard");
+const winnerLabel = document.querySelector("#winnerLabel");
 const winnerName = document.querySelector("#winnerName");
+const winnerList = document.querySelector("#winnerList");
 const winnerBib = document.querySelector("#winnerBib");
 const winnerPrize = document.querySelector("#winnerPrize");
 const historyList = document.querySelector("#historyList");
@@ -91,9 +94,16 @@ drawForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const prize = prizeInput.value.trim();
+  const winnerQuantity = Number(quantityInput.value);
   if (!prize) {
     setAppMessage("Escribe qué se sortea.", "error");
     prizeInput.focus();
+    return;
+  }
+
+  if (!Number.isInteger(winnerQuantity) || winnerQuantity < 1) {
+    setAppMessage("Indica una cantidad válida de ganadores.", "error");
+    quantityInput.focus();
     return;
   }
 
@@ -102,19 +112,29 @@ drawForm.addEventListener("submit", async (event) => {
     return;
   }
 
+  if (winnerQuantity > state.runners.length) {
+    setAppMessage(
+      `Solo hay ${state.runners.length} corredores disponibles.`,
+      "error",
+    );
+    quantityInput.focus();
+    return;
+  }
+
   drawButton.disabled = true;
   setAppMessage("Sorteando...", "neutral");
 
   try {
     await delay(650);
-    const winner = state.runners[getRandomIndex(state.runners.length)];
-    const entry = await saveDraw(prize, winner);
+    const winners = getRandomRunners(state.runners, winnerQuantity);
+    const entries = await saveDraws(prize, winners);
 
-    state.history.unshift(entry);
-    renderWinner(entry);
+    state.history.unshift(...entries);
+    renderWinners(entries);
     renderHistory();
-    setAppMessage("Sorteo completado y guardado en Firebase.", "success");
+    setAppMessage(getDrawSuccessMessage(entries.length), "success");
     prizeInput.value = "";
+    quantityInput.value = "1";
     prizeInput.focus();
   } catch (error) {
     setAppMessage("No se pudo guardar el sorteo en Firebase.", "error");
@@ -189,26 +209,36 @@ async function loadHistory() {
   }
 }
 
-async function saveDraw(prize, winner) {
+async function saveDraws(prize, winners) {
   const createdAt = new Date();
-  const payload = {
-    premio: prize,
-    nombreGanador: winner.name,
-    dorsalGanador: winner.bib,
-    fecha: serverTimestamp(),
-    usuario: state.currentUser?.email || "",
-  };
+  const userEmail = state.currentUser?.email || "";
+  const batch = writeBatch(db);
+  const drawsRef = collection(db, DRAWS_COLLECTION);
 
-  const docRef = await addDoc(collection(db, DRAWS_COLLECTION), payload);
+  const entries = winners.map((winner) => {
+    const docRef = doc(drawsRef);
+    const payload = {
+      premio: prize,
+      nombreGanador: winner.name,
+      dorsalGanador: winner.bib,
+      fecha: serverTimestamp(),
+      usuario: userEmail,
+    };
 
-  return {
-    id: docRef.id,
-    prize,
-    runnerName: winner.name,
-    runnerBib: winner.bib,
-    createdAt: createdAt.toISOString(),
-    createdBy: payload.usuario,
-  };
+    batch.set(docRef, payload);
+
+    return {
+      id: docRef.id,
+      prize,
+      runnerName: winner.name,
+      runnerBib: winner.bib,
+      createdAt: createdAt.toISOString(),
+      createdBy: userEmail,
+    };
+  });
+
+  await batch.commit();
+  return entries;
 }
 
 async function deleteDraw(drawId) {
@@ -239,6 +269,7 @@ async function loadRunners() {
     state.runners = parseCsv(csvText);
     state.csvLoaded = true;
     runnerCount.textContent = state.runners.length.toString();
+    quantityInput.max = state.runners.length.toString();
 
     if (!state.runners.length) {
       setAppMessage("El CSV no contiene corredores válidos.", "error");
@@ -304,12 +335,36 @@ function parseCsvLine(line) {
   return cells;
 }
 
-function renderWinner(entry) {
-  winnerName.textContent = entry.runnerName;
-  winnerBib.textContent = entry.runnerBib
-    ? `Dorsal ${entry.runnerBib}`
-    : "Sin dorsal";
-  winnerPrize.textContent = entry.prize;
+function renderWinners(entries) {
+  const [firstEntry] = entries;
+  const hasMultipleWinners = entries.length > 1;
+
+  winnerLabel.textContent = hasMultipleWinners ? "Ganadores" : "Ganador";
+  winnerName.textContent = hasMultipleWinners
+    ? `${entries.length} ganadores`
+    : firstEntry.runnerName;
+  winnerBib.textContent = hasMultipleWinners
+    ? `${entries.length} premios`
+    : firstEntry.runnerBib
+      ? `Dorsal ${firstEntry.runnerBib}`
+      : "Sin dorsal";
+  winnerPrize.textContent = firstEntry.prize;
+  winnerList.innerHTML = "";
+  winnerList.classList.toggle("is-hidden", !hasMultipleWinners);
+
+  if (hasMultipleWinners) {
+    for (const entry of entries) {
+      const item = document.createElement("li");
+      const name = document.createElement("strong");
+      const bib = document.createElement("span");
+
+      name.textContent = entry.runnerName;
+      bib.textContent = entry.runnerBib ? `Dorsal ${entry.runnerBib}` : "Sin dorsal";
+      item.append(name, bib);
+      winnerList.append(item);
+    }
+  }
+
   winnerCard.classList.remove("is-hidden");
 }
 
@@ -438,8 +493,28 @@ function delay(milliseconds) {
   });
 }
 
+function getRandomRunners(runners, quantity) {
+  const shuffledRunners = [...runners];
+
+  for (let index = shuffledRunners.length - 1; index > 0; index -= 1) {
+    const randomIndex = getRandomIndex(index + 1);
+    [shuffledRunners[index], shuffledRunners[randomIndex]] = [
+      shuffledRunners[randomIndex],
+      shuffledRunners[index],
+    ];
+  }
+
+  return shuffledRunners.slice(0, quantity);
+}
+
 function getRandomIndex(length) {
   const randomValues = new Uint32Array(1);
   window.crypto.getRandomValues(randomValues);
   return randomValues[0] % length;
+}
+
+function getDrawSuccessMessage(winnerQuantity) {
+  return winnerQuantity === 1
+    ? "Sorteo completado y guardado en Firebase."
+    : `Sorteo completado con ${winnerQuantity} ganadores y guardado en Firebase.`;
 }
